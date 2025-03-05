@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "딥러닝 (2025)",
     "section": "",
-    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 4, 2025\n\n\n01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
+    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 5, 2025\n\n\n01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -16,49 +16,49 @@
   {
     "objectID": "posts/01wk-1.html#a.-torch",
     "href": "posts/01wk-1.html#a.-torch",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "A. torch",
     "text": "A. torch\n- 벡터\n\ntorch.tensor([1,2,3])\n\ntensor([1, 2, 3])\n\n\n- 벡터의 덧셈\n\ntorch.tensor([1,2,3]) + torch.tensor([2,2,2])\n\ntensor([3, 4, 5])\n\n\n- 브로드캐스팅\n\ntorch.tensor([1,2,3]) + 2\n\ntensor([3, 4, 5])"
   },
   {
     "objectID": "posts/01wk-1.html#b.-벡터와-매트릭스",
     "href": "posts/01wk-1.html#b.-벡터와-매트릭스",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "B. 벡터와 매트릭스",
     "text": "B. 벡터와 매트릭스\n- \\(3 \\times 2\\) matrix\n\ntorch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- \\(3 \\times 1\\) matrix = \\(3 \\times 1\\) column vector\n\ntorch.tensor([[1],[3],[5]]) \n\ntensor([[1],\n        [3],\n        [5]])\n\n\n- \\(1 \\times 2\\) matrix = \\(1 \\times 2\\) raw vector\n\ntorch.tensor([[1,2]]) \n\ntensor([[1, 2]])\n\n\n- 더하기\n브로드캐스팅(편한거)\n\ntorch.tensor([[1,2],[3,4],[5,6]]) - 1\n\ntensor([[0, 1],\n        [2, 3],\n        [4, 5]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-3],[-5]])\n\ntensor([[0, 1],\n        [0, 1],\n        [0, 1]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-2]])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n잘못된 브로드캐스팅\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-3,-5]])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-2]])\n\nRuntimeError: The size of tensor a (3) must match the size of tensor b (2) at non-singleton dimension 0\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-2])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-3,-5])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n- 행렬곱\n정상적인 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1],[2]])\n\ntensor([[ 5],\n        [11],\n        [17]])\n\n\n\ntorch.tensor([[1,2,3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[22, 28]])\n\n\n잘못된 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1,2]])\n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x2 and 1x2)\n\n\n\ntorch.tensor([[1],[2],[3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x1 and 3x2)\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([1,2]) # 이게 왜 가능..\n\ntensor([ 5, 11, 17])\n\n\n\ntorch.tensor([1,2,3]) @ torch.tensor([[1,2],[3,4],[5,6]]) # 이건 왜 가능?\n\ntensor([22, 28])"
   },
   {
     "objectID": "posts/01wk-1.html#c.-transpose-reshape",
     "href": "posts/01wk-1.html#c.-transpose-reshape",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "C. transpose, reshape",
     "text": "C. transpose, reshape\n- transpose\n\ntorch.tensor([[1,2],[3,4]]).T \n\ntensor([[1, 3],\n        [2, 4]])\n\n\n\ntorch.tensor([[1],[3]]).T \n\ntensor([[1, 3]])\n\n\n\ntorch.tensor([[1,2]]).T \n\ntensor([[1],\n        [2]])\n\n\n- reshape\n일반적인 사용\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(2,3)\n\ntensor([[1, 2, 3],\n        [4, 5, 6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(6,1)\n\ntensor([[1],\n        [2],\n        [3],\n        [4],\n        [5],\n        [6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(1,6)\n\ntensor([[1, 2, 3, 4, 5, 6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(6)\n\ntensor([1, 2, 3, 4, 5, 6])\n\n\n편한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(2,-1)\n\ntensor([[1, 2, 3],\n        [4, 5, 6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(6,-1)\n\ntensor([[1],\n        [2],\n        [3],\n        [4],\n        [5],\n        [6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(-1,6)\n\ntensor([[1, 2, 3, 4, 5, 6]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]).reshape(-1)\n\ntensor([1, 2, 3, 4, 5, 6])"
   },
   {
     "objectID": "posts/01wk-1.html#d.-concat-stack-starstarstar",
     "href": "posts/01wk-1.html#d.-concat-stack-starstarstar",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "D. concat, stack \\((\\star\\star\\star)\\)",
     "text": "D. concat, stack \\((\\star\\star\\star)\\)\n- concat\n\na = torch.tensor([[1],[3],[5]])\nb = torch.tensor([[2],[4],[6]])\ntorch.concat([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- stack\n\na = torch.tensor([1,3,5])\nb = torch.tensor([2,4,6])\ntorch.stack([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\n\n\n\n\n\nWarning\n\n\n\nconcat과 stack을 지금 처음본다면 아래를 복습하시는게 좋습니다.\nhttps://guebin.github.io/PP2024/posts/06wk-2.html#numpy와-축axis"
   },
   {
     "objectID": "posts/01wk-1.html#a.-아이스-아메리카노-가짜자료",
     "href": "posts/01wk-1.html#a.-아이스-아메리카노-가짜자료",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "A. 아이스 아메리카노 (가짜자료)",
     "text": "A. 아이스 아메리카노 (가짜자료)\n- 카페주인인 박혜원씨는 온도와 아이스아메리카노 판매량이 관계가 있다는 것을 알았다. 구체적으로는\n\n“온도가 높아질 수록 (=날씨가 더울수록) 아이스아메리카노의 판매량이 증가”\n\n한다는 사실을 알게 되었다. 이를 확인하기 위해서 아래와 같이 100개의 데이터를 모았다.\n\ntemp = [-2.4821, -2.3621, -1.9973, -1.6239, -1.4792, -1.4635, -1.4509, -1.4435,\n        -1.3722, -1.3079, -1.1904, -1.1092, -1.1054, -1.0875, -0.9469, -0.9319,\n        -0.8643, -0.7858, -0.7549, -0.7421, -0.6948, -0.6103, -0.5830, -0.5621,\n        -0.5506, -0.5058, -0.4806, -0.4738, -0.4710, -0.4676, -0.3874, -0.3719,\n        -0.3688, -0.3159, -0.2775, -0.2772, -0.2734, -0.2721, -0.2668, -0.2155,\n        -0.2000, -0.1816, -0.1708, -0.1565, -0.1448, -0.1361, -0.1057, -0.0603,\n        -0.0559, -0.0214,  0.0655,  0.0684,  0.1195,  0.1420,  0.1521,  0.1568,\n         0.2646,  0.2656,  0.3157,  0.3220,  0.3461,  0.3984,  0.4190,  0.5443,\n         0.5579,  0.5913,  0.6148,  0.6469,  0.6469,  0.6523,  0.6674,  0.7059,\n         0.7141,  0.7822,  0.8154,  0.8668,  0.9291,  0.9804,  0.9853,  0.9941,\n         1.0376,  1.0393,  1.0697,  1.1024,  1.1126,  1.1532,  1.2289,  1.3403,\n         1.3494,  1.4279,  1.4994,  1.5031,  1.5437,  1.6789,  2.0832,  2.2444,\n         2.3935,  2.6056,  2.6057,  2.6632]\n\n\nsales= [-8.5420, -6.5767, -5.9496, -4.4794, -4.2516, -3.1326, -4.0239, -4.1862,\n        -3.3403, -2.2027, -2.0262, -2.5619, -1.3353, -2.0466, -0.4664, -1.3513,\n        -1.6472, -0.1089, -0.3071, -0.6299, -0.0438,  0.4163,  0.4166, -0.0943,\n         0.2662,  0.4591,  0.8905,  0.8998,  0.6314,  1.3845,  0.8085,  1.2594,\n         1.1211,  1.9232,  1.0619,  1.3552,  2.1161,  1.1437,  1.6245,  1.7639,\n         1.6022,  1.7465,  0.9830,  1.7824,  2.1116,  2.8621,  2.1165,  1.5226,\n         2.5572,  2.8361,  3.3956,  2.0679,  2.8140,  3.4852,  3.6059,  2.5966,\n         2.8854,  3.9173,  3.6527,  4.1029,  4.3125,  3.4026,  3.2180,  4.5686,\n         4.3772,  4.3075,  4.4895,  4.4827,  5.3170,  5.4987,  5.4632,  6.0328,\n         5.2842,  5.0539,  5.4538,  6.0337,  5.7250,  5.7587,  6.2020,  6.5992,\n         6.4621,  6.5140,  6.6846,  7.3497,  8.0909,  7.0794,  6.8667,  7.4229,\n         7.2544,  7.1967,  9.5006,  9.0339,  7.4887,  9.0759, 11.0946, 10.3260,\n        12.2665, 13.0983, 12.5468, 13.8340]\n\n여기에서 temp는 평균기온이고, sales는 아이스아메리카노 판매량이다. 평균기온과 판매량의 그래프를 그려보면 아래와 같다.\n\nplt.plot(temp,sales,'o')\n\n\n\n\n\n\n\n\n오늘 바깥의 온도는 0.5도 이다. 아이스 아메라카노를 몇잔정도 만들어 두면 좋을까?"
   },
   {
     "objectID": "posts/01wk-1.html#b.-가짜자료를-만든-방법",
     "href": "posts/01wk-1.html#b.-가짜자료를-만든-방법",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "B. 가짜자료를 만든 방법",
     "text": "B. 가짜자료를 만든 방법\n- 방법1: \\(y_i= w_0+w_1 x_i +\\epsilon_i = 2.5 + 4x_i +\\epsilon_i, \\quad i=1,2,\\dots,n\\)\n\ntorch.manual_seed(43052)\nx,_ = torch.randn(100).sort()\neps = torch.randn(100)*0.5\ny = 2.5 + 4*x + eps \n\n\nx[:5], y[:5]\n\n(tensor([-2.4821, -2.3621, -1.9973, -1.6239, -1.4792]),\n tensor([-8.5420, -6.5767, -5.9496, -4.4794, -4.2516]))\n\n\n- 방법2: \\({\\bf y}={\\bf X}{\\bf W} +\\boldsymbol{\\epsilon}\\)\n\n\\({\\bf y}=\\begin{bmatrix} y_1 \\\\ y_2 \\\\ \\dots \\\\ y_n\\end{bmatrix}, \\quad {\\bf X}=\\begin{bmatrix} 1 & x_1 \\\\ 1 & x_2 \\\\ \\dots \\\\ 1 & x_n\\end{bmatrix}, \\quad {\\bf W}=\\begin{bmatrix} 2.5 \\\\ 4 \\end{bmatrix}, \\quad \\boldsymbol{\\epsilon}= \\begin{bmatrix} \\epsilon_1 \\\\ \\dots \\\\ \\epsilon_n\\end{bmatrix}\\)\n\n\nX = torch.stack([torch.ones(100),x],axis=1)\nW = torch.tensor([[2.5],[4.0]])\ny = X@W + eps.reshape(100,1)\n\n\nX[:5,:], y[:5,:]\n\n(tensor([[ 1.0000, -2.4821],\n         [ 1.0000, -2.3621],\n         [ 1.0000, -1.9973],\n         [ 1.0000, -1.6239],\n         [ 1.0000, -1.4792]]),\n tensor([[-8.5420],\n         [-6.5767],\n         [-5.9496],\n         [-4.4794],\n         [-4.2516]]))\n\n\n- ture와 observed data를 동시에 시각화\n\nplt.plot(x,y,'o',label=r\"observed data: $(x_i,y_i)$\")\nplt.plot(x,2.5+4*x,'--',label=r\"true: $(x_i, 4x_i+2.5)$ // $y=4x+2.5$ \")\nplt.legend()"
   },
   {
     "objectID": "posts/01wk-1.html#c.-회귀분석이란",
     "href": "posts/01wk-1.html#c.-회귀분석이란",
-    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수",
     "section": "C. 회귀분석이란?",
     "text": "C. 회귀분석이란?\n- 관측한 자료 \\((x_i,y_i)\\) 가 있음 \\(\\to\\) 우리는 \\((x_i,y_i)\\)의 관계를 파악하여 새로운 \\(x\\)가 왔을때 그것에 대한 예측값(predicted value) \\(\\hat{y}\\)을 알아내는 법칙을 알고 싶음 \\(\\to\\) 관계를 파악하기 위해서 \\((x_i, y_i)\\)의 산점도를 그려보니 \\(x_i\\)와 \\(y_i\\)는 선형성을 가지고 있다는 것이 파악됨 \\(\\to\\) 오차항이 독립이고 어쩌고 저쩌고… \\(\\to\\) 하여튼 \\((x_i,y_i)\\) 를 “적당히 잘 관통하는” 어떠한 하나의 추세선을 잘 추정하면 된다.\n- 회귀분석이란 산점도를 보고 적당한 추세선을 찾는 것이다. 좀 더 정확하게 말하면 \\((x_1,y_1) \\dots (x_n,y_n)\\) 으로 \\(\\begin{bmatrix} \\hat{w}_0 \\\\ \\hat{w}_1 \\end{bmatrix}\\) 를 최대한 \\(\\begin{bmatrix} 2.5 \\\\ 4 \\end{bmatrix}\\)와 비슷하게 찾는 것.\n\ngiven data : \\(\\big\\{(x_i,y_i) \\big\\}_{i=1}^{n}\\)\nparameter: \\({\\bf W}=\\begin{bmatrix} w_0 \\\\ w_1 \\end{bmatrix}\\)\nestimated parameter: \\({\\bf \\hat{W}}=\\begin{bmatrix} \\hat{w}_0 \\\\ \\hat{w}_1 \\end{bmatrix}\\)\n\n- 더 쉽게 말하면 아래의 그림을 보고 “적당한” 추세선을 찾는 것이다.\n\nplt.plot(x,y,'o',label=r\"observed data: $(x_i,y_i)$\")\nplt.legend()"
   }

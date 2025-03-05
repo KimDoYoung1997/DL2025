@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="최규빈">
-<meta name="dcterms.date" content="2025-03-04">
+<meta name="dcterms.date" content="2025-03-05">
 
-<title>DL2025 - 01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법</title>
+<title>DL2025 - 01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -205,7 +205,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법</h1>
+<h1 class="title">01wk-2: 회귀분석 (1) – 회귀모형 intro, 손실함수</h1>
 </div>
 
 
@@ -222,7 +222,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 4, 2025</p>
+      <p class="date">March 5, 2025</p>
     </div>
   </div>
   
@@ -255,6 +255,10 @@ window.Quarto = {
 <section id="환경셋팅" class="level1">
 <h1>3. 환경셋팅</h1>
 <p><code>-</code> 코랩이용자: 별도의 설치 필요 없음</p>
+<ul>
+<li>GPU 관리가 꼭 필요함!! (시험하루전날 수업 몰아서 듣지않기, 아이디만들어두기)</li>
+<li>특히 시험기간에 조심하세요</li>
+</ul>
 <p><code>-</code> 리눅스서버 사용자 (ref: <a href="https://pytorch.org/get-started/locally/" class="uri">https://pytorch.org/get-started/locally/</a>)</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> dl2025 python=3.9</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate dl2025 </span>
