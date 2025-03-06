@@ -13,4 +13,9 @@ website:
 format:
   html:
     theme: cosmo
+    number-sections: false
     css: styles.css
+    toc: true
+    toc-location: right
+    highlight-style: github
+    toc-depth: 2  
