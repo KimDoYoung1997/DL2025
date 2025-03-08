@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "딥러닝 (2025)",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 5, 2025\n\n\n01wk-1: 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
+    "text": "About this blog"
   },
   {
     "objectID": "posts/01wk-1.html#a.-torch",
@@ -18,7 +18,7 @@
     "href": "posts/01wk-1.html#b.-벡터와-매트릭스",
     "title": "01wk-1: 강의소개, 파이토치 기본",
     "section": "B. 벡터와 매트릭스",
-    "text": "B. 벡터와 매트릭스\n- \\(3 \\times 2\\) matrix\n\ntorch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- \\(3 \\times 1\\) matrix = \\(3 \\times 1\\) column vector\n\ntorch.tensor([[1],[3],[5]]) \n\ntensor([[1],\n        [3],\n        [5]])\n\n\n- \\(1 \\times 2\\) matrix = \\(1 \\times 2\\) row vector\n\ntorch.tensor([[1,2]]) \n\ntensor([[1, 2]])\n\n\n- 더하기\n브로드캐스팅(편한거)\n\ntorch.tensor([[1,2],[3,4],[5,6]]) - 1\n\ntensor([[0, 1],\n        [2, 3],\n        [4, 5]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-3],[-5]])\n\ntensor([[0, 1],\n        [0, 1],\n        [0, 1]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-2]])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n잘못된 브로드캐스팅\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-3,-5]])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-2]])\n\nRuntimeError: The size of tensor a (3) must match the size of tensor b (2) at non-singleton dimension 0\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-2])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-3,-5])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n- 행렬곱\n정상적인 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1],[2]])\n\ntensor([[ 5],\n        [11],\n        [17]])\n\n\n\ntorch.tensor([[1,2,3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[22, 28]])\n\n\n잘못된 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1,2]])\n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x2 and 1x2)\n\n\n\ntorch.tensor([[1],[2],[3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x1 and 3x2)\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([1,2]) # 이게 왜 가능..\n\ntensor([ 5, 11, 17])\n\n\n\ntorch.tensor([1,2,3]) @ torch.tensor([[1,2],[3,4],[5,6]]) # 이건 왜 가능?\n\ntensor([22, 28])"
+    "text": "B. 벡터와 매트릭스\n- \\(3 \\times 2\\) matrix\n\ntorch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- \\(3 \\times 1\\) matrix = \\(3 \\times 1\\) column vector\n\ntorch.tensor([[1],[3],[5]]) \n\ntensor([[1],\n        [3],\n        [5]])\n\n\n- \\(1 \\times 2\\) matrix = \\(1 \\times 2\\) row vector\n\ntorch.tensor([[1,2]]) \n\ntensor([[1, 2]])\n\n\n- 더하기\n브로드캐스팅(편한거)\n\ntorch.tensor([[1,2],[3,4],[5,6]]) - 1\n\ntensor([[0, 1],\n        [2, 3],\n        [4, 5]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-3],[-5]])\n\ntensor([[0, 1],\n        [0, 1],\n        [0, 1]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-2]])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n잘못된 브로드캐스팅\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-3,-5]])\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[21], line 1\n----&gt; 1 torch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1,-3,-5]])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-2]])\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[22], line 1\n----&gt; 1 torch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([[-1],[-2]])\n\nRuntimeError: The size of tensor a (3) must match the size of tensor b (2) at non-singleton dimension 0\n\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-2])\n\ntensor([[0, 0],\n        [2, 2],\n        [4, 4]])\n\n\n\ntorch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-3,-5])\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[26], line 1\n----&gt; 1 torch.tensor([[1,2],[3,4],[5,6]]) + torch.tensor([-1,-3,-5])\n\nRuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1\n\n\n\n- 행렬곱\n정상적인 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1],[2]])\n\ntensor([[ 5],\n        [11],\n        [17]])\n\n\n\ntorch.tensor([[1,2,3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\ntensor([[22, 28]])\n\n\n잘못된 행렬곱\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1,2]])\n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[29], line 1\n----&gt; 1 torch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([[1,2]])\n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x2 and 1x2)\n\n\n\n\ntorch.tensor([[1],[2],[3]]) @ torch.tensor([[1,2],[3,4],[5,6]]) \n\n\n---------------------------------------------------------------------------\nRuntimeError                              Traceback (most recent call last)\nCell In[30], line 1\n----&gt; 1 torch.tensor([[1],[2],[3]]) @ torch.tensor([[1,2],[3,4],[5,6]])\n\nRuntimeError: mat1 and mat2 shapes cannot be multiplied (3x1 and 3x2)\n\n\n\n이상한 것\n\ntorch.tensor([[1,2],[3,4],[5,6]]) @ torch.tensor([1,2]) # 이게 왜 가능..\n\ntensor([ 5, 11, 17])\n\n\n\ntorch.tensor([1,2,3]) @ torch.tensor([[1,2],[3,4],[5,6]]) # 이건 왜 가능?\n\ntensor([22, 28])"
   },
   {
     "objectID": "posts/01wk-1.html#c.-transpose-reshape",
@@ -35,10 +35,10 @@
     "text": "D. concat, stack \\((\\star\\star\\star)\\)\n- concat\n\na = torch.tensor([[1],[3],[5]])\nb = torch.tensor([[2],[4],[6]])\ntorch.concat([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\ntorch.concat([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- stack\n\na = torch.tensor([1,3,5])\nb = torch.tensor([2,4,6])\ntorch.stack([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\ntorch.concat([a.reshape(3,1),b.reshape(3,1)],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\n\n\n\n\n\nWarning\n\n\n\nconcat과 stack을 지금 처음본다면 아래를 복습하시는게 좋습니다.\nhttps://guebin.github.io/PP2024/posts/06wk-2.html#numpy와-축axis"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "딥러닝 (2025)",
     "section": "",
-    "text": "About this blog"
+    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 5, 2025\n\n\n01wk-1: 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
   }
 ]
