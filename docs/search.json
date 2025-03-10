@@ -35,10 +35,45 @@
     "text": "D. concat, stack \\((\\star\\star\\star)\\)\n- concat\n\na = torch.tensor([[1],[3],[5]])\nb = torch.tensor([[2],[4],[6]])\ntorch.concat([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\ntorch.concat([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n- stack\n\na = torch.tensor([1,3,5])\nb = torch.tensor([2,4,6])\ntorch.stack([a,b],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\ntorch.concat([a.reshape(3,1),b.reshape(3,1)],axis=1)\n\ntensor([[1, 2],\n        [3, 4],\n        [5, 6]])\n\n\n\n\n\n\n\n\nWarning\n\n\n\nconcat과 stack을 지금 처음본다면 아래를 복습하시는게 좋습니다.\nhttps://guebin.github.io/PP2024/posts/06wk-2.html#numpy와-축axis"
   },
   {
+    "objectID": "posts/01wk-2.out.html",
+    "href": "posts/01wk-2.out.html",
+    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "section": "",
+    "text": "최규빈\n2024-03-06"
+  },
+  {
+    "objectID": "posts/01wk-2.out.html#a.-모형소개",
+    "href": "posts/01wk-2.out.html#a.-모형소개",
+    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "section": "A. 모형소개",
+    "text": "A. 모형소개\n- model: \\(y_i= w_0+w_1 x_i +\\epsilon_i = 2.5 + 4x_i +\\epsilon_i, \\quad i=1,2,\\dots,n\\)\n- model: \\({\\bf y}={\\bf X}{\\bf W} +\\boldsymbol{\\epsilon}\\)\n\n\\({\\bf y}=\\begin{bmatrix} y_1 \\\\ y_2 \\\\ \\dots \\\\ y_n\\end{bmatrix}, \\quad {\\bf X}=\\begin{bmatrix} 1 & x_1 \\\\ 1 & x_2 \\\\ \\dots \\\\ 1 & x_n\\end{bmatrix}, \\quad {\\bf W}=\\begin{bmatrix} 2.5 \\\\ 4 \\end{bmatrix}, \\quad \\boldsymbol{\\epsilon}= \\begin{bmatrix} \\epsilon_1 \\\\ \\dots \\\\ \\epsilon_n\\end{bmatrix}\\)"
+  },
+  {
+    "objectID": "posts/01wk-2.out.html#b.-회귀모형에서-데이터-생성",
+    "href": "posts/01wk-2.out.html#b.-회귀모형에서-데이터-생성",
+    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "section": "B. 회귀모형에서 데이터 생성",
+    "text": "B. 회귀모형에서 데이터 생성\n\ntorch.manual_seed(43052)\nones= torch.ones(100).reshape(-1,1)\nx,_ = torch.randn(100).sort()\nx = x.reshape(-1,1)\nX = torch.concat([ones,x],axis=-1)\nW = torch.tensor([[2.5],[4]])\nϵ = torch.randn(100).reshape(-1,1)*0.5\ny = X@W + ϵ\n\n\nplt.plot(x,y,'o')\nplt.plot(x,2.5+4*x,'--')"
+  },
+  {
+    "objectID": "posts/01wk-2.out.html#a.-손실함수",
+    "href": "posts/01wk-2.out.html#a.-손실함수",
+    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "section": "A. 손실함수",
+    "text": "A. 손실함수\n- ’적당한 정도’를 판단하기 위한 장치: loss function 도입!\n\\(loss=\\sum_{i=1}^{n}(y_i-\\hat{y}_i)^2=\\sum_{i=1}^{n}(y_i-(\\hat{w}_0+\\hat{w}_1x_i))^2\\)\n\\(=({\\bf y}-{\\bf\\hat{y}})^\\top({\\bf y}-{\\bf\\hat{y}})=({\\bf y}-{\\bf X}{\\bf \\hat{W}})^\\top({\\bf y}-{\\bf X}{\\bf \\hat{W}})\\)\n- loss 함수의 특징\n\n\\(y_i \\approx \\hat{y}_i\\) 일수록 loss값이 작다.\n\\(y_i \\approx \\hat{y}_i\\) 이 되도록 \\((\\hat{w}_0,\\hat{w}_1)\\)을 잘 찍으면 loss값이 작다.\n(중요) 주황색 점선이 ‘적당할 수록’ loss값이 작다.\n\n\nloss = torch.sum((y-yhat)**2)\nloss\n\n- 우리의 목표: 이 loss(=8587.6875)을 더 줄이자.\n\n궁극적으로는 아예 모든 조합 \\((\\hat{w}_0,\\hat{w}_1)\\)에 대하여 가장 작은 loss를 찾으면 좋겠다. (단계2에서 할일은 아님)\n\n- 문제의 치환: 생각해보니까 우리의 문제는 아래와 같이 수학적으로 단순화 되었다.\n\n적당해보이는 주황색 선을 찾자 \\(\\to\\) \\(loss(w_0,w_1)\\)를 최소로하는 \\((w_0,w_1)\\)의 값을 찾자.\n\n- 수정된 목표: \\(loss(w_0,w_1)\\)를 최소로 하는 \\((w_0,w_1)\\)을 구하라.\n\n단순한 수학문제가 되었다. 이것은 마치 \\(f(x,y)\\)를 최소화하는 \\((x,y)\\)를 찾으라는 것임.\n함수의 최대값 혹은 최소값을 컴퓨터를 이용하여 찾는것을 “최적화”라고 하며 이는 산공교수님들이 가장 잘하는 분야임. (산공교수님들에게 부탁하면 잘해줌, 산공교수님들은 보통 최적화해서 어디에 쓸지보다 최적화 자체에 더 관심을 가지고 연구하심)\n최적화를 하는 방법? 경사하강법"
+  },
+  {
+    "objectID": "posts/01wk-2.out.html#b.-경사하강법",
+    "href": "posts/01wk-2.out.html#b.-경사하강법",
+    "title": "01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법",
+    "section": "B. 경사하강법",
+    "text": "B. 경사하강법\n- 경사하강법 아이디어 (1차원)\n\n임의의 점을 찍는다.\n그 점에서 순간기울기를 구한다. (접선) &lt;– 미분\n순간기울기(=미분계수)의 부호를 살펴보고 부호와 반대방향으로 움직인다.\n\n\n팁: 기울기의 절대값 크기와 비례하여 보폭(=움직이는 정도)을 조절한다. \\(\\to\\) \\(\\alpha\\)를 도입\n\n\n최종수식: \\(w \\leftarrow w - \\alpha \\times \\frac{\\partial}{\\partial w}loss(w)\\)\n\n- 경사하강법 아이디어 (2차원)\n\n임의의 점을 찍는다.\n그 점에서 순간기울기를 구한다. (접평면) &lt;– 편미분\n순간기울기(=미분계수)의 부호를 살펴보고 부호와 반대방향으로 각각 움직인다.\n\n\n팁: 여기서도 기울기의 절대값 크기와 비례하여 보폭(=움직이는 정도)을 각각 조절한다. \\(\\to\\) \\(\\alpha\\)를 도입.\n\n- 경사하강법 = loss를 줄이도록 \\({\\bf W}\\)를 개선하는 방법\n\n업데이트 공식: 수정값 = 원래값 - \\(\\alpha\\) \\(\\times\\) 기울어진크기(=미분계수)\n여기에서 \\(\\alpha\\)는 전체적인 보폭의 크기를 결정한다. 즉 \\(\\alpha\\)값이 클수록 한번의 update에 움직이는 양이 크다."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "딥러닝 (2025)",
     "section": "",
-    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 5, 2025\n\n\n01wk-1: 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
+    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\n \n\n\n01wk-2: 회귀분석 (1) – 단순회귀의 학습전략, 경사하강법\n\n\n \n\n\n\n\nMar 5, 2025\n\n\n01wk-1: 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
   }
 ]
