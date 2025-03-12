@@ -651,7 +651,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>경사하강법을 좀 더 엄밀하게 써보자. 경사하강법이란 <span class="math inline">\(loss(\hat{\bf W})\)</span>를 최소로 만드는 <span class="math inline">\(\hat{\bf W}\)</span>를 컴퓨터로 구하는 방법을 의미한다. 즉 <span class="math inline">\(\underset{\hat{\bf W}}{\operatorname{argmin}} ~ loss(\hat{\bf W})\)</span>를 구하는 방법을 의미한다. 이 방법을 요약하면 아래와 같다.</p>
+<p>경사하강법을 좀 더 엄밀하게 써보자. 경사하강법은 <span class="math inline">\(loss(\hat{\bf W})\)</span>를 최소로 만드는 <span class="math inline">\(\hat{\bf W}\)</span>를 컴퓨터로 구하는 방법인데, 구체적으로는 아래와 같다.</p>
 <p><code>1</code>. 임의의 점 <span class="math inline">\(\hat{\bf W}\)</span>를 찍는다.</p>
 <p><code>2</code>. 그 점에서 순간기울기를 구한다. 즉 <span class="math inline">\(\left.\frac{\partial}{\partial {\bf W}}loss({\bf W})\right|_{{\bf W}=\hat{\bf W}}\)</span> 를 계산한다.</p>
 <p><code>3</code>. <span class="math inline">\(\hat{\bf W}\)</span>에서의 순간기울기의 부호를 살펴보고 부호와 반대방향으로 움직인다. 이때 기울기의 절대값 크기와 비례하여 보폭(=움직이는 정도)을 각각 조절한다. 즉 아래의 수식에 따라 업데이트 한다.</p>
@@ -745,6 +745,21 @@ Important
 <div class="cell-output cell-output-display" data-execution_count="153">
 <pre><code>tensor([[-1342.2524],
         [ 1188.9302]])</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>즉 이 방법은 <span class="math inline">\(loss({\bf W})\)</span>의 미분을 구할수 있어야 사용가능합니다. 즉</p>
+<p><span class="math display">\[\frac{\partial}{\partial {\bf W}}loss({\bf W})= -2{\bf X}^\top {\bf y} + 2{\bf X}^\top {\bf X}{\bf W}\]</span></p>
+<p>를 계산할 수 있어야 합니다.</p>
 </div>
 </div>
 <p><code>-</code> 미분값을 계산하는 방법3 – 이 패턴을 외우세여</p>
