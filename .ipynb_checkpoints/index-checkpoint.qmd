@@ -18,9 +18,22 @@ title-block-banner: false
 - Zoom: *이메일로 미리 시간을 정할 것*
 - 카카오톡: <http://pf.kakao.com/_txeIFG/chat>
 
-**대면수업 실습용 코랩**
+**오늘의 강의노트**
+
+::: {.panel-tabset}
+### 코랩사용자 
+
+아래의 링크 클릭
 
 <a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a>
 
+### 서버사용자 
+
+주피터에서 아래를 실행
+
+```bash
+!wget https://github.com/guebin/DL2025/blob/main/posts/lecture.ipynb
+```
+:::
 
 **강의노트** 
