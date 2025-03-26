@@ -11,13 +11,16 @@ page-layout: full
 title-block-banner: false
 ---
 
-lecture: <a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a>
-
 **질문하는 방법**
 
 - 이메일: <guebin@jbnu.ac.kr>
 - 직접방문: 자연과학대학 본관 205호 
 - Zoom: *이메일로 미리 시간을 정할 것*
 - 카카오톡: <http://pf.kakao.com/_txeIFG/chat>
+
+**대면수업 실습용 코랩**
+
+<a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a>
+
 
 **강의노트** 
