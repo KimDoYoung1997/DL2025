@@ -182,7 +182,7 @@ window.Quarto = {
   <li><a href="#강의영상" id="toc-강의영상" class="nav-link active" data-scroll-target="#강의영상">1. 강의영상</a></li>
   <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
   <li><a href="#꺽인그래프를-만드는-방법" id="toc-꺽인그래프를-만드는-방법" class="nav-link" data-scroll-target="#꺽인그래프를-만드는-방법">3. 꺽인그래프를 만드는 방법</a></li>
-  <li><a href="#취업데이터-다시-적합" id="toc-취업데이터-다시-적합" class="nav-link" data-scroll-target="#취업데이터-다시-적합">4. 취업데이터 다시 적합</a></li>
+  <li><a href="#스펙의역설-적합" id="toc-스펙의역설-적합" class="nav-link" data-scroll-target="#스펙의역설-적합">4. 스펙의역설 적합</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="04wk-1.out.ipynb" download="04wk-1.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -274,7 +274,12 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>여기에서 <span class="math inline">\(({\bf x},{\bf y})\)</span> 는 (독립변수,종속변수) 혹은 (설명변수,반응변수) 를 의미하는게 아님.</p>
+<p>일반적으로 제 강의노트에서</p>
+<ul>
+<li>독립변수 = 설명변수 = <span class="math inline">\({\bf x}\)</span>, <span class="math inline">\({\bf X}\)</span></li>
+<li>종속변수 = 반응변수 = <span class="math inline">\({\bf y}\)</span></li>
+</ul>
+<p>를 의미하는데요, 여기에서 <span class="math inline">\(({\bf x},{\bf y})\)</span> 는 (독립변수,종속변수) 혹은 (설명변수,반응변수) 를 의미하는게 아닙니다.</p>
 </div>
 </div>
 <p><code># 방법1</code> – 수식 그대로 구현</p>
@@ -636,11 +641,11 @@ Note
 </div>
 </div>
 </section>
-<section id="취업데이터-다시-적합" class="level1">
-<h1>4. 취업데이터 다시 적합</h1>
+<section id="스펙의역설-적합" class="level1">
+<h1>4. 스펙의역설 적합</h1>
 <p><code>-</code> 다시한번 데이터 정리</p>
-<div id="d9bf0548-df07-43e1-88d5-ac9f816a92f3" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2024/main/posts/dnnex.csv"</span>)</span>
+<div id="d9bf0548-df07-43e1-88d5-ac9f816a92f3" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/ironyofspec.csv"</span>)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor(df.x).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> torch.tensor(df.prob).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
@@ -657,7 +662,7 @@ Note
 </div>
 </div>
 <p><code>-</code> Step1에 대한 생각: 네트워크를 어떻게 만들까? = 아키텍처를 어떻게 만들까? = 모델링</p>
-<p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,2)}{\boldsymbol u^{(1)}} \overset{a_1}{\to} \underset{(n,2)}{\boldsymbol v^{(1)}} \overset{l_1}{\to} \underset{(n,1)}{\boldsymbol u^{(2)}} \overset{a_2}{\to} \underset{(n,1)}{\boldsymbol v^{(2)}}=\underset{(n,1)}{\hat{\boldsymbol y}}\]</span></p>
+<p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,2)}{{\bf u}^{(1)}} \overset{a_1}{\to} \underset{(n,2)}{{\bf v}^{(1)}} \overset{l_1}{\to} \underset{(n,1)}{{\bf u}^{(2)}} \overset{a_2}{\to} \underset{(n,1)}{{\bf v}^{(2)}}=\underset{(n,1)}{\hat{\bf y}}\]</span></p>
 <p><code>-</code> Step1-4</p>
 <div id="559812fb-1c1d-40ef-aa3c-7c0166ab951e" class="cell" data-tags="[]" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
