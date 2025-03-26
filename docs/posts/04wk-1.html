@@ -518,6 +518,12 @@ Note
 </div>
 <p><code>-</code> Step1에 대한 생각: 네트워크를 어떻게 만들까? = 아키텍처를 어떻게 만들까? = 모델링</p>
 <p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,2)}{\boldsymbol u^{(1)}} \overset{a_1}{\to} \underset{(n,2)}{\boldsymbol v^{(1)}} \overset{l_1}{\to} \underset{(n,1)}{\boldsymbol u^{(2)}} \overset{a_2}{\to} \underset{(n,1)}{\boldsymbol v^{(2)}}=\underset{(n,1)}{\hat{\boldsymbol y}}\]</span></p>
+<ul>
+<li><span class="math inline">\(l_1\)</span>: <code>torch.nn.Linear(1,2,bias=False)</code></li>
+<li><span class="math inline">\(a_1\)</span>: <code>torch.nn.ReLU()</code></li>
+<li><span class="math inline">\(l_2\)</span>: <code>torch.nn.Linear(2,1,bias=True)</code></li>
+<li><span class="math inline">\(a_2\)</span>: <code>torch.nn.Sigmoid()</code></li>
+</ul>
 <p><code>-</code> Step1-4</p>
 <div id="34442e08-c4da-483a-92fd-8a77bd46dba1" class="cell" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1</span>)</span>
