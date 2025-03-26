@@ -341,5 +341,12 @@
     "title": "About",
     "section": "",
     "text": "About this blog"
+  },
+  {
+    "objectID": "posts/03wk-2.html#b.-데이터-스펙과-취업",
+    "href": "posts/03wk-2.html#b.-데이터-스펙과-취업",
+    "title": "03wk-2: (로지스틱) – sig(linr(x)), BCELoss, Adam, 로지스틱의 한계",
+    "section": "B. 데이터 – 스펙과 취업",
+    "text": "B. 데이터 – 스펙과 취업\n\ntorch.manual_seed(43052)\nx = torch.linspace(-1,1,2000).reshape(2000,1)\nw0,w1 = -1, 5\nprob = torch.exp(w0+w1*x) / (1+torch.exp(w0+w1*x)) \ny = torch.bernoulli(prob)\n\n\nplt.plot(x,y,'.',alpha=0.03)\nplt.plot(x[0],y[0],'.',label=r\"$(x_i,y_i)$\",color=\"C0\")\nplt.plot(x,prob,'--r',label=r\"prob (true, unknown) = $\\frac{exp(-1+5x)}{1+exp(-1+5x)}$\")\nplt.legend()"
   }
 ]
