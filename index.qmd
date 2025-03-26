@@ -11,6 +11,8 @@ page-layout: full
 title-block-banner: false
 ---
 
+lecture: <a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a>
+
 **질문하는 방법**
 
 - 이메일: <guebin@jbnu.ac.kr>
