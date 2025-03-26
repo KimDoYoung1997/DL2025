@@ -29,10 +29,10 @@ title-block-banner: false
 
 ### 서버사용자 
 
-주피터에서 아래를 실행
+주피터에서 아래를 실행 (주소 오류 수정했음!)
 
 ```bash
-!wget https://github.com/guebin/DL2025/blob/main/posts/lecture.ipynb
+!wget https://raw.githubusercontent.com/guebin/DL2025/refs/heads/main/posts/lecture.ipynb
 ```
 :::
 
