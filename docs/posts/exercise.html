@@ -179,7 +179,10 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#벡터와-행렬" id="toc-벡터와-행렬" class="nav-link active" data-scroll-target="#벡터와-행렬"><code>$</code> 벡터와 행렬</a></li>
+  <li><a href="#벡터와-행렬" id="toc-벡터와-행렬" class="nav-link active" data-scroll-target="#벡터와-행렬"><code>$</code>. 벡터와 행렬</a></li>
+  <li><a href="#concat-stack" id="toc-concat-stack" class="nav-link" data-scroll-target="#concat-stack"><code>$</code>. concat, stack</a></li>
+  <li><a href="#행렬곱" id="toc-행렬곱" class="nav-link" data-scroll-target="#행렬곱"><code>$</code>. 행렬곱</a></li>
+  <li><a href="#인덱싱" id="toc-인덱싱" class="nav-link" data-scroll-target="#인덱싱"><code>$</code>. 인덱싱</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise.out.ipynb" download="exercise.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -222,7 +225,7 @@ window.Quarto = {
 <p>문제풀이에 필요한 모듈은 스스로 <code>import</code> 할 것</p>
 </blockquote>
 <section id="벡터와-행렬" class="level2">
-<h2 class="anchored" data-anchor-id="벡터와-행렬"><code>$</code> 벡터와 행렬</h2>
+<h2 class="anchored" data-anchor-id="벡터와-행렬"><code>$</code>. 벡터와 행렬</h2>
 <p><code>#</code>. 아래와 같이 length 5 인 vector를 <code>torch.tensor</code>로 선언하는 코드를 작성하라.</p>
 <p><span class="math display">\[{\bf x} = [1,2,3,4,5]\]</span></p>
 <p><code>(풀이)</code></p>
@@ -239,16 +242,16 @@ window.Quarto = {
 <p><span class="math display">\[{\bf W} = \begin{bmatrix} 2.5  \\  4 \end{bmatrix}\]</span></p>
 <p><code>#</code>. 아래와 같은 matrix 를 <code>torch.tensor</code>로 선언하는 코드를 작성하라.</p>
 <p><span class="math display">\[{\bf x} = \begin{bmatrix} 2.5  &amp; 4 \end{bmatrix}\]</span></p>
-<p><code>#</code>. 행렬곱 <code>@</code>을 이용하여 아래를 계산하라.</p>
-<p><span class="math display">\[{\bf x} = \begin{bmatrix} 2.5  &amp; 4 \end{bmatrix}\]</span></p>
-<hr>
-<p><code>##</code> – a,b가 아래와 같이 주어졌다고 하자.</p>
+</section>
+<section id="concat-stack" class="level2">
+<h2 class="anchored" data-anchor-id="concat-stack"><code>$</code>. concat, stack</h2>
+<p>a,b가 아래와 같이 주어졌다고 하자.</p>
 <div id="a8da07e4-f27b-4905-b8a7-01356ea9a86d" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> torch.tensor([<span class="dv">1</span>]<span class="op">*</span><span class="dv">10</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.tensor([<span class="dv">2</span>]<span class="op">*</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>아래를 잘 읽고 물음에 답하라.</p>
-<p><code>#</code> 주어진 a,b와 <code>torch.concat</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
+<p><code>#</code>. 주어진 a,b와 <code>torch.concat</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
 <pre><code>tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])</code></pre>
 <div id="0504134c-c396-4258-80ab-84eead0b5fa3" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>torch.concat([a.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), b.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -275,7 +278,7 @@ window.Quarto = {
         [2]])</code></pre>
 </div>
 </div>
-<p><code>#</code> 주어진 a,b 와 <code>torch.concat</code>,<code>.reshape</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
+<p><code>#</code>. 주어진 a,b 와 <code>torch.concat</code>,<code>.reshape</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
 <pre><code>tensor([[1],
         [1],
         [1],
@@ -296,7 +299,7 @@ window.Quarto = {
         [2],
         [2],
         [2]])</code></pre>
-<p><code>#</code> 주어진 a,b 와 <code>torch.concat</code>,<code>.reshape</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
+<p><code>#</code>. 주어진 a,b 와 <code>torch.concat</code>,<code>.reshape</code>를 이용하여 아래와 같은 배열을 만들어라.</p>
 <pre><code>tensor([[1, 2],
         [1, 2],
         [1, 2],
@@ -307,10 +310,10 @@ window.Quarto = {
         [1, 2],
         [1, 2],
         [1, 2]])</code></pre>
-<p><code>#</code> 주어진 a,b와 <code>torch.stack</code> 을 이용하여 아래와 같은 배열을 만들어라.</p>
+<p><code>#</code>. 주어진 a,b와 <code>torch.stack</code> 을 이용하여 아래와 같은 배열을 만들어라.</p>
 <pre><code>tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]]</code></pre>
-<p><code>#</code> 주어진 a,b와 <code>torch.stack</code>을 이용하여 아래와 같은 배열을 만들어라.</p>
+<p><code>#</code>. 주어진 a,b와 <code>torch.stack</code>을 이용하여 아래와 같은 배열을 만들어라.</p>
 <pre><code>tensor([[1, 2],
         [1, 2],
         [1, 2],
@@ -321,20 +324,36 @@ window.Quarto = {
         [1, 2],
         [1, 2],
         [1, 2]])</code></pre>
-<p><code>##.</code></p>
-<hr>
-<p><code>#</code>. 아래와 같은 텐서를 생성하라.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> torch.tensor([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+</section>
+<section id="행렬곱" class="level2">
+<h2 class="anchored" data-anchor-id="행렬곱"><code>$</code>. 행렬곱</h2>
+<p><code>#</code>. 아래와 같은 텐서를 고려하자.</p>
+<div id="c24782f8-8150-4684-a25c-b362108c4fc8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> torch.tensor([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.tensor([<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><code>@</code> 연산자를 이용하여 <span class="math inline">\(\sum_{i=1}^{5}a_ib_i\)</span>를 계산하라.</p>
-<p><code>#</code> 아래와 같은 텐서를 생성하라.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>(풀이)</code></p>
+<div id="6c5458ca-3f4a-4ff7-b33d-2a04d834efa3" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a.T <span class="op">@</span> b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>tensor([[24]])</code></pre>
+</div>
+</div>
+<p><code>#</code>. 아래와 같은 텐서를 고려하자.</p>
+<div id="b1acadbf-49e3-4ae9-ab76-0d61136154af" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">0</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><code>@</code>연산자를 이용하여 <span class="math inline">\(\sum_{i=1}^{100}x_i^2\)</span>을 계산하라.</p>
-<p><code>##</code> – 아래와 같은 배열을 선언하라.</p>
+</section>
+<section id="인덱싱" class="level2">
+<h2 class="anchored" data-anchor-id="인덱싱"><code>$</code>. 인덱싱</h2>
+<p>아래와 같은 배열을 선언하라.</p>
 <div id="8f35bb57-46ba-4c94-97a6-ae5e4424598a" class="cell" data-outputid="52c92613-c738-4896-c465-74652a0b817e" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">12</span>).reshape(<span class="dv">3</span>,<span class="dv">4</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">12</span>).reshape(<span class="dv">3</span>,<span class="dv">4</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>tensor([[ 0.6614,  0.2669,  0.0617,  0.6213],
         [-0.4519, -0.1661, -1.5228,  0.3817],
@@ -353,7 +372,6 @@ window.Quarto = {
 <pre><code>tensor([[-0.4519, -0.1661, -1.5228,  0.3817],
         [-1.0276, -0.5631, -0.8923, -0.0583]])
 </code></pre>
-<p><code>##</code></p>
 
 
 </section>
