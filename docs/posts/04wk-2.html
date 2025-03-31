@@ -263,20 +263,20 @@ window.Quarto = {
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="ea4484ca-ea1b-4a6b-9b8f-8fc85a61844d" class="cell" data-tags="[]" data-execution_count="2">
+<div id="ea4484ca-ea1b-4a6b-9b8f-8fc85a61844d" class="cell" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b6faf258-8c03-4d17-a22c-7ebc92017816" class="cell" data-execution_count="3">
+<div id="b6faf258-8c03-4d17-a22c-7ebc92017816" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">4.5</span>, <span class="fl">3.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="꺽인그래프의-한계" class="level1">
 <h1>3. 꺽인그래프의 한계?</h1>
-<div id="fc55186d-277e-472f-9b96-dd1c567cebbe" class="cell" data-execution_count="191">
+<div id="fc55186d-277e-472f-9b96-dd1c567cebbe" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 지난시간</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 목표: 꺽여있는 곡선을 만드는것 </span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sig(꺽여있는직선)</span></span>
@@ -294,7 +294,7 @@ window.Quarto = {
 <section id="a.-step은-표현-불가능하지-않나" class="level2">
 <h2 class="anchored" data-anchor-id="a.-step은-표현-불가능하지-않나">A. Step은 표현 불가능하지 않나?</h2>
 <p><code># 예제1</code> – 일부러 이상하게 만든 취업합격률 곡선</p>
-<div id="f5014fd5-e5ad-4921-9e1e-b847971a43e3" class="cell" data-tags="[]" data-execution_count="8">
+<div id="f5014fd5-e5ad-4921-9e1e-b847971a43e3" class="cell" data-tags="[]" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> <span class="dv">0</span><span class="op">*</span>x<span class="op">-</span><span class="dv">3</span></span>
@@ -304,7 +304,7 @@ window.Quarto = {
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> π <span class="op">=</span> sig(u)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.bernoulli(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8bd89d49-34ec-479c-9e6a-f7a35ca30d89" class="cell" data-execution_count="17">
+<div id="8bd89d49-34ec-479c-9e6a-f7a35ca30d89" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'.'</span>,alpha<span class="op">=</span><span class="fl">0.03</span>, label<span class="op">=</span><span class="st">"observed"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,v,<span class="st">'--'</span>, label<span class="op">=</span><span class="st">"unobserved"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -316,7 +316,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="b0ecfe6f-cb7c-472c-b13b-46aa99d6dcf9" class="cell" data-execution_count="18">
+<div id="b0ecfe6f-cb7c-472c-b13b-46aa99d6dcf9" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">512</span>),</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
@@ -337,7 +337,7 @@ window.Quarto = {
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="392a8197-c13c-45ce-9b3f-4897bc6ac8a0" class="cell" data-execution_count="21">
+<div id="392a8197-c13c-45ce-9b3f-4897bc6ac8a0" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'.'</span>,alpha<span class="op">=</span><span class="fl">0.03</span>, label<span class="op">=</span><span class="st">"observed"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,v, label<span class="op">=</span><span class="st">"true"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,net(x).data,<span class="st">'--'</span>, label<span class="op">=</span><span class="st">"estimated"</span>)</span>
@@ -356,14 +356,14 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="b.-곡선은-표현-불가능하지-않나">B. 곡선은 표현 불가능하지 않나?</h2>
 <p><code># 예제2</code> – 2024년 수능 미적30번 문제에 나온 곡선</p>
 <p><span class="math display">\[y_i = e^{-x_i} \times  |\cos(5x_i)| \times \sin(5x) + \epsilon_i, \quad \epsilon_i \sim N(0,\sigma^2)\]</span></p>
-<div id="a9c610bb-4d41-44dd-b4c7-deacb77ae057" class="cell" data-tags="[]" data-execution_count="30">
+<div id="a9c610bb-4d41-44dd-b4c7-deacb77ae057" class="cell" data-tags="[]" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> torch.randn(<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.05</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>x)<span class="op">*</span> torch.<span class="bu">abs</span>(torch.cos(<span class="dv">3</span><span class="op">*</span>x))<span class="op">*</span>(torch.sin(<span class="dv">3</span><span class="op">*</span>x))</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fx <span class="op">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="89907431-8f64-4db1-9f99-1eee4f988eae" class="cell" data-execution_count="40">
+<div id="89907431-8f64-4db1-9f99-1eee4f988eae" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,label<span class="op">=</span><span class="st">"observed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,fx,label<span class="op">=</span><span class="st">"true"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -374,7 +374,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="8643b22b-7869-481c-a954-32623a5b7907" class="cell" data-execution_count="50">
+<div id="8643b22b-7869-481c-a954-32623a5b7907" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">2048</span>), <span class="co"># 꺽이지않은 1024개의 직선</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(), <span class="co"># 꺽인(렐루된) 1024개의 직선 </span></span>
@@ -394,7 +394,7 @@ window.Quarto = {
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="155745b5-c3a8-4e72-a4f3-e45b3f1e367f" class="cell" data-execution_count="51">
+<div id="155745b5-c3a8-4e72-a4f3-e45b3f1e367f" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,label<span class="op">=</span><span class="st">"observed"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,fx,label<span class="op">=</span><span class="st">"true"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,net(x).data,<span class="st">'--'</span>,label<span class="op">=</span><span class="st">"estimated"</span>)</span>
@@ -449,7 +449,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <section id="b.-시벤코정리의-증명-스케치만.." class="level2">
 <h2 class="anchored" data-anchor-id="b.-시벤코정리의-증명-스케치만..">B. 시벤코정리의 증명 (스케치만..)</h2>
 <p><code>-</code> 준비</p>
-<div id="a4a27550-16c2-4cc1-a398-89c829b0d6c4" class="cell" data-tags="[]" data-execution_count="63">
+<div id="a4a27550-16c2-4cc1-a398-89c829b0d6c4" class="cell" data-tags="[]" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">200</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(in_features<span class="op">=</span><span class="dv">1</span>,out_features<span class="op">=</span><span class="dv">2</span>),</span>
@@ -458,9 +458,9 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>l1,a1,l2 <span class="op">=</span> net</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6c1fa013-0fa4-4d68-91a5-27d91592edc6" class="cell" data-execution_count="65">
+<div id="6c1fa013-0fa4-4d68-91a5-27d91592edc6" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>net</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="65">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>Sequential(
   (0): Linear(in_features=1, out_features=2, bias=True)
   (1): Sigmoid()
@@ -469,15 +469,15 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 </div>
 <p><code># 생각1</code> – 2개의 시그모이드를 우연히 잘 조합하면 하나의 계단함수를 만들 수 있다.</p>
-<div id="5f15d3b4-ae58-4841-843e-04ff5f981e67" class="cell" data-tags="[]" data-execution_count="66">
+<div id="5f15d3b4-ae58-4841-843e-04ff5f981e67" class="cell" data-tags="[]" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">10.00</span>,<span class="op">+</span><span class="fl">10.00</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8aa5911b-4996-4af4-800c-09114e5b306c" class="cell" data-tags="[]" data-execution_count="67">
+<div id="8aa5911b-4996-4af4-800c-09114e5b306c" class="cell" data-tags="[]" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,<span class="fl">1.00</span>]])</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">1.00</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="2c0704d3-deb5-4a4b-a42e-b5547f64f394" class="cell" data-outputid="5c41ab44-f436-4964-cb50-22fdc47932d1" data-tags="[]" data-execution_count="69">
+<div id="2c0704d3-deb5-4a4b-a42e-b5547f64f394" class="cell" data-outputid="5c41ab44-f436-4964-cb50-22fdc47932d1" data-tags="[]" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">3</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x)[:,[<span class="dv">0</span>]].data,label<span class="op">=</span><span class="vs">r"$-5x+10$"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x)[:,[<span class="dv">1</span>]].data,label<span class="op">=</span><span class="vs">r"$5x+10$"</span>)</span>
@@ -501,7 +501,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <p><code>#</code></p>
 <p><code># 생각2</code> – 계단함수의 모양이 꼭 생각1과 같을 필요는 없다. 중심은 이동가능하고, 높이도 조절가능하다.</p>
 <p><strong>가능한 예시1</strong></p>
-<div id="71be8948-0a8e-459c-a6eb-a55eef3a8f2e" class="cell" data-outputid="ac57530f-141b-4a8a-8198-13f560c5a03d" data-tags="[]" data-execution_count="70">
+<div id="71be8948-0a8e-459c-a6eb-a55eef3a8f2e" class="cell" data-outputid="ac57530f-141b-4a8a-8198-13f560c5a03d" data-tags="[]" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">0.00</span>,<span class="op">+</span><span class="fl">20.00</span>])</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,<span class="fl">1.00</span>]])</span>
@@ -520,7 +520,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 </div>
 <p><strong>가능한 예시2</strong></p>
-<div id="f618535e-a1c6-4347-bb32-69930e80dc3f" class="cell" data-outputid="e2307b59-0b77-445c-cb76-45e10cab4489" data-tags="[]" data-execution_count="71">
+<div id="f618535e-a1c6-4347-bb32-69930e80dc3f" class="cell" data-outputid="e2307b59-0b77-445c-cb76-45e10cab4489" data-tags="[]" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">20.00</span>,<span class="op">+</span><span class="fl">00.00</span>])</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">2.50</span>,<span class="fl">2.50</span>]])</span>
@@ -540,21 +540,21 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 <p><code>#</code></p>
 <p><code># 생각3</code>: 첫번째 선형변환(=<span class="math inline">\(l_1\)</span>)에서 <code>out_features=4</code>로 하고 적당한 가중치를 조정하면 <span class="math inline">\((l_2\circ a_1 \circ l_1)(x)\)</span>의 결과로 생각2의 예시1,2를 조합한 형태도 가능할 것 같다. 즉 4개의 시그모이드를 잘 조합하면 2단계 계단함수를 만들 수 있다.</p>
-<div id="e7f4070e-a787-483f-92af-f245be34649f" class="cell" data-tags="[]" data-execution_count="80">
+<div id="e7f4070e-a787-483f-92af-f245be34649f" class="cell" data-tags="[]" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">1</span>,out_features<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> torch.nn.Sigmoid()</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">4</span>,out_features<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8b779f90-e345-4d8a-8b50-df621be6fea0" class="cell" data-tags="[]" data-execution_count="81">
+<div id="8b779f90-e345-4d8a-8b50-df621be6fea0" class="cell" data-tags="[]" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>],[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="fl">0.00</span>, <span class="fl">20.00</span>, <span class="fl">20.00</span>, <span class="dv">0</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,  <span class="fl">1.00</span>, <span class="fl">2.50</span>,  <span class="fl">2.50</span>]])</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">1.0</span><span class="op">-</span><span class="fl">2.5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="98a9d5c5-7554-44c5-a5f5-50025e189881" class="cell" data-outputid="d2bdf106-045a-415d-9ea7-ba200f179b1b" data-tags="[]" data-execution_count="82">
+<div id="98a9d5c5-7554-44c5-a5f5-50025e189881" class="cell" data-outputid="d2bdf106-045a-415d-9ea7-ba200f179b1b" data-tags="[]" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.plot(l2(a1(l1(x))).data,<span class="st">'--'</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="vs">r"$(l_2 \circ a_1 \circ l_1)(x)$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="82">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>Text(0.5, 1.0, '$(l_2 \\circ a_1 \\circ l_1)(x)$')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -571,17 +571,17 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <p><code>#</code></p>
 <p><code># 생각4</code> – <span class="math inline">\(2m\)</span>개의 시그모이드를 우연히 잘 조합하면 <span class="math inline">\(m\)</span>단계 계단함수를 만들 수 있다.</p>
 <p><code>-</code> 정리1: 2개의 시그모이드를 우연히 잘 결합하면 아래와 같은 “1단계-계단함수” 함수 <span class="math inline">\(h\)</span>를 만들 수 있다.</p>
-<div id="34adf02e-798a-4fcc-ae28-5838393de585" class="cell" data-execution_count="100">
+<div id="34adf02e-798a-4fcc-ae28-5838393de585" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> h(x):</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    sig <span class="op">=</span> torch.nn.Sigmoid()</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    v1 <span class="op">=</span> <span class="op">-</span>sig(<span class="dv">200</span><span class="op">*</span>(x<span class="op">-</span><span class="fl">0.5</span>))</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    v2 <span class="op">=</span> sig(<span class="dv">200</span><span class="op">*</span>(x<span class="op">+</span><span class="fl">0.5</span>))</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> v1<span class="op">+</span>v2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a1d9fe46-abca-4a90-ba44-917c8703cd7c" class="cell" data-outputid="22026c5e-c845-4611-db68-bd3c35bc57cc" data-tags="[]" data-execution_count="101">
+<div id="a1d9fe46-abca-4a90-ba44-917c8703cd7c" class="cell" data-outputid="22026c5e-c845-4611-db68-bd3c35bc57cc" data-tags="[]" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,h(x))</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"$h(x)$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="101">
+<div class="cell-output cell-output-display" data-execution_count="29">
 <pre><code>Text(0.5, 1.0, '$h(x)$')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
@@ -616,7 +616,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(??,<span class="dv">1</span>)</span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>-</code> <span class="math inline">\(h(x)\)</span>를 생성하는 클래스를 만들어보자.</p>
-<div id="0d460139-c955-474b-b17a-f7bbce8418c5" class="cell" data-execution_count="109">
+<div id="0d460139-c955-474b-b17a-f7bbce8418c5" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> H(torch.nn.Module):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -629,18 +629,18 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> h(x)</span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e1b945ea-1678-436c-b294-30519ddcf04f" class="cell" data-execution_count="110">
+<div id="e1b945ea-1678-436c-b294-30519ddcf04f" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> H()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> <span class="math inline">\(h\)</span>의 위력을 체감해보자.</p>
 <p><code># 예제1</code> – 스펙의 역설</p>
-<div id="c332a2bc-fba7-4eeb-9e5a-f7a9928b87c7" class="cell" data-tags="[]" data-execution_count="111">
+<div id="c332a2bc-fba7-4eeb-9e5a-f7a9928b87c7" class="cell" data-tags="[]" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/ironyofspec.csv"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor(df.x).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> torch.tensor(df.prob).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d2f84917-ef82-46f2-96bb-8b2510b3981b" class="cell" data-execution_count="116">
+<div id="d2f84917-ef82-46f2-96bb-8b2510b3981b" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">2048</span>),</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    H(),</span>
@@ -661,7 +661,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="26d5a2e9-138f-496e-be16-6a87d87d1a5a" class="cell" data-execution_count="117">
+<div id="26d5a2e9-138f-496e-be16-6a87d87d1a5a" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,prob)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,net(x).data,<span class="st">'--'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -674,14 +674,14 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 <p><code>#</code></p>
 <p><code># 예제2</code> – 수능곡선</p>
-<div id="a7c91e8e-d4a3-411e-a98d-1e21a5d56a89" class="cell" data-tags="[]" data-execution_count="118">
+<div id="a7c91e8e-d4a3-411e-a98d-1e21a5d56a89" class="cell" data-tags="[]" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> torch.randn(<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.05</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>x)<span class="op">*</span> torch.<span class="bu">abs</span>(torch.cos(<span class="dv">3</span><span class="op">*</span>x))<span class="op">*</span>(torch.sin(<span class="dv">3</span><span class="op">*</span>x))</span>
 <span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fx <span class="op">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="27a0571a-70a3-48e4-987d-febf2f282b32" class="cell" data-execution_count="121">
+<div id="27a0571a-70a3-48e4-987d-febf2f282b32" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,fx)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -692,7 +692,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 </div>
 </div>
-<div id="a9669de8-599a-43c2-9b43-73527e900767" class="cell" data-execution_count="122">
+<div id="a9669de8-599a-43c2-9b43-73527e900767" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">2048</span>),</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    H(),</span>
@@ -712,7 +712,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b3d6c851-b487-4a6f-99c1-2f29b8a24042" class="cell" data-execution_count="125">
+<div id="b3d6c851-b487-4a6f-99c1-2f29b8a24042" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,fx)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,net(x).data,<span class="st">'--'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -827,7 +827,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <section id="b.-데이터" class="level2">
 <h2 class="anchored" data-anchor-id="b.-데이터">B. 데이터</h2>
 <p><code>-</code> 데이터 정리코드</p>
-<div id="5b7d8891-a688-4370-9a17-7f1d13a7605b" class="cell" data-execution_count="246">
+<div id="5b7d8891-a688-4370-9a17-7f1d13a7605b" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">3</span>])</span>
@@ -835,7 +835,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([X3,X7],axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>]<span class="op">*</span><span class="bu">len</span>(X3) <span class="op">+</span> [<span class="fl">1.0</span>]<span class="op">*</span><span class="bu">len</span>(X7))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="aa16c71e-c49e-4f84-84a5-43d897bf011a" class="cell" data-execution_count="173">
+<div id="aa16c71e-c49e-4f84-84a5-43d897bf011a" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -846,20 +846,20 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 </div>
 <p><code>-</code> 우리는 <span class="math inline">\({\bf X}: (n,1,28,28)\)</span> 에서 <span class="math inline">\({\bf y}: (n,1)\)</span>으로 가는 맵핑을 배우고 싶음. <span class="math inline">\(\to\)</span> 이런건 배운적이 없는데?.. <span class="math inline">\(\to\)</span> 그렇다면 <span class="math inline">\({\bf X}:(n,784) \to {\bf y}:(n,1)\)</span> 으로 가는 맵핑을 학습하자.</p>
-<div id="2df9e971-6010-45a3-a9f8-f3e12760b048" class="cell" data-execution_count="187">
+<div id="2df9e971-6010-45a3-a9f8-f3e12760b048" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.stack([img.reshape(<span class="op">-</span><span class="dv">1</span>) <span class="cf">for</span> img <span class="kw">in</span> X])</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="52bb1708-04ac-4761-8b72-8c61a8cf8934" class="cell" data-execution_count="189">
+<div id="52bb1708-04ac-4761-8b72-8c61a8cf8934" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>X.shape,y.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="189">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <pre><code>(torch.Size([12396, 784]), torch.Size([12396, 1]))</code></pre>
 </div>
 </div>
 </section>
 <section id="c.-학습" class="level2">
 <h2 class="anchored" data-anchor-id="c.-학습">C. 학습</h2>
-<div id="a5fa579d-1767-4b56-85c0-f171b1768731" class="cell" data-execution_count="221">
+<div id="a5fa579d-1767-4b56-85c0-f171b1768731" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">784</span>,<span class="dv">32</span>),</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
@@ -880,7 +880,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 <span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="246c61bc-5ef1-4569-a8aa-8622290a8a2a" class="cell" data-execution_count="222">
+<div id="246c61bc-5ef1-4569-a8aa-8622290a8a2a" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>plt.plot(net(X).data,<span class="st">'.'</span>,alpha<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -891,10 +891,10 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </div>
 </div>
 </div>
-<div id="d98f390a-3068-4faf-85f3-2212c2a6dc88" class="cell" data-execution_count="223">
+<div id="d98f390a-3068-4faf-85f3-2212c2a6dc88" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>((y <span class="op">==</span> (net(X).data <span class="op">&gt;</span> <span class="fl">0.5</span>))<span class="op">*</span><span class="fl">1.0</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="223">
-<pre><code>tensor(0.9899)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>tensor(0.9901)</code></pre>
 </div>
 </div>
 

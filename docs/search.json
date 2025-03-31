@@ -67,7 +67,7 @@
     "href": "posts/04wk-2.html#c.-학습",
     "title": "04wk-2: (신경망) – 꺽인그래프의 한계(?), 시벤코정리, MNIST",
     "section": "C. 학습",
-    "text": "C. 학습\n\nnet = torch.nn.Sequential(\n    torch.nn.Linear(784,32),\n    torch.nn.ReLU(),\n    torch.nn.Linear(32,1),\n    torch.nn.Sigmoid()\n)\nloss_fn = torch.nn.BCELoss()\noptimizr = torch.optim.Adam(net.parameters())\n#---#\nfor epoc in range(200):\n    ## 1 \n    yhat = net(X) \n    ## 2 \n    loss = loss_fn(yhat,y)\n    ## 3\n    loss.backward()\n    ## 4 \n    optimizr.step()\n    optimizr.zero_grad()\n\n\nplt.plot(y,'.')\nplt.plot(net(X).data,'.',alpha=0.2)\n\n\n\n\n\n\n\n\n\n((y == (net(X).data &gt; 0.5))*1.0).mean()\n\ntensor(0.9899)"
+    "text": "C. 학습\n\nnet = torch.nn.Sequential(\n    torch.nn.Linear(784,32),\n    torch.nn.ReLU(),\n    torch.nn.Linear(32,1),\n    torch.nn.Sigmoid()\n)\nloss_fn = torch.nn.BCELoss()\noptimizr = torch.optim.Adam(net.parameters())\n#---#\nfor epoc in range(200):\n    ## 1 \n    yhat = net(X) \n    ## 2 \n    loss = loss_fn(yhat,y)\n    ## 3\n    loss.backward()\n    ## 4 \n    optimizr.step()\n    optimizr.zero_grad()\n\n\nplt.plot(y,'.')\nplt.plot(net(X).data,'.',alpha=0.2)\n\n\n\n\n\n\n\n\n\n((y == (net(X).data &gt; 0.5))*1.0).mean()\n\ntensor(0.9901)"
   },
   {
     "objectID": "posts/01wk-2.html#a.-아이스-아메리카노-가짜자료",
