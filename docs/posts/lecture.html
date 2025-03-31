@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -103,6 +123,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -146,10 +195,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lecture.out.ipynb" download="lecture.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#강의영상" id="toc-강의영상" class="nav-link active" data-scroll-target="#강의영상">1. 강의영상</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
+  <li><a href="#꺽인그래프의-한계" id="toc-꺽인그래프의-한계" class="nav-link" data-scroll-target="#꺽인그래프의-한계">3. 꺽인그래프의 한계?</a>
+  <ul class="collapse">
+  <li><a href="#a.-step은-표현-불가능하지-않나" id="toc-a.-step은-표현-불가능하지-않나" class="nav-link" data-scroll-target="#a.-step은-표현-불가능하지-않나">A. Step은 표현 불가능하지 않나?</a></li>
+  <li><a href="#b.-곡선은-표현-불가능하지-않나" id="toc-b.-곡선은-표현-불가능하지-않나" class="nav-link" data-scroll-target="#b.-곡선은-표현-불가능하지-않나">B. 곡선은 표현 불가능하지 않나?</a></li>
+  </ul></li>
+  <li><a href="#시벤코정리" id="toc-시벤코정리" class="nav-link" data-scroll-target="#시벤코정리">4. 시벤코정리</a>
+  <ul class="collapse">
+  <li><a href="#a.-시벤코의-정리-소개" id="toc-a.-시벤코의-정리-소개" class="nav-link" data-scroll-target="#a.-시벤코의-정리-소개">A. 시벤코의 정리 소개</a></li>
+  <li><a href="#b.-왜-가능한가" id="toc-b.-왜-가능한가" class="nav-link" data-scroll-target="#b.-왜-가능한가">B. 왜 가능한가?</a></li>
+  <li><a href="#c.-h의-위력" id="toc-c.-h의-위력" class="nav-link" data-scroll-target="#c.-h의-위력">C. <span class="math inline">\(h\)</span>의 위력</a></li>
+  <li><a href="#d.-의문점" id="toc-d.-의문점" class="nav-link" data-scroll-target="#d.-의문점">D. 의문점</a></li>
+  </ul></li>
+  <li><a href="#mnist-해결" id="toc-mnist-해결" class="nav-link" data-scroll-target="#mnist-해결">5. MNIST 해결</a>
+  <ul class="collapse">
+  <li><a href="#a.-예비학습-plt.imshow" id="toc-a.-예비학습-plt.imshow" class="nav-link" data-scroll-target="#a.-예비학습-plt.imshow">A. 예비학습 – `<code>plt.imshow()</code></a></li>
+  <li><a href="#b.-데이터" id="toc-b.-데이터" class="nav-link" data-scroll-target="#b.-데이터">B. 데이터</a></li>
+  <li><a href="#c.-학습" id="toc-c.-학습" class="nav-link" data-scroll-target="#c.-학습">C. 학습</a></li>
+  <li><a href="#d.-test" id="toc-d.-test" class="nav-link" data-scroll-target="#d.-test">D. Test</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lecture.out.ipynb" download="lecture.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -183,14 +258,304 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
-<div id="8914169a-e8cd-40fa-b279-e4693ba6dfde" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">11</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
-<pre><code>11</code></pre>
+<section id="강의영상" class="level1">
+<h1>1. 강의영상</h1>
+<div id="72af72c0-1a96-4355-8f03-374ed01ad951" class="cell" data-tags="[]" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#{{&lt;video https://youtu.be/playlist?list=PLQqh36zP38-wD7Am2wZ7NNZjHpt55gwEH&amp;si=Yj3LYi8Y9uU5SYtp &gt;}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="imports" class="level1">
+<h1>2. Imports</h1>
+<div id="26cf6cb5-a3ff-411e-91d1-65d67789207c" class="cell" data-tags="[]" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="꺽인그래프의-한계" class="level1">
+<h1>3. 꺽인그래프의 한계?</h1>
+<p><code>-</code> 걱정: 지난시간에 배운 기술은 sig를 취하기 전이 꺽은선인 형태만 가능할 듯 하다. 그래서 이 역시 표현력이 부족할 듯 하다.</p>
+<p><code>-</code> 그런데 생각보다 표현력이 풍부한 편이다. 즉 생각보다 쓸 만하다.</p>
+<section id="a.-step은-표현-불가능하지-않나" class="level2">
+<h2 class="anchored" data-anchor-id="a.-step은-표현-불가능하지-않나">A. Step은 표현 불가능하지 않나?</h2>
+<p><code># 예제1</code> – 일부러 이상하게 만든 취업합격률 곡선</p>
+<div id="a83723d6-1b8d-49da-a5c0-65137dc2f46c" class="cell" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> <span class="dv">0</span><span class="op">*</span>x<span class="op">-</span><span class="dv">3</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>u[x<span class="op">&lt;-</span><span class="fl">0.2</span>] <span class="op">=</span> (<span class="dv">15</span><span class="op">*</span>x<span class="op">+</span><span class="dv">6</span>)[x<span class="op">&lt;-</span><span class="fl">0.2</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>u[(<span class="op">-</span><span class="fl">0.2</span><span class="op">&lt;</span>x)<span class="op">&amp;</span>(x<span class="op">&lt;</span><span class="fl">0.4</span>)] <span class="op">=</span> (<span class="dv">0</span><span class="op">*</span>x<span class="op">-</span><span class="dv">1</span>)[(<span class="op">-</span><span class="fl">0.2</span><span class="op">&lt;</span>x)<span class="op">&amp;</span>(x<span class="op">&lt;</span><span class="fl">0.4</span>)]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sig <span class="op">=</span> torch.nn.Sigmoid()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> π <span class="op">=</span> sig(u)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.bernoulli(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>#</code></p>
+</section>
+<section id="b.-곡선은-표현-불가능하지-않나" class="level2">
+<h2 class="anchored" data-anchor-id="b.-곡선은-표현-불가능하지-않나">B. 곡선은 표현 불가능하지 않나?</h2>
+<p><code># 예제2</code> – 2024년 수능 미적30번 문제에 나온 곡선</p>
+<p><span class="math display">\[y_i = e^{-x_i} \times  |\cos(5x_i)| \times \sin(5x) + \epsilon_i, \quad \epsilon_i \sim N(0,\sigma^2)\]</span></p>
+<div id="6b0942d5-619a-4356-b188-ff7fcb7282b3" class="cell" data-tags="[]" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> torch.randn(<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.05</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>x)<span class="op">*</span> torch.<span class="bu">abs</span>(torch.cos(<span class="dv">3</span><span class="op">*</span>x))<span class="op">*</span>(torch.sin(<span class="dv">3</span><span class="op">*</span>x))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fx <span class="op">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>#</code></p>
+</section>
+</section>
+<section id="시벤코정리" class="level1 page-columns page-full">
+<h1>4. 시벤코정리</h1>
+<section id="a.-시벤코의-정리-소개" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="a.-시벤코의-정리-소개">A. 시벤코의 정리 소개</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Universal Approximation Thm <span class="citation" data-cites="cybenko1989approximation">Goodfellow, Bengio, and Courville (<a href="#ref-goodfellow2016deep" role="doc-biblioref">2016</a>)</span>
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>하나의 은닉층을 가지는 아래와 같은 꼴의 네트워크 <span class="math inline">\(net: {\bf X}_{n \times p} \to {\bf y}_{n\times q}\)</span>는</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(p,???),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sigmoid(),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(???,q)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>모든 보렐 가측함수 (Borel measurable function)</p>
+<p><span class="math display">\[f: {\bf X}_{n \times p} \to {\bf y}_{n\times q}\]</span></p>
+<p>를 원하는 정확도로 “근사”시킬 수 있다. 쉽게 말하면 <span class="math inline">\({\bf X} \to {\bf y}\)</span> 인 어떠한 복잡한 규칙라도 하나의 은닉층을 가진 신경망이 원하는 정확도로 근사시킨다는 의미이다. 예를들면 아래와 같은 문제를 해결할 수 있다.</p>
+<ul>
+<li><span class="math inline">\({\bf X}\)</span>는 토익점수, GPA, 공모전참가여부, <span class="math inline">\({\bf y}\)</span>는 취업여부일 경우 <span class="math inline">\({\bf X} \to {\bf y}\)</span>인 규칙을 심층신경망은 항상 찾을 수 있다.</li>
+<li><span class="math inline">\({\bf X}\)</span>는 주택이미지, 지역정보, 주택면적, 주택에 대한 설명 <span class="math inline">\({\bf y}\)</span>는 주택가격일 경우 <span class="math inline">\({\bf X} \to {\bf y}\)</span>인 규칙을 심층신경망은 항상 찾을 수 있다.</li>
+</ul>
+<p>즉 하나의 은닉층을 가진 신경망의 표현력은 거의 무한대라 볼 수 있다.</p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-goodfellow2016deep" class="csl-entry" role="listitem">
+Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. 2016. <em>Deep Learning</em>. MIT press.
+</div></div></section>
+<section id="b.-왜-가능한가" class="level2">
+<h2 class="anchored" data-anchor-id="b.-왜-가능한가">B. 왜 가능한가?</h2>
+<p><code>-</code> 데이터</p>
+<div id="b540035f-1252-49e7-967c-f7736d359286" class="cell" data-tags="[]" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">200</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> 아래와 같은 네트워크를 고려하자. (스펙올라도 취업못하는 예제에서 썼던 네크워크랑 비슷해요)</p>
+<div id="946b65c7-8efd-4938-a0c8-8284b5129a5b" class="cell" data-tags="[]" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">1</span>,out_features<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> torch.nn.Sigmoid()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> 직관1: <span class="math inline">\(l_1\)</span>,<span class="math inline">\(l_2\)</span>의 가중치를 잘 결합하다보면 우연히 아래와 같이 만들 수 있다.</p>
+<div id="03869bcc-f78b-425b-8a6e-94a0d58e7c49" class="cell" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">10.00</span>,<span class="op">+</span><span class="fl">10.00</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3e52f887-6f47-4260-b19c-7e2f152bb4fb" class="cell" data-tags="[]" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,<span class="fl">1.00</span>]])</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">1.00</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="0b2c38b8-d9ee-4d02-aeb8-706fe008b6f0" class="cell" data-outputid="5c41ab44-f436-4964-cb50-22fdc47932d1" data-tags="[]" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">3</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x)[:,[<span class="dv">0</span>]].data,label<span class="op">=</span><span class="vs">r"$-5x+10$"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x)[:,[<span class="dv">1</span>]].data,label<span class="op">=</span><span class="vs">r"$5x+10$"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="st">'$l_1(x)$'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].legend()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x,a1(l1(x))[:,[<span class="dv">0</span>]].data,label<span class="op">=</span><span class="vs">r"$v_1=sig(-5x+10)$"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x,a1(l1(x))[:,[<span class="dv">1</span>]].data,label<span class="op">=</span><span class="vs">r"$v_2=sig(5x+10)$"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="st">'$(a_1 \circ l_1)(x)$'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].legend()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].plot(x,l2(a1(l1(x))).data,color<span class="op">=</span><span class="st">'C2'</span>,label<span class="op">=</span><span class="vs">r"$v_1+v_2-1$"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].set_title(<span class="st">'$(l_2 \circ a_1 \circ \l_1)(x)$'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 직관2: 아래들도 가능할듯?</p>
+<div id="fd3bb952-0deb-4820-8e30-b7a5d769e220" class="cell" data-outputid="ac57530f-141b-4a8a-8198-13f560c5a03d" data-tags="[]" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">0.00</span>,<span class="op">+</span><span class="fl">20.00</span>])</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,<span class="fl">1.00</span>]])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">1.00</span>])</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">3</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x).data.numpy(),<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C0'</span>)<span class="op">;</span> ax[<span class="dv">0</span>].set_title(<span class="st">'$l_1(x)$'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x,a1(l1(x)).data.numpy(),<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C0'</span>)<span class="op">;</span> ax[<span class="dv">1</span>].set_title(<span class="st">'$(a_1 \circ l_1)(x)$'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].plot(x,l2(a1(l1(x))).data,<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C0'</span>)<span class="op">;</span> ax[<span class="dv">2</span>].set_title(<span class="st">'$(l_2 \circ a_1 \circ \l_1)(x)$'</span>)<span class="op">;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].set_ylim(<span class="op">-</span><span class="fl">0.1</span>,<span class="fl">2.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="f803c9a7-8864-4ec0-bf91-3eb2be0c3539" class="cell" data-outputid="e2307b59-0b77-445c-cb76-45e10cab4489" data-tags="[]" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="op">+</span><span class="fl">20.00</span>,<span class="op">+</span><span class="fl">00.00</span>])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">2.50</span>,<span class="fl">2.50</span>]])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">2.50</span>])</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">3</span>,figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">3</span>))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(x,l1(x).data.numpy(),<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C1'</span>)<span class="op">;</span> ax[<span class="dv">0</span>].set_title(<span class="st">'$l_1(x)$'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(x,a1(l1(x)).data.numpy(),<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C1'</span>)<span class="op">;</span> ax[<span class="dv">1</span>].set_title(<span class="st">'$(a_1 \circ l_1)(x)$'</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].plot(x,l2(a1(l1(x))).data,<span class="st">'--'</span>,color<span class="op">=</span><span class="st">'C1'</span>)<span class="op">;</span> ax[<span class="dv">2</span>].set_title(<span class="st">'$(l_2 \circ a_1 \circ \l_1)(x)$'</span>)<span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">2</span>].set_ylim(<span class="op">-</span><span class="fl">0.1</span>,<span class="fl">2.6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 직관3: <code>은닉층의노드수=4</code>로 하고 적당한 가중치를 조정하면 <span class="math inline">\((l_2\circ a_1 \circ l_1)(x)\)</span>의 결과로 주황색선 + 파란색선도 가능할 것 같다. <span class="math inline">\(\to\)</span> 실제로 가능함</p>
+<div id="25f34074-53dc-49cb-a3c4-bb7fcd333702" class="cell" data-tags="[]" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">1</span>,out_features<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>a1 <span class="op">=</span> torch.nn.Sigmoid()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>l2 <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">4</span>,out_features<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f83016f5-ac32-4eed-989c-c09dcd332255" class="cell" data-tags="[]" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>l1.weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>],[<span class="op">-</span><span class="fl">5.00</span>],[<span class="fl">5.00</span>]])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>l1.bias.data <span class="op">=</span> torch.tensor([<span class="fl">0.00</span>, <span class="fl">20.00</span>, <span class="fl">20.00</span>, <span class="dv">0</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>l2.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">1.00</span>,  <span class="fl">1.00</span>, <span class="fl">2.50</span>,  <span class="fl">2.50</span>]])</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>l2.bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">1.0</span><span class="op">-</span><span class="fl">2.5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="98eba72a-1727-4bf9-9d17-0171f40260e6" class="cell" data-outputid="d2bdf106-045a-415d-9ea7-ba200f179b1b" data-tags="[]" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.plot(l2(a1(l1(x))).data,<span class="st">'--'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="vs">r"$(l_2 \circ a_1 \circ l_1)(x)$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>Text(0.5, 1.0, '$(l_2 \\circ a_1 \\circ l_1)(x)$')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture_files/figure-html/cell-19-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>이러한 함수는 계단모양이며, 0을 제외한 서로다른 계단의 높이는 2개가 된다. 이를 간단히 “2단계-계단함수”라고 칭하자.</p>
+</blockquote>
+<p><code>-</code> 정리1: 2개의 시그모이드를 우연히 잘 결합하면 아래와 같은 “1단계-계단함수” 함수 <span class="math inline">\(h\)</span>를 만들 수 있다.</p>
+<div id="3d35cc11-f214-484d-9a72-972af2298a96" class="cell" data-tags="[]" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> h(x):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.sigmoid(<span class="dv">200</span><span class="op">*</span>(x<span class="op">+</span><span class="fl">0.5</span>))<span class="op">+</span>torch.sigmoid(<span class="op">-</span><span class="dv">200</span><span class="op">*</span>(x<span class="op">-</span><span class="fl">0.5</span>))<span class="op">-</span><span class="fl">1.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1a2db7c7-9dfb-404b-bbb0-396a52c283d2" class="cell" data-outputid="22026c5e-c845-4611-db68-bd3c35bc57cc" data-tags="[]" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,h(x))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"$h(x)$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>Text(0.5, 1.0, '$h(x)$')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lecture_files/figure-html/cell-21-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 정리2: 위와 같은 함수 <span class="math inline">\(h\)</span>를 활성화함수로 하고 <span class="math inline">\(m\)</span>개의 노드를 가지는 은닉층을 생각해보자. 이러한 은닉층을 사용한다면 “m단계-계단함수”와 같은 형태의 네트워크는 아래와 같이 <span class="math inline">\(m\)</span>개의 은닉노드를 써서 항상 표현할 수 있다.</p>
+<p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,m)}{\boldsymbol u^{(1)}} \overset{h}{\to} \underset{(n,m)}{\boldsymbol v^{(1)}} \overset{l_2}{\to} \underset{(n,1)}{\hat{\boldsymbol y}}\]</span></p>
+<p>그리고 위의 네트워크와 동일한 효과를 주는 아래의 네트워크가 항상 존재함.</p>
+<p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,2m)}{\boldsymbol u^{(1)}} \overset{sig}{\to} \underset{(n,2m)}{\boldsymbol v^{(1)}} \overset{l_2}{\to} \underset{(n,1)}{\hat{\boldsymbol y}}\]</span></p>
+<p><code>-</code> 직관4: 그런데 어떠한 함수형태라도 구불구불한 “m단계-계단함수”로 다 근사할 수 있지 않나?</p>
+</section>
+<section id="c.-h의-위력" class="level2">
+<h2 class="anchored" data-anchor-id="c.-h의-위력">C. <span class="math inline">\(h\)</span>의 위력</h2>
+<p><code>-</code> <span class="math inline">\(h(x)\)</span>를 생성하는 클래스를 만들어보자.</p>
+<p><code>-</code> 아래와 같이 하나의 은닉층을 가지고 있더라도 많은 노드수만 보장되면 매우 충분한 표현력을 가짐</p>
+<p><span class="math display">\[\underset{(n,1)}{\bf X} \overset{l_1}{\to} \underset{(n,m)}{\boldsymbol u^{(1)}} \overset{h}{\to} \underset{(n,m)}{\boldsymbol v^{(1)}} \overset{l_2}{\to} \underset{(n,1)}{\hat{\boldsymbol y}}\]</span></p>
+<p><code>-</code> <span class="math inline">\(h\)</span>의 위력을 체감해보자.</p>
+<p><code># 예제1</code> – 스펙의 역설</p>
+<div id="744f95f1-39ba-4ab7-8e18-a453893cb5f1" class="cell" data-tags="[]" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/ironyofspec.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor(df.x).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> torch.tensor(df.prob).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>#</code></p>
+<p><code># 예제2</code> – 수능곡선</p>
+<div id="37c54295-c38c-45cc-8be3-e1bd4ccfc1ab" class="cell" data-tags="[]" data-execution_count="106">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> torch.randn(<span class="dv">2000</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.05</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>fx <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span><span class="op">*</span>x)<span class="op">*</span> torch.<span class="bu">abs</span>(torch.cos(<span class="dv">3</span><span class="op">*</span>x))<span class="op">*</span>(torch.sin(<span class="dv">3</span><span class="op">*</span>x))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> fx <span class="op">+</span> eps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>#</code></p>
+</section>
+<section id="d.-의문점" class="level2">
+<h2 class="anchored" data-anchor-id="d.-의문점">D. 의문점</h2>
+<p><code>-</code> 이 수업을 잘 이해한 사람: 그냥 활성화함수를 <span class="math inline">\(h\)</span>로 쓰면 끝 아니야? 뭐하러 relu 를 쓰는거지?</p>
+<p><code>-</code> 딥러닝을 좀 공부해본사람1: 왜 딥러닝이 2010년이 지나서야 떳지? 1989년에 세상의 모든 문제가 풀려야 하는것 아닌가?</p>
+<p><code>-</code> 딥러닝을 좀 공부해본사람2: 하나의 은닉층을 가진 네크워크는 잘 안쓰지 않나? 은닉층이 깊을수록 좋다고 들었는데?</p>
+<p><code>-</code> 약간의 의구심이 있지만 아무튼 우리는 아래의 무기를 가진 꼴이 되었다.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+우리의 무기
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>하나의 은닉층을 가지는 아래와 같은 꼴의 네트워크로,</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(p,???),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sigmoid(),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(???,q)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math inline">\(f: {\bf X}_{n \times p} \to {\bf y}_{n\times q}\)</span> 인 모든 보렐 가측 함수 <span class="math inline">\(f\)</span> 을 원하는 정확도로 “근사”시킬 수 있다.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="mnist-해결" class="level1">
+<h1>5. MNIST 해결</h1>
+<section id="a.-예비학습-plt.imshow" class="level2">
+<h2 class="anchored" data-anchor-id="a.-예비학습-plt.imshow">A. 예비학습 – `<code>plt.imshow()</code></h2>
+<p><code>-</code> <code>plt.imshow(...)</code> 에서 <code>...</code>이 shape이 (??,??)이면 흑백이미지를 출력</p>
+<p><code>-</code> <code>plt.imshow(...)</code> 에서 <code>...</code>의 shape이 (??,??,3)이면 칼라이미지를 출력</p>
+<p><code>-</code> <code>plt.imshow(...)</code> 에서 <code>...</code>의 자료형이 int인지 float인지에 따라서 인식이 다름</p>
+</section>
+<section id="b.-데이터" class="level2">
+<h2 class="anchored" data-anchor-id="b.-데이터">B. 데이터</h2>
+<p><code>-</code> 데이터 정리코드</p>
+<div id="53028be9-bc43-4a34-87fa-b1d9b4de2b16" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>X3 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">3</span>])</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>X7 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">7</span>])</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([X3,X7],axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>]<span class="op">*</span><span class="bu">len</span>(X3) <span class="op">+</span> [<span class="fl">1.0</span>]<span class="op">*</span><span class="bu">len</span>(X7))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> 우리는 <span class="math inline">\({\bf X}: (n,1,28,28)\)</span> 에서 <span class="math inline">\({\bf y}: (n,1)\)</span>으로 가는 맵핑을 배우고 싶음. <span class="math inline">\(\to\)</span> 이런건 배운적이 없는데?.. <span class="math inline">\(\to\)</span> 그렇다면 <span class="math inline">\({\bf X}:(n,784) \to {\bf y}:(n,1)\)</span> 으로 가는 맵핑을 학습하자.</p>
+</section>
+<section id="c.-학습" class="level2">
+<h2 class="anchored" data-anchor-id="c.-학습">C. 학습</h2>
+</section>
+<section id="d.-test" class="level2">
+<h2 class="anchored" data-anchor-id="d.-test">D. Test</h2>
 
 
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
