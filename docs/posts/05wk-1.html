@@ -795,7 +795,7 @@ Cybenko, George. 1989. <span>“Approximation by Superpositions of a Sigmoidal F
 </section>
 <section id="c.-드랍아웃-레이어의-위치" class="level2">
 <h2 class="anchored" data-anchor-id="c.-드랍아웃-레이어의-위치">C. 드랍아웃 레이어의 위치</h2>
-<p><code>-</code> ReLU,dropout의 특이한 성질: <span class="math inline">\((\text{dropout} \circ \text{relu})({\bf x})=(\text{relu} \circ \text{dropout})({\bf x})\)</span></p>
+<p><code>-</code> ReLU,dropout의 특이한 성질: <span class="math inline">\(\text{dropout}(\text{relu}({\bf x}))=\text{relu}(\text{dropout}({\bf x}))\)</span></p>
 <div id="fb03a289-1e98-4e13-8d6b-c842584fd71e" class="cell" data-execution_count="191">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> torch.randn(<span class="dv">10</span>,<span class="dv">2</span>)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> torch.nn.ReLU()</span>
