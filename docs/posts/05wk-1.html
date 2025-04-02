@@ -400,11 +400,11 @@ Note
 <div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>net(x) <span class="op">=</span> <span class="fl">4.0042</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">2.4459</span>  <span class="op">=</span> net[<span class="dv">0</span>].weight <span class="op">*</span> x <span class="op">+</span> net[<span class="dv">0</span>].bias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>이것은 아래의 수식과 같습니다.</p>
 <p><span class="math display">\[net(x) = \begin{bmatrix} 1 &amp; x \end{bmatrix} \begin{bmatrix} 2.4459 \\ 4.0042 \end{bmatrix}\]</span></p>
-<p>만약에 <span class="math inline">\({\bf x} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}\)</span>에 대하여 고려하면</p>
+<p>만약에 <span class="math inline">\({\bf x} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}\)</span>에 대하여 고려하면 아래와 같이 됩니다.</p>
 <p><span class="math display">\[net({\bf x})=net\left(\begin{bmatrix}x_1 \\ x_2 \end{bmatrix}\right) = \begin{bmatrix} 1 &amp; x_1 \\ 1 &amp; x_2 \end{bmatrix} \begin{bmatrix} 2.4459 \\ 4.0042 \end{bmatrix} = \begin{bmatrix} 2.4459 + 4.0042 x_1 \\ 2.4459 + 4.0042 x_2\end{bmatrix} \]</span></p>
 <p>따라서 <span class="math inline">\({\bf xx} = \begin{bmatrix} 0.1 \\ 0.2 \end{bmatrix}\)</span> 를 네트워크의 입력으로 넣으면</p>
-<p><span class="math display">\[net({\bf xx})= \begin{bmatrix} 2.4459 + 4.0042 \times 0.1 \\ 2.4459 + 4.0042 \times 0.2\end{bmatrix}\]</span></p>
-<p>를 한번에 볼 수 있겠죠</p>
+<p><span class="math display">\[net({\bf xx})= \begin{bmatrix} 2.4459 + 4.0042 \times 0.1 \\ 2.4459 + 4.0042 \times 0.2\end{bmatrix}= \begin{bmatrix} 2.8463 \\ 3.2467 \end{bmatrix}\]</span></p>
+<p>와 같이 계산되겠죠</p>
 </div>
 </div>
 </section>
