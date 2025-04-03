@@ -186,6 +186,8 @@ window.Quarto = {
   <li><a href="#회귀5obs" id="toc-회귀5obs" class="nav-link" data-scroll-target="#회귀5obs"><code>$</code>. 회귀(5obs)</a></li>
   <li><a href="#회귀2d" id="toc-회귀2d" class="nav-link" data-scroll-target="#회귀2d"><code>$</code>. 회귀(2d)</a></li>
   <li><a href="#회귀dl2022-mid-2" id="toc-회귀dl2022-mid-2" class="nav-link" data-scroll-target="#회귀dl2022-mid-2"><code>$</code>. 회귀(DL2022-MID-2)</a></li>
+  <li><a href="#회귀dl2022-mid-2-1" id="toc-회귀dl2022-mid-2-1" class="nav-link" data-scroll-target="#회귀dl2022-mid-2-1"><code>$</code>. 회귀(DL2022-MID-2)</a></li>
+  <li><a href="#과잉매개변수dl2022-ass-2" id="toc-과잉매개변수dl2022-ass-2" class="nav-link" data-scroll-target="#과잉매개변수dl2022-ass-2"><code>$</code>. 과잉매개변수(DL2022-ASS-2)</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise.out.ipynb" download="exercise.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -492,6 +494,9 @@ window.Quarto = {
 </section>
 <section id="회귀dl2022-mid-2" class="level2">
 <h2 class="anchored" data-anchor-id="회귀dl2022-mid-2"><code>$</code>. 회귀(DL2022-MID-2)</h2>
+<blockquote class="blockquote">
+<p>이 문제의 경우 풀이가 <a href="https://guebin.github.io/DL2022/posts/2022-10-28-9wk-1-midsol.html" class="uri">https://guebin.github.io/DL2022/posts/2022-10-28-9wk-1-midsol.html</a> 에 있습니다.</p>
+</blockquote>
 <p>주어진 자료가 아래와 같다고 하자.</p>
 <div id="b5294ab7-2fdc-4bc0-828b-68e2227a90cf" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">7676</span>)</span>
@@ -519,9 +524,62 @@ window.Quarto = {
 <ul>
 <li>hint: 미분값을 근거로 대답할 것</li>
 </ul>
+</section>
+<section id="회귀dl2022-mid-2-1" class="level2">
+<h2 class="anchored" data-anchor-id="회귀dl2022-mid-2-1"><code>$</code>. 회귀(DL2022-MID-2)</h2>
+</section>
+<section id="과잉매개변수dl2022-ass-2" class="level2">
+<h2 class="anchored" data-anchor-id="과잉매개변수dl2022-ass-2"><code>$</code>. 과잉매개변수(DL2022-ASS-2)</h2>
 <blockquote class="blockquote">
-<p>이 문제의 경우 풀이가 <a href="https://guebin.github.io/DL2022/posts/2022-10-28-9wk-1-midsol.html" class="uri">https://guebin.github.io/DL2022/posts/2022-10-28-9wk-1-midsol.html</a> 에 있습니다.</p>
+<p>이 내용은 overparameterized model에 대한 내용을 다루고 있습니다. 이 문제의 경우는 풀이가 <a href="https://guebin.github.io/DL2022/posts/II.%20DNN/2022-10-26-Assignment2.html" class="uri">https://guebin.github.io/DL2022/posts/II.%20DNN/2022-10-26-Assignment2.html</a> 에 제공되어있습니다.</p>
 </blockquote>
+<blockquote class="blockquote">
+<p>Overparameterized model은 03wk-1, 3-B 의 내용과도 관련 있습니다.</p>
+</blockquote>
+<p>아래와 같은 자료가 있다고 가정하자.</p>
+<div id="506b74fc-0854-4f66-8907-c710f0eb654c" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.rand([<span class="dv">1000</span>,<span class="dv">1</span>])<span class="op">*</span><span class="dv">2</span><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">3.14</span> <span class="op">+</span> <span class="fl">6.28</span><span class="op">*</span>x <span class="op">+</span> torch.randn([<span class="dv">1000</span>,<span class="dv">1</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e6f40848-f6c2-4b5f-a8a9-399f3ec60445" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exercise_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>(1)</code> 아래의 모형을 가정하고 <span class="math inline">\(\beta_0,\beta_1\)</span>을 파이토치를 이용하여 추정하라.</p>
+<ul>
+<li><span class="math inline">\(y_i = \beta_0  + \beta_1 x_i + \epsilon_i,\quad \epsilon_i \sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p><code>(2)</code> 아래의 모형을 가정하고 <span class="math inline">\(\beta_0\)</span>를 파이토치를 이용하여 추정하라.</p>
+<ul>
+<li><span class="math inline">\(y_i = \beta_0  + \epsilon_i,\quad \epsilon_i \sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p><code>(3)</code> 아래의 모형을 가정하고 <span class="math inline">\(\beta_1\)</span>을 파이토치를 이용하여 추정하라.</p>
+<ul>
+<li><span class="math inline">\(y_i = \beta_1x_i  + \epsilon_i \quad \epsilon_i \sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p><code>(4)</code> 아래의 모형을 가정하고 <span class="math inline">\(\alpha_0,\beta_0,\beta_1\)</span>을 파이토치를 이용하여 추정하라.</p>
+<ul>
+<li><span class="math inline">\(y_i = \alpha_0+\beta_0+ \beta_1x_i  + \epsilon_i \quad \epsilon_i \sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p><span class="math inline">\(\hat{\alpha}_0+\hat{\beta}_0\)</span>은 얼마인가? 이 값과 문제 (1)에서 추정된 <span class="math inline">\(\hat{\beta_0}\)</span>의 값과 비교하여 보라.</p>
+<p><code>(5)</code> 아래의 모형을 가정하고 <span class="math inline">\(\alpha_0,\alpha_1,\beta_0,\beta_1\)</span>을 파이토치를 이용하여 추정하라. – 이거 제가 힌트를 잘못줬어요.. 문제가 좀 어렵게나왔네요 ㅠㅠ</p>
+<ul>
+<li><span class="math inline">\(y_i = \alpha_0+\beta_0+ \beta_1x_i + \alpha_1x_i + \epsilon_i \quad \epsilon_i \sim N(0,\sigma^2)\)</span></li>
+</ul>
+<p><span class="math inline">\(\hat{\alpha}_0+\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\alpha}_1 + \hat{\beta}_1\)</span>의 값은 각각 얼마인가? 이 값들을 (1) 에서 추정된 <span class="math inline">\(\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\beta}_1\)</span> 값들과 비교하라.</p>
+<p><code>(6)</code> 다음은 위의 모형에 대하여 학생들이 discussion한 결과이다. 올바르게 해석한 학생을 모두 골라라.</p>
+<p><strong>민정</strong>: <span class="math inline">\((x_i,y_i)\)</span>의 산점도는 직선모양이고 직선의 절펴과 기울기 모두 유의미해 보이므로 <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i\)</span> 꼴을 적합하는게 좋겠다.</p>
+<p><strong>슬기</strong>: 나도 그렇게 생각해. 그래서 (2)-(3)과 같이 기울기를 제외하고 적합하거나 절편을 제외하고 적합하면 underfitting의 상황에 빠질 수 있어.</p>
+<p><strong>성재</strong>: (2)의 경우 사실상 <span class="math inline">\(\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_i\)</span>를 추정하는 것과 같아지게 되지.</p>
+<p><strong>세민</strong>: (4)의 경우 <span class="math inline">\({\bf X}=\begin{bmatrix} 1  &amp; x_1 \\ 1 &amp; x_2 \\ \dots &amp; \dots \\ 1 &amp; x_n \end{bmatrix}\)</span> 와 같이 설정하고 네트워크를 아래와 같이 설정할 경우 얻어지는 모형이야.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>구환</strong>: 모델 (4)-(5)는 표현력은 (1)과 동일하지만 추정할 파라메터는 (1)보다 많으므로 효율적인 모델이라고 볼 수 없어.</p>
 
 
 </section>
