@@ -183,7 +183,7 @@ window.Quarto = {
   <li><a href="#concat-stack" id="toc-concat-stack" class="nav-link" data-scroll-target="#concat-stack"><code>$</code>. concat, stack</a></li>
   <li><a href="#행렬곱" id="toc-행렬곱" class="nav-link" data-scroll-target="#행렬곱"><code>$</code>. 행렬곱</a></li>
   <li><a href="#인덱싱" id="toc-인덱싱" class="nav-link" data-scroll-target="#인덱싱"><code>$</code>. 인덱싱</a></li>
-  <li><a href="#회귀" id="toc-회귀" class="nav-link" data-scroll-target="#회귀"><code>$</code>. 회귀</a></li>
+  <li><a href="#회귀2d" id="toc-회귀2d" class="nav-link" data-scroll-target="#회귀2d"><code>$</code>. 회귀(2d)</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise.out.ipynb" download="exercise.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -374,17 +374,43 @@ window.Quarto = {
         [-1.0276, -0.5631, -0.8923, -0.0583]])
 </code></pre>
 </section>
-<section id="회귀" class="level2">
-<h2 class="anchored" data-anchor-id="회귀"><code>$</code>. 회귀</h2>
-<p>아래의 모델을 고려하자.</p>
-<p><span class="math display">\[y_i = w_0 + w_1 x_{i1} + w_2 x_{i2} + \epsilon_i = 2.5 + 4 x_{1i} -2 x_{2i} + \epsilon_i, \quad i = 1, 2, \ldots, n\]</span></p>
-<div id="a1c13885-07af-4ba3-a3aa-2a662eedaf06" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x1,_ <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort()<span class="op">;</span> x1 <span class="op">=</span> x1.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>x2,_ <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort()<span class="op">;</span> x2 <span class="op">=</span> x2.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>eps <span class="op">=</span> torch.randn((<span class="dv">100</span>,<span class="dv">1</span>))<span class="op">*</span><span class="fl">0.5</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x1 <span class="op">-</span><span class="dv">2</span><span class="op">*</span>x2 <span class="op">+</span> eps </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="회귀2d" class="level2">
+<h2 class="anchored" data-anchor-id="회귀2d"><code>$</code>. 회귀(2d)</h2>
+<p>아래의 데이터를 고려하자.</p>
+<div id="8582aa72" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/regression_2d.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.tensor(df.x1).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.tensor(df.x2).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><span class="math inline">\(x_1, x_2\)</span> 에서 <span class="math inline">\(y\)</span>로 향하는 규칙을 찾기 위해 아래와 같은 모형을 고려하였다. (<span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span> 대신에 <span class="math inline">\(w_0, w_1, w_2\)</span> 라고 생각해도 무방)</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i \quad i = 1, 2, \ldots, n\]</span></p>
+<p><code>1</code>. 아래의 제약사항에 맞추어서 <span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span>의 값을 추정하라.</p>
+<p><strong>제약사항</strong></p>
+<ol type="1">
+<li><code>yhat = X@Bhat</code> 을 만족하는 적당한 <code>X</code>, <code>Bhat</code>을 선언하여 문제를 풀 것. (즉 <code>torch.nn.Linear()</code> 를 사용하지 말 것)</li>
+<li>손실함수는 MSE로 설정하되 <code>torch.nn.MSELoss()</code>를 사용하지 말고 직접 손실을 구할 것</li>
+<li>(확률적)경사하강법을 이용하여 update 하되 직접 수식을 입력할 것. 즉 <code>torch.optim.SGD()</code>를 사용하지 말 것.</li>
+</ol>
+<p><strong>hint</strong>: 참값은 <span class="math inline">\(\beta_0=2.5, \beta_1=4 , \beta_2= -2\)</span> 임</p>
+<p><code>2</code>. <code>1</code>에서 구한 <code>X</code>에 대하여 아래의 수식을 이용하여 직접 추정값을 구하여라.</p>
+<p><span class="math display">\[\hat{\boldsymbol \beta}^{LSE} = \begin{bmatrix} \hat{\beta}_0^{LSE} \\  \hat{\beta}_1^{LSE} \\  \hat{\beta}_2^{LSE}\end{bmatrix} = ({\bf X}^\top {\bf X})^{-1}({\bf X})^\top {\bf y}\]</span></p>
+<p>1에서 추정한 값과 비교하라. 비슷한가?</p>
+<p><code>3</code>. 이 문제에서 모수의 참값은 <span class="math inline">\(\beta_0=2.5, \beta_1=4 , \beta_2= -2\)</span> 이다. <code>epoch</code>을 증가할수록 <code>1</code>에서 추정된 값은 참값에 근접해갈까? (<code>epoch</code>을 무한대로 하면 결국 참값에 수렴할까?)</p>
+<p><code>4</code>. 아래의 제약사항에 맞추어서 <span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span>의 값을 다시 추정하라.</p>
+<p><strong>제약사항</strong></p>
+<ol type="1">
+<li><code>yhat = net(X)</code> 을 만족하는 적당한 <code>X</code>, <code>net</code>을 선언하여 문제를 풀 것. 단 <code>torch.nn.Linear(??,??,bias=False)</code> 를 사용할 것.</li>
+<li><code>torch.nn.MSELoss()</code>를 이용하여 손실을 구할 것</li>
+<li><code>torch.optim.SGD()</code>를 이용하여 update할 것</li>
+</ol>
+<p><code>5</code>. 아래의 제약사항에 맞추어서 <span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span>의 값을 다시 추정하라.</p>
+<p><strong>제약사항</strong></p>
+<ol type="1">
+<li><code>yhat = net(X)</code> 을 만족하는 적당한 <code>X</code>, <code>net</code>을 선언하여 문제를 풀 것. 단 <code>torch.nn.Linear(??,??,bias=True)</code> 를 사용할 것.</li>
+<li><code>torch.nn.MSELoss()</code>를 이용하여 손실을 구할 것</li>
+<li><code>torch.optim.SGD()</code>를 이용하여 update할 것</li>
+</ol>
 <p><code>#</code>.</p>
 
 
