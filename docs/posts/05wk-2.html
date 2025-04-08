@@ -838,7 +838,7 @@ Rosenblatt, Frank et al. 1962. <em>Principles of Neurodynamics: Perceptrons and 
 </div>
 </div>
 <p><code>-</code> 데이터의 크기가 커지는 순간 <code>x.to("cuda:0")</code>, <code>y.to("cuda:0")</code> 쓰면 난리나겠는걸? <span class="math inline">\(\to\)</span> 이런식이면 GPU를 이용하여 아무런 분석도 못할것 같은데?? 뭔가 좀 이상한데??</p>
-<p><code>-</code> 아이디어: 데이터를 100개중에 1개만 꼴로만 쓰면 어떨까?</p>
+<p><code>-</code> 아이디어: 데이터를 100개중에 1개 꼴로만 쓰면 어떨까?</p>
 <div id="4697a19c-8d55-4b48-8ab3-32b1679205db" class="cell" data-execution_count="96">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x[::<span class="dv">100</span>],y[::<span class="dv">100</span>],<span class="st">'o'</span>,alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,<span class="dv">2</span><span class="op">*</span>x,<span class="st">'--'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

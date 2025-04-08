@@ -498,10 +498,10 @@ Rosenblatt, Frank et al. 1962. <em>Principles of Neurodynamics: Perceptrons and 
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>y_gpu <span class="op">=</span> y_cpu.to(<span class="st">"cuda:0"</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>net_gpu <span class="op">=</span> torch.nn.Linear(<span class="dv">1</span>,<span class="dv">1</span>).to(<span class="st">"cuda:0"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ddf7a4d9-b0b6-44b5-8cf3-f60d967df3bf" class="cell" data-execution_count="9">
+<div id="ddf7a4d9-b0b6-44b5-8cf3-f60d967df3bf" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nvidia<span class="op">-</span>smi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mon Apr  7 09:48:43 2025       
+<pre><code>Tue Apr  8 18:21:50 2025       
 +---------------------------------------------------------------------------------------+
 | NVIDIA-SMI 535.230.02             Driver Version: 535.230.02   CUDA Version: 12.2     |
 |-----------------------------------------+----------------------+----------------------+
@@ -510,7 +510,7 @@ Rosenblatt, Frank et al. 1962. <em>Principles of Neurodynamics: Perceptrons and 
 |                                         |                      |               MIG M. |
 |=========================================+======================+======================|
 |   0  NVIDIA GeForce RTX 3090        Off | 00000000:09:00.0 Off |                  N/A |
-|  0%   34C    P2              65W / 420W |    287MiB / 24576MiB |      0%      Default |
+|  0%   32C    P8              28W / 420W |     26MiB / 24576MiB |      0%      Default |
 |                                         |                      |                  N/A |
 +-----------------------------------------+----------------------+----------------------+
                                                                                          
@@ -521,7 +521,6 @@ Rosenblatt, Frank et al. 1962. <em>Principles of Neurodynamics: Perceptrons and 
 |=======================================================================================|
 |    0   N/A  N/A      1152      G   /usr/lib/xorg/Xorg                            9MiB |
 |    0   N/A  N/A      1471      G   /usr/bin/gnome-shell                          8MiB |
-|    0   N/A  N/A    140211      C   ...b3/anaconda3/envs/dl2025/bin/python      256MiB |
 +---------------------------------------------------------------------------------------+</code></pre>
 </div>
 </div>

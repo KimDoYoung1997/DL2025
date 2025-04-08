@@ -193,14 +193,14 @@
     "href": "posts/examguidelines.html",
     "title": "A2: Exam Guidelines",
     "section": "",
-    "text": "총 40분\n\n\n\n\n\n답안지 (.ipynb)\n시험 장면 영상 촬영본\n\n\n\n\n\n답안지와 영상촬영본 모두 LMS에 업로드\n\n\n\n\n\n\n\nZoom 실행 후 로그인하여 새 회의 시작\n카메라와 마이크를 켠 상태로 시험 환경 세팅\n하단의 녹화 버튼 클릭 (또는 단축키 Alt + R)\n시험 종료 후 회의 종료 → 영상이 자동 저장됨\n\n기본 저장 위치: 내 PC &gt; 문서 &gt; Zoom 폴더\n\n\n※ Zoom 무료 계정은 40분 제한이 있으므로 시간 초과 주의\n※ 본 시험은 40분이므로 한 번에 녹화 가능\n\n\n\n\nCommand + Shift + 5 키 입력\n화면 하단 도구에서 전체 화면 또는 원하는 영역 지정 후 녹화 시작\n시험 종료 후 메뉴 막대에서 정지 버튼 클릭\n영상은 기본적으로 바탕화면에 저장됨\n\n\n기타 OBS Studio 등 녹화 프로그램을 활용해도 무방함. 녹화본은 반드시 시험 시작부터 종료까지 전 과정을 포함해야 하며 LMS 업로드 마감 시간 내 제출할 것"
+    "text": "총 30분 (미정)\n\n\n\n\n\n답안지 (.ipynb)\n시험 장면 영상 촬영본\n\n\n\n\n\n답안지와 영상촬영본 모두 LMS에 업로드\n\n\n\n\n\n\n\nZoom 실행 후 로그인하여 새 회의 시작\n카메라와 마이크를 켠 상태로 시험 환경 세팅\n하단의 녹화 버튼 클릭 (또는 단축키 Alt + R)\n시험 종료 후 회의 종료 → 영상이 자동 저장됨\n\n기본 저장 위치: 내 PC &gt; 문서 &gt; Zoom 폴더\n\n\n※ Zoom 무료 계정은 40분 제한이 있으므로 시간 초과 주의\n※ 본 시험은 40분이므로 한 번에 녹화 가능\n\n\n\n\nCommand + Shift + 5 키 입력\n화면 하단 도구에서 전체 화면 또는 원하는 영역 지정 후 녹화 시작\n시험 종료 후 메뉴 막대에서 정지 버튼 클릭\n영상은 기본적으로 바탕화면에 저장됨\n\n\n기타 OBS Studio 등 녹화 프로그램을 활용해도 무방함. 녹화본은 반드시 시험 시작부터 종료까지 전 과정을 포함해야 하며 LMS 업로드 마감 시간 내 제출할 것"
   },
   {
     "objectID": "posts/examguidelines.html#시험-시간",
     "href": "posts/examguidelines.html#시험-시간",
     "title": "A2: Exam Guidelines",
     "section": "",
-    "text": "총 40분"
+    "text": "총 30분 (미정)"
   },
   {
     "objectID": "posts/examguidelines.html#제출물",
@@ -599,7 +599,7 @@
     "href": "posts/05wk-2.html#a.-의문-좀-이상하지-않아요",
     "title": "05wk-2: (신경망) – 신경망의 표현, GPU사용법, 확률적경사하강법",
     "section": "A. 의문: 좀 이상하지 않아요?",
-    "text": "A. 의문: 좀 이상하지 않아요?\n- 국민상식: GPU 비싸요.. https://bbs.ruliweb.com/community/board/300143/read/61066881\n\nGPU 메모리 많아봐야 24GB, 그래도 비싸요.. http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=index&marketPlaceSeq=16\nGPU 메모리가 80GB일 경우 가격: https://prod.danawa.com/info/?pcode=21458333\n\n- 우리가 분석하는 데이터\n\nx = torch.linspace(-10,10,100000).reshape(-1,1)\neps = torch.randn(100000).reshape(-1,1)\ny = x*2 + eps \n\n\nplt.plot(x,y,'.',alpha=0.05)\nplt.plot(x,2*x,'--')\n\n\n\n\n\n\n\n\n- 데이터의 크기가 커지는 순간 x.to(\"cuda:0\"), y.to(\"cuda:0\") 쓰면 난리나겠는걸? \\(\\to\\) 이런식이면 GPU를 이용하여 아무런 분석도 못할것 같은데?? 뭔가 좀 이상한데??\n- 아이디어: 데이터를 100개중에 1개만 꼴로만 쓰면 어떨까?\n\nplt.plot(x[::100],y[::100],'o',alpha=0.05)\nplt.plot(x,2*x,'--')\n\n\n\n\n\n\n\n\n\n대충 이거만 가지고 적합해도 충분히 정확할것 같은데?"
+    "text": "A. 의문: 좀 이상하지 않아요?\n- 국민상식: GPU 비싸요.. https://bbs.ruliweb.com/community/board/300143/read/61066881\n\nGPU 메모리 많아봐야 24GB, 그래도 비싸요.. http://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=index&marketPlaceSeq=16\nGPU 메모리가 80GB일 경우 가격: https://prod.danawa.com/info/?pcode=21458333\n\n- 우리가 분석하는 데이터\n\nx = torch.linspace(-10,10,100000).reshape(-1,1)\neps = torch.randn(100000).reshape(-1,1)\ny = x*2 + eps \n\n\nplt.plot(x,y,'.',alpha=0.05)\nplt.plot(x,2*x,'--')\n\n\n\n\n\n\n\n\n- 데이터의 크기가 커지는 순간 x.to(\"cuda:0\"), y.to(\"cuda:0\") 쓰면 난리나겠는걸? \\(\\to\\) 이런식이면 GPU를 이용하여 아무런 분석도 못할것 같은데?? 뭔가 좀 이상한데??\n- 아이디어: 데이터를 100개중에 1개 꼴로만 쓰면 어떨까?\n\nplt.plot(x[::100],y[::100],'o',alpha=0.05)\nplt.plot(x,2*x,'--')\n\n\n\n\n\n\n\n\n\n대충 이거만 가지고 적합해도 충분히 정확할것 같은데?"
   },
   {
     "objectID": "posts/05wk-2.html#b.-xy-데이터를-굳이-모두-gpu에-넘겨야-하는가",
