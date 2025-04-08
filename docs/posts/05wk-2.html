@@ -268,10 +268,9 @@ window.Quarto = {
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="dbaaf438-42eb-4c98-937a-29515f995c72" class="cell" data-tags="[]" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="2">
+<div id="dbaaf438-42eb-4c98-937a-29515f995c72" class="cell" data-tags="[]" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="127">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cb941cba-205e-4164-ba49-baa6fcc47e32" class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">4.5</span>, <span class="fl">3.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1088,7 +1087,7 @@ x_mini_batch:[[3.0]]     y_mini_batch:[[1.0]]</code></pre>
 <ul>
 <li>따라서 (mini) batchsize 가 2048 이라면 한 epoch당 7회 update</li>
 </ul>
-<div id="3f2062f6-1f39-4395-82c1-a7f9c6a2dd7e" class="cell" data-execution_count="124">
+<div id="3f2062f6-1f39-4395-82c1-a7f9c6a2dd7e" class="cell" data-execution_count="128">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">1</span>)</span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">784</span>,<span class="dv">32</span>),</span>
@@ -1099,22 +1098,22 @@ x_mini_batch:[[3.0]]     y_mini_batch:[[1.0]]</code></pre>
 <span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.BCELoss()</span>
 <span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.SGD(net.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9a336846-2443-4277-9edf-19060617fb33" class="cell" data-execution_count="125">
+<div id="9a336846-2443-4277-9edf-19060617fb33" class="cell" data-execution_count="129">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>): </span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> x_mbatch,y_mbatch <span class="kw">in</span> dl:        </span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xm,ym <span class="kw">in</span> dl:        </span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># step1 </span></span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>        y_mbatch_hat <span class="op">=</span> net(x_mbatch)</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>        ym_hat <span class="op">=</span> net(xm)</span>
 <span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># step2 </span></span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> loss_fn(y_mbatch_hat,y_mbatch)</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> loss_fn(ym_hat,ym)</span>
 <span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># step3     </span></span>
 <span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
 <span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># step4 </span></span>
 <span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>        optimizr.step()</span>
 <span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>        optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6d53c7e2-96ca-4e66-9fcd-abb9d5e06a37" class="cell" data-execution_count="126">
+<div id="6d53c7e2-96ca-4e66-9fcd-abb9d5e06a37" class="cell" data-execution_count="130">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>((net(X) <span class="op">&gt;</span> <span class="fl">0.5</span>) <span class="op">==</span>  y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="126">
+<div class="cell-output cell-output-display" data-execution_count="130">
 <pre><code>tensor(0.9931)</code></pre>
 </div>
 </div>
