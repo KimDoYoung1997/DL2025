@@ -692,28 +692,28 @@ epoch = 10   acc = 0.9577</code></pre>
 </ul>
 <p><code>-</code> 왜?</p>
 <ul>
-<li>설명1: 강아지그림, 고양이그림, 토끼그림은 서열측도가 아니라 명목척도임. 그래서 0,1,2 로 코딩하면 평균등의 의미가 없음 (사회조사분석사 2급 스타일)</li>
+<li>설명1: 강아지그림, 고양이그림, 토끼그림은 서열측도가 아니라 명목척도임. 그래서 범주를 0,1,2 로 숫자화하면 평균등의 의미가 없음 (사회조사분석사 2급 스타일)</li>
 <li>설명2: 범주형은 원핫인코딩으로 해야함 (“30일만에 끝내는 실전머신러닝” 이런 책에 나오는 스타일)</li>
-<li>설명3: 동전을 한번 던져서 나오는 결과는 <span class="math inline">\(n=1\)</span>인 이항분포를 따름. 주사위 한번 던져서 나오는 눈금의 숫자는 <span class="math inline">\(n=1\)</span>인 다항분포를 따름. <span class="math inline">\(n=1\)</span>인 이항분포의 실현값은 0,1 이고, <span class="math inline">\(n=1\)</span>인 다항분포의 실현값은 [1,0,0], [0,1,0], [0,0,1] 이므로 당연히 <span class="math inline">\(y_i\)</span> 는 [1,0,0], [0,1,0], [0,0,1] 중 하나의 형태를 가진다고 가정하는게 바람직함</li>
+<li>설명3: 동전을 한번 던져서 나오는 결과는 <span class="math inline">\(n=1\)</span>인 이항분포를 따름. 주사위 한번 던져서 나오는 눈금의 숫자는 <span class="math inline">\(n=1\)</span>인 다항분포를 따름. <span class="math inline">\(n=1\)</span>인 이항분포의 실현값은 0,1 이고, <span class="math inline">\(n=1\)</span>인 다항분포의 실현값은 [1,0,0], [0,1,0], [0,0,1] 이므로 당연히 <span class="math inline">\(y_i\)</span> 는 [1,0,0], [0,1,0], [0,0,1] 중 하나의 형태를 가진다고 가정하는게 바람직함 (이 설명이 이 중에서 가장 정확한 설명임)</li>
 </ul>
 </section>
 <section id="c.-실습-3개의-클래스를-구분" class="level2">
 <h2 class="anchored" data-anchor-id="c.-실습-3개의-클래스를-구분">C. 실습: 3개의 클래스를 구분¶</h2>
 <p><code>-</code> 데이터준비</p>
-<div id="7b1ff810-df3a-4464-b478-970198a01264" class="cell" data-execution_count="119">
+<div id="7b1ff810-df3a-4464-b478-970198a01264" class="cell" data-execution_count="125">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>X0 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">0</span>])</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">1</span>])</span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">2</span>])</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([X0,X1,X2]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span><span class="op">*</span><span class="dv">28</span><span class="op">*</span><span class="dv">28</span>)<span class="op">/</span><span class="dv">255</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([X0,X1,X2]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span><span class="op">*</span><span class="dv">28</span><span class="op">*</span><span class="dv">28</span>)</span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([<span class="dv">0</span>]<span class="op">*</span><span class="bu">len</span>(X0) <span class="op">+</span> [<span class="dv">1</span>]<span class="op">*</span><span class="bu">len</span>(X1)<span class="op">+</span> [<span class="dv">2</span>]<span class="op">*</span><span class="bu">len</span>(X2)).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5d61b01a-b418-43d9-918a-83325ff5a38b" class="cell" data-execution_count="120">
+<div id="5d61b01a-b418-43d9-918a-83325ff5a38b" class="cell" data-execution_count="126">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.nn.functional.one_hot(y.flatten().<span class="bu">long</span>()).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> 적합</p>
-<div id="37cbd11f-fd22-4a5d-97a8-ce1fac9cb536" class="cell" data-execution_count="121">
+<div id="37cbd11f-fd22-4a5d-97a8-ce1fac9cb536" class="cell" data-execution_count="127">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">784</span>,<span class="dv">32</span>),</span>
@@ -723,7 +723,7 @@ epoch = 10   acc = 0.9577</code></pre>
 <span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss() <span class="co"># 이름이 좀 그래.. 나같으면 CEWithLogitsLoss 라고 했을듯 </span></span>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
 <span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">## step1 </span></span>
 <span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
 <span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">## step2 </span></span>
@@ -734,10 +734,10 @@ epoch = 10   acc = 0.9577</code></pre>
 <span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="0688157a-0a59-4829-8826-92c67081da45" class="cell" data-execution_count="122">
+<div id="0688157a-0a59-4829-8826-92c67081da45" class="cell" data-execution_count="128">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>)  <span class="op">==</span> y.argmax(axis<span class="op">=</span><span class="dv">1</span>)).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="122">
-<pre><code>tensor(0.9396)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="128">
+<pre><code>tensor(0.9827)</code></pre>
 </div>
 </div>
 </section>
