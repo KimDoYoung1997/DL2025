@@ -234,7 +234,7 @@ window.Quarto = {
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="903d2bef-18cf-436f-aba0-bbf57ea3bbcb" class="cell" data-execution_count="1">
+<div id="903d2bef-18cf-436f-aba0-bbf57ea3bbcb" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -282,9 +282,9 @@ window.Quarto = {
 <section id="a.-torch" class="level2">
 <h2 class="anchored" data-anchor-id="a.-torch">A. torch</h2>
 <p><code>-</code> 벡터</p>
-<div id="f49a819d-6474-490d-bf3b-b14b2189caaa" class="cell" data-execution_count="2">
+<div id="f49a819d-6474-490d-bf3b-b14b2189caaa" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>tensor([1, 2, 3])</code></pre>
 </div>
 </div>
@@ -306,79 +306,79 @@ window.Quarto = {
 <section id="b.-벡터와-매트릭스" class="level2">
 <h2 class="anchored" data-anchor-id="b.-벡터와-매트릭스">B. 벡터와 매트릭스</h2>
 <p><code>-</code> <span class="math inline">\(3 \times 2\)</span> matrix</p>
-<div id="385f1c2f-95fd-4612-9da6-c1173e0369ff" class="cell" data-execution_count="9">
+<div id="385f1c2f-95fd-4612-9da6-c1173e0369ff" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>tensor([[1, 2],
         [3, 4],
         [5, 6]])</code></pre>
 </div>
 </div>
 <p><code>-</code> <span class="math inline">\(3 \times 1\)</span> matrix = <span class="math inline">\(3 \times 1\)</span> column vector</p>
-<div id="650c60bb-9a48-4878-82bf-7a48db23be8f" class="cell" data-execution_count="13">
+<div id="650c60bb-9a48-4878-82bf-7a48db23be8f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>],[<span class="dv">3</span>],[<span class="dv">5</span>]]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>tensor([[1],
         [3],
         [5]])</code></pre>
 </div>
 </div>
 <p><code>-</code> <span class="math inline">\(1 \times 2\)</span> matrix = <span class="math inline">\(1 \times 2\)</span> row vector</p>
-<div id="950ceb01-dc8c-48f9-a72a-6ad56b2b71fe" class="cell" data-execution_count="14">
+<div id="950ceb01-dc8c-48f9-a72a-6ad56b2b71fe" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>]]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>tensor([[1, 2]])</code></pre>
 </div>
 </div>
 <p><code>-</code> 더하기</p>
 <p><strong><em>브로드캐스팅(편한거)</em></strong></p>
-<div id="ca7e7d66-a904-4101-8c72-7393126df3d0" class="cell" data-execution_count="15">
+<div id="ca7e7d66-a904-4101-8c72-7393126df3d0" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">-</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>tensor([[0, 1],
         [2, 3],
         [4, 5]])</code></pre>
 </div>
 </div>
-<div id="fed0bb9a-f882-416b-84a6-a5673395c211" class="cell" data-execution_count="17">
+<div id="fed0bb9a-f882-416b-84a6-a5673395c211" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([[<span class="op">-</span><span class="dv">1</span>],[<span class="op">-</span><span class="dv">3</span>],[<span class="op">-</span><span class="dv">5</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>tensor([[0, 1],
         [0, 1],
         [0, 1]])</code></pre>
 </div>
 </div>
-<div id="b5c41b92-5ca3-496f-b2ec-884b09a64e8a" class="cell" data-execution_count="19">
+<div id="b5c41b92-5ca3-496f-b2ec-884b09a64e8a" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([[<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>tensor([[0, 0],
         [2, 2],
         [4, 4]])</code></pre>
 </div>
 </div>
 <p><strong><em>잘못된 브로드캐스팅</em></strong></p>
-<div id="adcbf7c2-98bf-49af-8b04-fa2bb59bc70e" class="cell" data-execution_count="21">
+<div id="adcbf7c2-98bf-49af-8b04-fa2bb59bc70e" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([[<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">3</span>,<span class="op">-</span><span class="dv">5</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1</code></pre>
 </div>
 </div>
-<div id="28292256-c002-4f5b-af98-faab9411eac2" class="cell" data-execution_count="22">
+<div id="28292256-c002-4f5b-af98-faab9411eac2" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([[<span class="op">-</span><span class="dv">1</span>],[<span class="op">-</span><span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: The size of tensor a (3) must match the size of tensor b (2) at non-singleton dimension 0</code></pre>
 </div>
 </div>
 <p><strong><em>이상한 것</em></strong></p>
-<div id="3bc6db41-4b59-427f-b51c-32533fa16694" class="cell" data-execution_count="25">
+<div id="3bc6db41-4b59-427f-b51c-32533fa16694" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>tensor([[0, 0],
         [2, 2],
         [4, 4]])</code></pre>
 </div>
 </div>
-<div id="7a85150a-c777-4d62-a833-20605a5040cf" class="cell" data-execution_count="26">
+<div id="7a85150a-c777-4d62-a833-20605a5040cf" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">+</span> torch.tensor([<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">3</span>,<span class="op">-</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1</code></pre>
@@ -386,43 +386,43 @@ window.Quarto = {
 </div>
 <p><code>-</code> 행렬곱</p>
 <p><strong><em>정상적인 행렬곱</em></strong></p>
-<div id="70b0e64a-e10c-4be8-8025-4fc64e75c7b6" class="cell" data-execution_count="27">
+<div id="70b0e64a-e10c-4be8-8025-4fc64e75c7b6" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">@</span> torch.tensor([[<span class="dv">1</span>],[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>tensor([[ 5],
         [11],
         [17]])</code></pre>
 </div>
 </div>
-<div id="be672e2d-6ff7-410b-9534-5df651ce0f48" class="cell" data-execution_count="28">
+<div id="be672e2d-6ff7-410b-9534-5df651ce0f48" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]]) <span class="op">@</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>tensor([[22, 28]])</code></pre>
 </div>
 </div>
 <p><strong><em>잘못된 행렬곱</em></strong></p>
-<div id="70fd75c5-30a4-4d41-b52c-6bc97f6e87b7" class="cell" data-execution_count="29">
+<div id="70fd75c5-30a4-4d41-b52c-6bc97f6e87b7" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">@</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: mat1 and mat2 shapes cannot be multiplied (3x2 and 1x2)</code></pre>
 </div>
 </div>
-<div id="97769005-262c-439e-a0af-9b8c17febab0" class="cell" data-execution_count="30">
+<div id="97769005-262c-439e-a0af-9b8c17febab0" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>],[<span class="dv">2</span>],[<span class="dv">3</span>]]) <span class="op">@</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: mat1 and mat2 shapes cannot be multiplied (3x1 and 3x2)</code></pre>
 </div>
 </div>
 <p><strong><em>이상한 것</em></strong></p>
-<div id="2ecd144a-076b-44ae-8c99-faf1050f590f" class="cell" data-execution_count="31">
+<div id="2ecd144a-076b-44ae-8c99-faf1050f590f" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="op">@</span> torch.tensor([<span class="dv">1</span>,<span class="dv">2</span>]) <span class="co"># 이게 왜 가능..</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>tensor([ 5, 11, 17])</code></pre>
 </div>
 </div>
-<div id="4bfa92c5-5979-4b38-9db4-62053d7fd219" class="cell" data-execution_count="35">
+<div id="4bfa92c5-5979-4b38-9db4-62053d7fd219" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>torch.tensor([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]) <span class="op">@</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>],[<span class="dv">3</span>,<span class="dv">4</span>],[<span class="dv">5</span>,<span class="dv">6</span>]]) <span class="co"># 이건 왜 가능?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>tensor([22, 28])</code></pre>
 </div>
 </div>
