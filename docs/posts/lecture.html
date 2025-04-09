@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-01-01">
 
-<title>DL2025 - 05wk-2: xxxx</title>
+<title>DL2025 - 06wk-1: 데이터분석 코딩패턴, 다중클래스 분류</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -183,7 +183,7 @@ window.Quarto = {
   <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
   <li><a href="#데이터분석-코딩패턴" id="toc-데이터분석-코딩패턴" class="nav-link" data-scroll-target="#데이터분석-코딩패턴">3. 데이터분석 코딩패턴</a>
   <ul class="collapse">
-  <li><a href="#a.-일반적인-trainvaltest-셋팅" id="toc-a.-일반적인-trainvaltest-셋팅" class="nav-link" data-scroll-target="#a.-일반적인-trainvaltest-셋팅">A. 일반적인 train/val/test 셋팅</a></li>
+  <li><a href="#a.-일반적인-traintest-셋팅" id="toc-a.-일반적인-traintest-셋팅" class="nav-link" data-scroll-target="#a.-일반적인-traintest-셋팅">A. 일반적인 train/test 셋팅</a></li>
   <li><a href="#b.-dropout-사용" id="toc-b.-dropout-사용" class="nav-link" data-scroll-target="#b.-dropout-사용">B. Dropout 사용</a></li>
   <li><a href="#c.-gpu도-사용" id="toc-c.-gpu도-사용" class="nav-link" data-scroll-target="#c.-gpu도-사용">C. GPU도 사용</a></li>
   <li><a href="#d.-미니배치도-사용" id="toc-d.-미니배치도-사용" class="nav-link" data-scroll-target="#d.-미니배치도-사용">D. 미니배치도 사용</a></li>
@@ -203,7 +203,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">05wk-2: xxxx</h1>
+<h1 class="title">06wk-1: 데이터분석 코딩패턴, 다중클래스 분류</h1>
 </div>
 
 
@@ -242,21 +242,21 @@ window.Quarto = {
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="814a5113-d7ff-48ab-a03a-12ff78f1b3e0" class="cell" data-tags="[]" data-execution_count="7">
+<div id="814a5113-d7ff-48ab-a03a-12ff78f1b3e0" class="cell" data-tags="[]" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="09a2b523-80f3-428b-824b-d055e2d4c2f1" class="cell" data-execution_count="8">
+<div id="2a6cb3ff-0065-445f-9bad-11dd69edf5ec" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">4.5</span>, <span class="fl">3.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="데이터분석-코딩패턴" class="level1">
 <h1>3. 데이터분석 코딩패턴</h1>
-<section id="a.-일반적인-trainvaltest-셋팅" class="level2">
-<h2 class="anchored" data-anchor-id="a.-일반적인-trainvaltest-셋팅">A. 일반적인 train/val/test 셋팅</h2>
+<section id="a.-일반적인-traintest-셋팅" class="level2">
+<h2 class="anchored" data-anchor-id="a.-일반적인-traintest-셋팅">A. 일반적인 train/test 셋팅</h2>
 <p><code>-</code> Step1: 데이터정리</p>
-<div id="7878088e-2b7d-4ff2-96cc-f50d3c6ab503" class="cell" data-execution_count="3">
+<div id="7878088e-2b7d-4ff2-96cc-f50d3c6ab503" class="cell" data-execution_count="103">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
@@ -278,7 +278,7 @@ window.Quarto = {
 <section id="b.-dropout-사용" class="level2">
 <h2 class="anchored" data-anchor-id="b.-dropout-사용">B. Dropout 사용</h2>
 <p><code>-</code> Step1: 데이터정리</p>
-<div id="db342632-af74-4411-b3ca-317fe89d71b7" class="cell" data-execution_count="8">
+<div id="db342632-af74-4411-b3ca-317fe89d71b7" class="cell" data-execution_count="92">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> Step2: 학습가능한 오브젝트들의 설정 (모델링과정 포함)</p>
@@ -290,7 +290,7 @@ window.Quarto = {
 <section id="c.-gpu도-사용" class="level2">
 <h2 class="anchored" data-anchor-id="c.-gpu도-사용">C. GPU도 사용</h2>
 <p><code>-</code> Step1: 데이터정리</p>
-<div id="2aa6016c-05c2-4456-9d3e-f604fc8bbc0c" class="cell" data-execution_count="13">
+<div id="2aa6016c-05c2-4456-9d3e-f604fc8bbc0c" class="cell" data-execution_count="122">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> Step2: 학습가능한 오브젝트들의 설정 (모델링과정 포함)</p>
@@ -323,6 +323,7 @@ window.Quarto = {
 <ul>
 <li>실패 / 성공 <span class="math inline">\(\to\)</span> 0 / 1</li>
 <li>숫자0그림 / 숫자1그림 <span class="math inline">\(\to\)</span> 0 / 1</li>
+<li>남자 / 여자 <span class="math inline">\(\to\)</span> 0 / 1</li>
 <li>강아지그림 / 고양이그림 <span class="math inline">\(\to\)</span> 0 / 1</li>
 <li>강아지그림 / 고양이그림 / 토끼그림 <span class="math inline">\(\to\)</span> 0 / 1 / 2 ?????</li>
 </ul>
@@ -333,15 +334,15 @@ window.Quarto = {
 </ul>
 <p><code>-</code> 왜?</p>
 <ul>
-<li>설명1: 강아지그림, 고양이그림, 토끼그림은 서열측도가 아니라 명목척도임. 그래서 범주를 0,1,2 로 숫자화하면 평균등의 의미가 없음 (사회조사분석사 2급 스타일)</li>
-<li>설명2: 범주형은 원핫인코딩으로 해야함 (“30일만에 끝내는 실전머신러닝” 이런 책에 나오는 스타일)</li>
+<li>설명1: 강아지그림, 고양이그림, 토끼그림은 서열측도가 아니라 명목척도임. 그래서 범주를 0,1,2 로 숫자화하면 평균과 같은 통계량들이 의미가 없음 (사회조사분석사 2급 스타일의 설명)</li>
+<li>설명2: 범주형은 원핫인코딩으로 해야함 (“30일만에 끝내는 실전머신러닝” 이런 책에 나오는 스타일의 설명)</li>
 <li>설명3: 동전을 한번 던져서 나오는 결과는 <span class="math inline">\(n=1\)</span>인 이항분포를 따름. 주사위 한번 던져서 나오는 눈금의 숫자는 <span class="math inline">\(n=1\)</span>인 다항분포를 따름. <span class="math inline">\(n=1\)</span>인 이항분포의 실현값은 0,1 이고, <span class="math inline">\(n=1\)</span>인 다항분포의 실현값은 [1,0,0], [0,1,0], [0,0,1] 이므로 당연히 <span class="math inline">\(y_i\)</span> 는 [1,0,0], [0,1,0], [0,0,1] 중 하나의 형태를 가진다고 가정하는게 바람직함 (이 설명이 이 중에서 가장 정확한 설명임)</li>
 </ul>
 </section>
 <section id="c.-실습-3개의-클래스를-구분" class="level2">
 <h2 class="anchored" data-anchor-id="c.-실습-3개의-클래스를-구분">C. 실습: 3개의 클래스를 구분¶</h2>
 <p><code>-</code> 데이터준비</p>
-<div id="775ff9dd-cdeb-4907-aa28-e564496b9dca" class="cell" data-execution_count="125">
+<div id="775ff9dd-cdeb-4907-aa28-e564496b9dca" class="cell" data-execution_count="254">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X0 <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">0</span>])</span>
