@@ -199,7 +199,7 @@ window.Quarto = {
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="06wk-1.out.ipynb" download="06wk-1.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -573,7 +573,7 @@ window.Quarto = {
 </blockquote>
 </section>
 </section>
-<section id="다항분류" class="level1">
+<section id="다항분류" class="level1 page-columns page-full">
 <h1>4. 다항분류</h1>
 <section id="a.-이항분류와-bcewithlogitsloss" class="level2">
 <h2 class="anchored" data-anchor-id="a.-이항분류와-bcewithlogitsloss">A. 이항분류와 <code>BCEWithLogitsLoss</code></h2>
@@ -741,7 +741,7 @@ epoch = 10   acc = 0.9577</code></pre>
 </div>
 </div>
 </section>
-<section id="d.-결론-외우세여" class="level2">
+<section id="d.-결론-외우세여" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="d.-결론-외우세여">D. 결론 – 외우세여</h2>
 <p><code>-</code> 파이토치버전 // 코딩용</p>
 <table class="table">
@@ -780,6 +780,12 @@ epoch = 10   acc = 0.9577</code></pre>
 </blockquote>
 <p><code>-</code> 일반적개념 // 이론용</p>
 <table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: center;">분류</th>
@@ -792,21 +798,22 @@ epoch = 10   acc = 0.9577</code></pre>
 <tr class="odd">
 <td style="text-align: center;">이항분류</td>
 <td style="text-align: center;">이항분포</td>
-<td style="text-align: center;">sigmoid</td>
+<td style="text-align: center;">sigmoid<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
 <td style="text-align: center;">Binary Cross Entropy</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">다항분류</td>
 <td style="text-align: center;">다항분포</td>
-<td style="text-align: center;">softmax</td>
+<td style="text-align: center;">softmax^[probs=soft(logits)</td>
 <td style="text-align: center;">Cross Entropy</td>
 </tr>
 </tbody>
 </table>
 
 
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;prob=sig(logit)</p></li></div></section>
 </section>
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

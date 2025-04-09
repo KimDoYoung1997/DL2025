@@ -277,7 +277,7 @@
     "href": "posts/06wk-1.html#d.-결론-외우세여",
     "title": "06wk-1: (신경망) – 데이터분석 코딩패턴, 다중클래스 분류",
     "section": "D. 결론 – 외우세여",
-    "text": "D. 결론 – 외우세여\n- 파이토치버전 // 코딩용\n\n\n\n분류\nnetout의 의미\n손실함수\n\n\n\n\n이항분류\nprob\nBCELoss\n\n\n이항분류\nlogits\nBCEWithLogitsLoss\n\n\n다항분류\nprob\nNA\n\n\n다항분류\nlogits\nCrossEntropyLoss\n\n\n\n\nCrossEntropyLoss 이거 이름이 완전 마음에 안들어요.. CEWithLogitsLoss 라고 하는게 더 좋을 것 같습니다.\n\n- 일반적개념 // 이론용\n\n\n\n분류\n오차항의가정\n마지막활성화함수\n손실함수\n\n\n\n\n이항분류\n이항분포\nsigmoid\nBinary Cross Entropy\n\n\n다항분류\n다항분포\nsoftmax\nCross Entropy"
+    "text": "D. 결론 – 외우세여\n- 파이토치버전 // 코딩용\n\n\n\n분류\nnetout의 의미\n손실함수\n\n\n\n\n이항분류\nprob\nBCELoss\n\n\n이항분류\nlogits\nBCEWithLogitsLoss\n\n\n다항분류\nprob\nNA\n\n\n다항분류\nlogits\nCrossEntropyLoss\n\n\n\n\nCrossEntropyLoss 이거 이름이 완전 마음에 안들어요.. CEWithLogitsLoss 라고 하는게 더 좋을 것 같습니다.\n\n- 일반적개념 // 이론용\n\n\n\n\n\n\n\n\n\n분류\n오차항의가정\n마지막활성화함수\n손실함수\n\n\n\n\n이항분류\n이항분포\nsigmoid1\nBinary Cross Entropy\n\n\n다항분류\n다항분포\nsoftmax^[probs=soft(logits)\nCross Entropy\n\n\n\n\n\n1 prob=sig(logit)"
   },
   {
     "objectID": "posts/04wk-1.html",
