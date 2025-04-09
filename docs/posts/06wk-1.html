@@ -183,7 +183,7 @@ window.Quarto = {
   <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
   <li><a href="#데이터분석-코딩패턴" id="toc-데이터분석-코딩패턴" class="nav-link" data-scroll-target="#데이터분석-코딩패턴">3. 데이터분석 코딩패턴</a>
   <ul class="collapse">
-  <li><a href="#a.-trainvaltest" id="toc-a.-trainvaltest" class="nav-link" data-scroll-target="#a.-trainvaltest">A. train/val/test</a></li>
+  <li><a href="#a.-일반적인-trainvaltest-셋팅" id="toc-a.-일반적인-trainvaltest-셋팅" class="nav-link" data-scroll-target="#a.-일반적인-trainvaltest-셋팅">A. 일반적인 train/val/test 셋팅</a></li>
   <li><a href="#b.-dropout-사용" id="toc-b.-dropout-사용" class="nav-link" data-scroll-target="#b.-dropout-사용">B. Dropout 사용</a></li>
   <li><a href="#c.-gpu도-사용" id="toc-c.-gpu도-사용" class="nav-link" data-scroll-target="#c.-gpu도-사용">C. GPU도 사용</a></li>
   <li><a href="#d.-미니배치도-사용" id="toc-d.-미니배치도-사용" class="nav-link" data-scroll-target="#d.-미니배치도-사용">D. 미니배치도 사용</a></li>
@@ -253,8 +253,8 @@ window.Quarto = {
 </section>
 <section id="데이터분석-코딩패턴" class="level1">
 <h1>3. 데이터분석 코딩패턴</h1>
-<section id="a.-trainvaltest" class="level2">
-<h2 class="anchored" data-anchor-id="a.-trainvaltest">A. train/val/test</h2>
+<section id="a.-일반적인-trainvaltest-셋팅" class="level2">
+<h2 class="anchored" data-anchor-id="a.-일반적인-trainvaltest-셋팅">A. 일반적인 train/val/test 셋팅</h2>
 <p><code>-</code> Step1: 데이터정리</p>
 <div id="b189fe60-06eb-4183-bf3b-902041a39388" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
@@ -804,14 +804,14 @@ epoch = 10   acc = 0.9577</code></pre>
 <tr class="even">
 <td style="text-align: center;">다항분류</td>
 <td style="text-align: center;">다항분포</td>
-<td style="text-align: center;">softmax^[probs=soft(logits)</td>
+<td style="text-align: center;">softmax<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></td>
 <td style="text-align: center;">Cross Entropy</td>
 </tr>
 </tbody>
 </table>
 
 
-<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;prob=sig(logit)</p></li></div></section>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;prob=sig(logit)</p></li><li id="fn2"><p><sup>2</sup>&nbsp;probs=soft(logits)</p></li></div></section>
 </section>
 
 
