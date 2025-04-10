@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -116,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#시험-녹화-및-제출-안내" id="toc-시험-녹화-및-제출-안내" class="nav-link active" data-scroll-target="#시험-녹화-및-제출-안내">시험 녹화 및 제출 안내</a>
+  <li><a href="#시험-안내" id="toc-시험-안내" class="nav-link active" data-scroll-target="#시험-안내">시험 안내</a>
   <ul class="collapse">
   <li><a href="#시험-시간" id="toc-시험-시간" class="nav-link" data-scroll-target="#시험-시간">시험 시간</a></li>
   <li><a href="#제출물" id="toc-제출물" class="nav-link" data-scroll-target="#제출물">제출물</a></li>
@@ -160,12 +189,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="시험-녹화-및-제출-안내" class="level1">
-<h1>시험 녹화 및 제출 안내</h1>
+<section id="시험-안내" class="level1">
+<h1>시험 안내</h1>
 <section id="시험-시간" class="level2">
 <h2 class="anchored" data-anchor-id="시험-시간">시험 시간</h2>
 <ul>
-<li>총 30분 (미정)</li>
+<li>총 40분</li>
 </ul>
 </section>
 <section id="제출물" class="level2">
@@ -186,22 +215,21 @@ ul.task-list li input[type="checkbox"] {
 <section id="windows-사용자-zoom-활용" class="level3">
 <h3 class="anchored" data-anchor-id="windows-사용자-zoom-활용">Windows 사용자 (Zoom 활용)</h3>
 <ol type="1">
-<li>Zoom 실행 후 로그인하여 새 회의 시작</li>
-<li>카메라와 마이크를 켠 상태로 시험 환경 세팅</li>
-<li>하단의 녹화 버튼 클릭 (또는 단축키 Alt + R)</li>
-<li>시험 종료 후 회의 종료 → 영상이 자동 저장됨
+<li>Zoom 로그인하여 혼자 새 회의 시작 (비디오, 마이크 셋팅 불필요)</li>
+<li>화면 공유 시작 <span class="math inline">\(\to\)</span> 전체화면 공유</li>
+<li>녹화 버튼 클릭</li>
+<li>시험 종료 후 화면공유 종료 <span class="math inline">\(\to\)</span> 녹화종료 <span class="math inline">\(\to\)</span> 영상을 이 컴퓨터에 저장
 <ul>
 <li>기본 저장 위치: 내 PC &gt; 문서 &gt; Zoom 폴더</li>
 </ul></li>
 </ol>
-<p>※ Zoom 무료 계정은 40분 제한이 있으므로 시간 초과 주의<br>
-※ 본 시험은 40분이므로 한 번에 녹화 가능</p>
+<p>※ Zoom 무료 계정은 40분 제한이 있으니, 필요한 경우 나누어 촬영</p>
 </section>
 <section id="mac-사용자-기본-기능-활용" class="level3">
 <h3 class="anchored" data-anchor-id="mac-사용자-기본-기능-활용">Mac 사용자 (기본 기능 활용)</h3>
 <ol type="1">
 <li>Command + Shift + 5 키 입력</li>
-<li>화면 하단 도구에서 전체 화면 또는 원하는 영역 지정 후 녹화 시작</li>
+<li>화면 하단 도구에서 전체 화면 지정 후 녹화 시작</li>
 <li>시험 종료 후 메뉴 막대에서 정지 버튼 클릭</li>
 <li>영상은 기본적으로 바탕화면에 저장됨</li>
 </ol>
