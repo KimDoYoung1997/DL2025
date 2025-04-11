@@ -1,1 +1,13 @@
 /* css styles */
+
+/* 블록 수식만 크게: $$ ... $$ */
+.math.display {
+  font-size: 1.25em !important;
+  margin: 1em 0 !important;
+}
+
+/* 인라인 수식은 원래 크기 유지: $...$ */
+.math.inline {
+  font-size: 1.2em !important;
+}
+
