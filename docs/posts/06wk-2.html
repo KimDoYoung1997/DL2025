@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-04-14">
 
-<title>DL2025 - 06wk-2: (신경망, 합성곱신경망) – 다항분류, 합성곱신경망</title>
+<title>DL2025 - 06wk-2: (신경망) – 다항분류, FashionMNIST</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -224,7 +224,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">06wk-2: (신경망, 합성곱신경망) – 다항분류, 합성곱신경망</h1>
+<h1 class="title">06wk-2: (신경망) – 다항분류, FashionMNIST</h1>
 </div>
 
 
@@ -483,8 +483,8 @@ window.Quarto = {
 </table>
 <div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;prob=sig(logit)</p></li><li id="fn2"><p><sup>2</sup>&nbsp;probs=soft(logits)</p></li></div><p><code>-</code> 참고 (sigmoid, softmax 계산과정비교)</p>
 <ul>
-<li><span class="math inline">\(\text{prob} = \text{sig}(logit) =\frac{\exp(logit)}{1+\exp(logit)}\)</span></li>
-<li><span class="math inline">\(probs =\text{softmax}({\bf logits})= \text{softmax}\left(\begin{bmatrix} logit_1 \\ logit_2 \\ logit_3\end{bmatrix}\right) =\begin{bmatrix} \frac{\exp(logit_1)}{\exp(logit_1)+\exp(logit_2)+\exp(logit_3)} \\
+<li><span class="math inline">\(prob = \text{sig}(logit) =\frac{\exp(logit)}{1+\exp(logit)}\)</span></li>
+<li><span class="math inline">\(probs= \text{softmax}\left(\begin{bmatrix} logit_1 \\ logit_2 \\ logit_3\end{bmatrix}\right) =\begin{bmatrix} \frac{\exp(logit_1)}{\exp(logit_1)+\exp(logit_2)+\exp(logit_3)} \\
 \frac{\exp(logit_2)}{\exp(logit_1)+\exp(logit_2)+\exp(logit_3)} \\
 \frac{\exp(logit_3)}{\exp(logit_1)+\exp(logit_2)+\exp(logit_3)} \end{bmatrix}\)</span></li>
 </ul>
