@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -481,11 +501,14 @@ epoch = 10   acc = 0.9577</code></pre>
 </table>
 <div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;prob=sig(logit)</p></li><li id="fn2"><p><sup>2</sup>&nbsp;probs=soft(logits)</p></li></div></section>
 </section>
-<section id="fashionmnist" class="level1">
+<section id="fashionmnist" class="level1 page-columns page-full">
 <h1>4. FashionMNIST</h1>
-<section id="a.-데이터" class="level2">
+<section id="a.-데이터" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="a.-데이터">A. 데이터</h2>
-<div id="42a7ef81-8f3d-42b8-9e18-c21ee42b621e" class="cell" data-execution_count="255">
+<p><a href="https://arxiv.org/abs/1708.07747" class="uri">https://arxiv.org/abs/1708.07747</a> <span class="citation" data-cites="xiao2017fashion">(<a href="#ref-xiao2017fashion" role="doc-biblioref">Xiao, Rasul, and Vollgraf 2017</a>)</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-xiao2017fashion" class="csl-entry" role="listitem">
+Xiao, Han, Kashif Rasul, and Roland Vollgraf. 2017. <span>“Fashion-Mnist: A Novel Image Dataset for Benchmarking Machine Learning Algorithms.”</span> <em>arXiv Preprint arXiv:1708.07747</em>.
+</div></div><div id="42a7ef81-8f3d-42b8-9e18-c21ee42b621e" class="cell" data-execution_count="281">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.FashionMNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.FashionMNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
@@ -496,7 +519,7 @@ epoch = 10   acc = 0.9577</code></pre>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> torch.tensor([lbl <span class="cf">for</span> img, lbl <span class="kw">in</span> test_dataset])</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> torch.nn.functional.one_hot(yy).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ef3d9f39-d791-4f48-b948-67d28f4e0cc6" class="cell" data-execution_count="256">
+<div id="ef3d9f39-d791-4f48-b948-67d28f4e0cc6" class="cell" data-execution_count="282">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds_train <span class="op">=</span> torch.utils.data.TensorDataset(X,y)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dl_train <span class="op">=</span> torch.utils.data.DataLoader(ds_train,batch_size<span class="op">=</span><span class="dv">256</span>,shuffle<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ds_test <span class="op">=</span> torch.utils.data.TensorDataset(XX,yy)</span>
@@ -849,6 +872,7 @@ epoch = 10   acc = 0.9577</code></pre>
 <pre><code>433546</code></pre>
 </div>
 </div>
+
 
 
 </section>
