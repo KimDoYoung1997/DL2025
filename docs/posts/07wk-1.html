@@ -472,65 +472,65 @@ torch.Size([10])</code></pre>
 <section id="c.-torch.nn.conv2d" class="level2">
 <h2 class="anchored" data-anchor-id="c.-torch.nn.conv2d">C. <code>torch.nn.Conv2d</code></h2>
 <p><strong>(예시1) 연산방법, stride=2</strong></p>
-<div id="cef2ebc5-0bd6-4641-b598-980495912e42" class="cell" data-execution_count="74">
+<div id="cef2ebc5-0bd6-4641-b598-980495912e42" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.rand(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>,out_channels<span class="op">=</span><span class="dv">1</span>,kernel_size<span class="op">=</span><span class="dv">2</span>,stride<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bf9ae376-c7cb-437d-b3af-72dca6f5beb6" class="cell" data-execution_count="75">
+<div id="bf9ae376-c7cb-437d-b3af-72dca6f5beb6" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="75">
-<pre><code>tensor([[[[0.2131, 0.1967, 0.7032, 0.3938],
-          [0.1322, 0.7054, 0.3835, 0.3356],
-          [0.2207, 0.5856, 0.1852, 0.7541],
-          [0.7601, 0.2665, 0.4143, 0.5187]]]])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>tensor([[[[0.0197, 0.3086, 0.0321, 0.0743],
+          [0.5398, 0.4104, 0.7244, 0.0238],
+          [0.9728, 0.4270, 0.2396, 0.1358],
+          [0.1888, 0.2525, 0.1224, 0.5778]]]])</code></pre>
 </div>
 </div>
-<div id="efbc1fe7-9282-437d-bb76-203f82359058" class="cell" data-execution_count="76">
+<div id="efbc1fe7-9282-437d-bb76-203f82359058" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="76">
-<pre><code>tensor([[[[-0.3152, -0.1692],
-          [ 0.1625, -0.0974]]]], grad_fn=&lt;ConvolutionBackward0&gt;)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>tensor([[[[-0.3077, -0.4760],
+          [ 0.0550, -0.0650]]]], grad_fn=&lt;ConvolutionBackward0&gt;)</code></pre>
 </div>
 </div>
 <p>??</p>
-<div id="a2024823-4a92-46a5-bc0b-f3ec76845228" class="cell" data-execution_count="93">
+<div id="a2024823-4a92-46a5-bc0b-f3ec76845228" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>conv.weight.data, conv.bias.data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="93">
-<pre><code>(tensor([[[[-0.2525, -0.0014],
-           [ 0.4847, -0.4007]]]]),
- tensor([-0.0426]))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(tensor([[[[ 0.3095,  0.0207],
+           [-0.3130,  0.2836]]]]),
+ tensor([-0.2675]))</code></pre>
 </div>
 </div>
-<div id="55d1ae50-24af-4d69-92e9-f0cc10d4e128" class="cell" data-execution_count="98">
+<div id="55d1ae50-24af-4d69-92e9-f0cc10d4e128" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>(img[:,  :,  :<span class="dv">2</span>,  :<span class="dv">2</span>] <span class="op">*</span> conv.weight.data).<span class="bu">sum</span>()<span class="op">+</span>conv.bias.data, conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="98">
-<pre><code>(tensor([-0.3152]),
- tensor([[[[-0.3152, -0.1692],
-           [ 0.1625, -0.0974]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>(tensor([-0.3077]),
+ tensor([[[[-0.3077, -0.4760],
+           [ 0.0550, -0.0650]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
 </div>
 </div>
-<div id="7829de3b-8838-4d76-9b31-105b640592f8" class="cell" data-execution_count="104">
+<div id="7829de3b-8838-4d76-9b31-105b640592f8" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>(img[:,  :,  :<span class="dv">2</span>,  <span class="dv">2</span>:] <span class="op">*</span> conv.weight.data).<span class="bu">sum</span>()<span class="op">+</span>conv.bias.data, conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="104">
-<pre><code>(tensor([-0.1692]),
- tensor([[[[-0.3152, -0.1692],
-           [ 0.1625, -0.0974]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>(tensor([-0.4760]),
+ tensor([[[[-0.3077, -0.4760],
+           [ 0.0550, -0.0650]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
 </div>
 </div>
-<div id="eda894f1-a747-405f-a175-4ad30951d666" class="cell" data-execution_count="103">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>(img[:,  :,  :<span class="dv">2</span>,  <span class="dv">2</span>:] <span class="op">*</span> conv.weight.data).<span class="bu">sum</span>()<span class="op">+</span>conv.bias.data, conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="103">
-<pre><code>(tensor([-0.1692]),
- tensor([[[[-0.3152, -0.1692],
-           [ 0.1625, -0.0974]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
+<div id="eda894f1-a747-405f-a175-4ad30951d666" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>(img[:,  :,  <span class="dv">2</span>:,  :<span class="dv">2</span>] <span class="op">*</span> conv.weight.data).<span class="bu">sum</span>()<span class="op">+</span>conv.bias.data, conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>(tensor([0.0550]),
+ tensor([[[[-0.3077, -0.4760],
+           [ 0.0550, -0.0650]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
 </div>
 </div>
-<div id="8569a21b-051c-443a-a0c0-2bd3aef5753f" class="cell" data-execution_count="102">
+<div id="8569a21b-051c-443a-a0c0-2bd3aef5753f" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>(img[:,  :,  <span class="dv">2</span>:,  <span class="dv">2</span>:] <span class="op">*</span> conv.weight.data).<span class="bu">sum</span>()<span class="op">+</span>conv.bias.data, conv(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="102">
-<pre><code>(tensor([-0.0974]),
- tensor([[[[-0.3152, -0.1692],
-           [ 0.1625, -0.0974]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>(tensor([-0.0650]),
+ tensor([[[[-0.3077, -0.4760],
+           [ 0.0550, -0.0650]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
 </div>
 </div>
 
