@@ -421,34 +421,13 @@ torch.Size([10])</code></pre>
           [0.7401, 0.5780]]]])</code></pre>
 </div>
 </div>
-<p><strong>(예시2) 정사각형이 아닌 커널</strong></p>
-<div id="5a478ae0-dfdd-48d7-8edd-3b36ef845cff" class="cell" data-execution_count="61">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.rand(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>) <span class="co"># 흑백이미지한장</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> torch.nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="830cdd06-024c-43cf-b431-10a10a59b568" class="cell" data-execution_count="62">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="62">
-<pre><code>tensor([[[[0.2001, 0.1130, 0.2961, 0.9473],
-          [0.2944, 0.8712, 0.8057, 0.4017],
-          [0.0661, 0.9816, 0.4964, 0.0813],
-          [0.5853, 0.0936, 0.1827, 0.2528]]]])</code></pre>
-</div>
-</div>
-<div id="c1f17e1c-792a-4166-b066-b60a1dd58740" class="cell" data-execution_count="63">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mp(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="63">
-<pre><code>tensor([[[[0.9473],
-          [0.9816]]]])</code></pre>
-</div>
-</div>
-<p><strong>(예시3) 이미지크기와 딱 맞지않는 커널일경우?</strong></p>
+<p><strong>(예시2) 이미지크기와 딱 맞지않는 커널일경우?</strong></p>
 <div id="fccb5604-0db5-4948-bd95-51ae23efabd2" class="cell" data-execution_count="71">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.rand(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">5</span>) <span class="co"># 흑백이미지한장</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.rand(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">5</span>) <span class="co"># 흑백이미지한장</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="b4cb5fa2-1eac-4158-9258-6cd618d5a9c8" class="cell" data-execution_count="72">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="72">
 <pre><code>tensor([[[[0.8015, 0.9923, 0.5175, 0.2965, 0.7411],
           [0.8369, 0.2625, 0.9127, 0.2559, 0.1240],
@@ -458,10 +437,31 @@ torch.Size([10])</code></pre>
 </div>
 </div>
 <div id="cb1776fa-5b7f-46ad-8b01-4b72d0226782" class="cell" data-execution_count="73">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mp(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mp(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="73">
 <pre><code>tensor([[[[0.9923, 0.9127],
           [0.8461, 0.6200]]]])</code></pre>
+</div>
+</div>
+<p><strong>(예시3) 정사각형이 아닌 커널</strong></p>
+<div id="5a478ae0-dfdd-48d7-8edd-3b36ef845cff" class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.rand(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>) <span class="co"># 흑백이미지한장</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> torch.nn.MaxPool2d(kernel_size<span class="op">=</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="830cdd06-024c-43cf-b431-10a10a59b568" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>tensor([[[[0.2001, 0.1130, 0.2961, 0.9473],
+          [0.2944, 0.8712, 0.8057, 0.4017],
+          [0.0661, 0.9816, 0.4964, 0.0813],
+          [0.5853, 0.0936, 0.1827, 0.2528]]]])</code></pre>
+</div>
+</div>
+<div id="c1f17e1c-792a-4166-b066-b60a1dd58740" class="cell" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mp(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="63">
+<pre><code>tensor([[[[0.9473],
+          [0.9816]]]])</code></pre>
 </div>
 </div>
 </section>
@@ -531,7 +531,7 @@ torch.Size([10])</code></pre>
            [7.7718, 9.4475]]]], grad_fn=&lt;ConvolutionBackward0&gt;))</code></pre>
 </div>
 </div>
-<p><strong>(예시2) 이동평균 – kernel_size 와 stride를 확실히 이해</strong></p>
+<p><strong>(예시2) 이동평균</strong></p>
 <div id="4182d95a-1e60-4f60-aa39-fb5e1100b730" class="cell" data-execution_count="228">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.arange(<span class="dv">1</span>,<span class="dv">17</span>).<span class="bu">float</span>().reshape(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>,out_channels<span class="op">=</span><span class="dv">1</span>,kernel_size<span class="op">=</span><span class="dv">2</span>,stride<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">False</span>)</span>
