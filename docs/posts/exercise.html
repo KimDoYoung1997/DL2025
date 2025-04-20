@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-01-01">
 
-<title>DL2025 - A1: Exercise – 0420 (1)</title>
+<title>DL2025 - A1: Exercise – ver. 0420-2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -217,7 +217,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A1: Exercise – 0420 (1)</h1>
+<h1 class="title">A1: Exercise – ver. 0420-2</h1>
 </div>
 
 
@@ -783,27 +783,10 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <section id="iris" class="level2">
 <h2 class="anchored" data-anchor-id="iris"><code>$</code>. iris</h2>
 <p>아래의 자료를 고려하자.</p>
-<div id="d7a676c0-d9a5-49be-85b5-3c1404539a75" class="cell" data-execution_count="508">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/iris.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>위의 자료는 아이리스 데이터셋으로 머신러닝에서 자주 사용되는 분류(classification) 예제 데이터이다. 데이터는 다음과 같은 특징을 가지고 있다:</p>
-<p><code>-</code> 샘플 수: 150개</p>
-<p><code>-</code> 특징 수: 4개</p>
-<ul>
-<li>꽃받침 길이 (sepal length)</li>
-<li>꽃받침 너비 (sepal width)</li>
-<li>꽃잎 길이 (petal length)</li>
-<li>꽃잎 너비 (petal width)</li>
-</ul>
-<p><code>-</code> 클래스 수: 3개 (각 50개 샘플)</p>
-<ul>
-<li>0: setosa</li>
-<li>1: versicolor</li>
-<li>2: virginica</li>
-</ul>
-<div id="cd1bbb70-27ae-4461-8781-a4cb321afc4b" class="cell" data-execution_count="509">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="509">
+<div id="d7a676c0-d9a5-49be-85b5-3c1404539a75" class="cell" data-execution_count="549">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/iris.csv"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="549">
 <div>
 
 
@@ -811,11 +794,11 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">0</th>
-<th data-quarto-table-cell-role="th">1</th>
-<th data-quarto-table-cell-role="th">2</th>
-<th data-quarto-table-cell-role="th">3</th>
-<th data-quarto-table-cell-role="th">4</th>
+<th data-quarto-table-cell-role="th">SepalLength</th>
+<th data-quarto-table-cell-role="th">SepalWidth</th>
+<th data-quarto-table-cell-role="th">PetalLength</th>
+<th data-quarto-table-cell-role="th">PetalWidth</th>
+<th data-quarto-table-cell-role="th">Species</th>
 </tr>
 </thead>
 <tbody>
@@ -914,6 +897,63 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 </div>
 </div>
 </div>
+<p>위의 자료는 아이리스 데이터셋으로 머신러닝에서 자주 사용되는 분류(classification) 예제 데이터이다. 데이터는 다음과 같은 특징을 가지고 있다:</p>
+<p><strong>샘플 수: 150개</strong></p>
+<p><strong>특징 수: 4개</strong></p>
+<ul>
+<li>꽃받침 길이 (sepal length)</li>
+<li>꽃받침 너비 (sepal width)</li>
+<li>꽃잎 길이 (petal length)</li>
+<li>꽃잎 너비 (petal width)</li>
+</ul>
+<p><strong>클래스 수: 3개 (각 50개 샘플)</strong></p>
+<ul>
+<li>0: setosa</li>
+<li>1: versicolor</li>
+<li>2: virginica</li>
+</ul>
+<p><code>(1)</code> 주어진 데이터를 8:2 비율로 학습용(df_train)과 테스트용(df_test)으로 나누고, SepalLength, SepalWidth, PetalLength, PetalWidth를 입력으로 하여 Species를 예측할 수 있도록 데이터를 텐서 형태로 변환하라.</p>
+<p>hint: 아래의 코드를 활용할 것</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.8</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> df.drop(df_train.index)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor(df_train.iloc[:,:<span class="dv">4</span>].values).<span class="bu">float</span>()</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ???</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> ???</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> ???</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>(2)</code> 아래의 제약사항에 맞추어 Species를 예측할 수 있는 적당한 네트워크를 학습하라.</p>
+<p><strong>제약사항</strong></p>
+<ul>
+<li>학습가능한 파라메터는 1층만 설계할 것</li>
+<li>학습 후 test accuracy 가 70% 이상일것</li>
+</ul>
+<p><code>(3)</code> 아래의 제약사항에 맞추어 Species를 예측할 수 있는 적당한 네트워크를 학습하라.</p>
+<p><strong>제약사항</strong></p>
+<ul>
+<li>학습가능한 파라메터는 1층만 설계할 것</li>
+<li>학습 후 test accuracy 가 70% 이상일것</li>
+<li>train/test에서 모두 <code>batch_size = 10</code> 으로 설정할 것</li>
+<li>GPU를 사용할 것</li>
+</ul>
+<p><code>(4)</code> 아래의 제약사항에 맞추어 Species를 예측할 수 있는 적당한 네트워크를 학습하라.</p>
+<p><strong>제약사항</strong></p>
+<ul>
+<li>학습가능한 파라메터는 1층만 설계할 것</li>
+<li>학습 후 test accuracy 가 70% 이상일 것</li>
+<li>train에서 <code>batch_size = 50</code> 으로, test에서는 <code>batch_size=30</code>을 설정할것</li>
+<li>GPU를 사용할 것</li>
+<li>매 epoch마다 loss와 train accuracy를 출력할 것</li>
+</ul>
+<p><code>(5)</code> 아래의 제약사항에 맞추어 Species를 예측할 수 있는 적당한 네트워크를 학습하라.</p>
+<p><strong>제약사항</strong></p>
+<ul>
+<li>학습가능한 파라메터는 2층이상 설계할 것</li>
+<li>드랍아웃을 포함시킬 것</li>
+<li>학습 후 test accuracy 가 70% 이상일 것</li>
+<li>train에서 <code>batch_size = 50</code> 으로, test에서는 <code>batch_size=30</code>을 설정할것</li>
+<li>GPU를 사용할 것</li>
+<li>매 epoch마다 loss와 train accuracy를 출력할 것</li>
+</ul>
 
 
 </section>
