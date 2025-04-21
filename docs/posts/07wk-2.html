@@ -439,9 +439,9 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 <p><strong>(예시4) 2개의 이미지</strong></p>
 <p><code>-</code> 개념: (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?) 의 conv를 observation 별로 적용</p>
 <ul>
-<li><code>conv</code>에 포함된 파라메터 수는 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?) 인 경우와 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,1,?,?)인 경우가 동일</li>
+<li><code>conv</code> 에 포함된 파라메터 수는 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?) 인 경우와 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,1,?,?)인 경우가 동일</li>
 </ul>
-<div id="d587127a-7258-4214-a1cd-a59eaf411331" class="cell" data-execution_count="38">
+<div id="d587127a-7258-4214-a1cd-a59eaf411331" class="cell" data-execution_count="996">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>imgs <span class="op">=</span> torch.arange(<span class="dv">1</span>,<span class="dv">33</span>).<span class="bu">float</span>().reshape(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>,out_channels<span class="op">=</span><span class="dv">1</span>,kernel_size<span class="op">=</span><span class="dv">2</span>,stride<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>conv.weight.data <span class="op">=</span> conv.weight.data<span class="op">*</span><span class="dv">0</span> <span class="op">+</span> <span class="dv">1</span><span class="op">/</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -477,9 +477,11 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 <p><strong>(예시5) 2개의 이미지, 2개의 out_channels</strong></p>
 <p><code>-</code> 개념: (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?) 의 conv를 한번 적용, 그것과 별개로 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?) 인 <strong>다른</strong> conv를 적용함. (즉 하나의 observation당 2번 conv변환) 이것을 observation별로 반복</p>
 <ul>
-<li><code>conv</code>에 포함된 파라메터 수는 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,1,?,?) 인 경우보다 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,2,?,?)인 경우가 2배 많음<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li>(1,1,?,?) <span class="math inline">\(\to\)</span> (1,2,?,?) 인 경우는 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?)인 경우보다 <code>conv</code>에 포함된 파라메터 수가 2배 많음</li>
+<li>그런데 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,2,?,?) 인 경우와 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,2,?,?)인 경우는 <code>conv</code>에 포함된 파라메터 수가 같음.</li>
+<li>따라서 (n,1,?,?) <span class="math inline">\(\to\)</span> (n,2,?,?) 인 경우는 (1,1,?,?) <span class="math inline">\(\to\)</span> (1,1,?,?)인 경우보다 <code>conv</code>에 포함된 파라메터 수가 2배 많음</li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;bias가 있어도 2배임</p></li></div><div id="23fcf260-852b-43b9-ab70-0cfef000d862" class="cell" data-execution_count="92">
+<div id="23fcf260-852b-43b9-ab70-0cfef000d862" class="cell" data-execution_count="92">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.arange(<span class="dv">1</span>,<span class="dv">33</span>).<span class="bu">float</span>().reshape(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>conv <span class="op">=</span> torch.nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>,out_channels<span class="op">=</span><span class="dv">2</span>,kernel_size<span class="op">=</span><span class="dv">2</span>,stride<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
