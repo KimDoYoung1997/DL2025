@@ -312,7 +312,7 @@
     "href": "posts/07wk-2.html#f.-대충-이런-구조",
     "title": "07wk-2: (합성곱신경망) – CNN 핵심레이어, CNN의 학습원리, FashionMNIST",
     "section": "F. 대충 이런 구조",
-    "text": "F. 대충 이런 구조\n\nnet = torch.nn.Sequential(\n    torch.nn.Conv2d(in_channels=1,out_channels=3,kernel_size=4),\n    torch.nn.ReLU(),\n    torch.nn.MaxPool2d(kernel_size=13),\n    torch.nn.Flatten()\n)\nnet[0].weight.data = torch.concat(\n    [v_conv.weight.data,\n     h_conv.weight.data,\n     m_conv.weight.data],axis=0)\nnet[0].bias.data = torch.tensor([0.0,0.0, -0.05])\n\n\nplt.matshow(net(imgs).data,cmap=\"gray\")\n\n\n\n\n\n\n\n\n\nnet(imgs).shape\n\ntorch.Size([4, 3])"
+    "text": "F. 대충 이런 구조\n\nnet = torch.nn.Sequential(\n    torch.nn.Conv2d(in_channels=1,out_channels=3,kernel_size=4),\n    torch.nn.ReLU(),\n    torch.nn.MaxPool2d(kernel_size=13),\n    torch.nn.Flatten()\n)\nnet[0].weight.data = torch.concat(\n    [v_conv.weight.data,\n     h_conv.weight.data,\n     m_conv.weight.data],axis=0)\nnet[0].bias.data = torch.tensor([0.0,0.0, -0.05])\n\n\nplt.matshow(net(imgs).data,cmap=\"gray\")\n\n\n\n\n\n\n\n\n\nnet(imgs).shape\n\ntorch.Size([4, 3])\n\n\n\n출력은 (n,3)으로 정리되어서 나온다. 이 시점부터는 더 이상 이미지가 입력이라고 생각하지 않아도 되고, 단순히 (n, 3) 크기의 숫자 데이터가 입력으로 주어진 것처럼 보면 된다. 즉 이제부터는 이 (n,3) 데이터를 입력으로 받는 신경망을 설계하면 된다."
   },
   {
     "objectID": "posts/07wk-2.html#g.-mp의-역할",

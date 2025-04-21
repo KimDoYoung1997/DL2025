@@ -687,7 +687,7 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 </section>
 <section id="d.-이동평균" class="level2">
 <h2 class="anchored" data-anchor-id="d.-이동평균">D. 이동평균</h2>
-<div id="68db9ddb-acc7-400c-8a8c-e244376928e4" class="cell" data-execution_count="253">
+<div id="68db9ddb-acc7-400c-8a8c-e244376928e4" class="cell" data-execution_count="987">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>m_conv <span class="op">=</span> torch.nn.Conv2d(</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>    in_channels<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    out_channels<span class="op">=</span><span class="dv">1</span>,</span>
@@ -696,7 +696,7 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 <span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>m_conv.weight.data <span class="op">=</span> m_conv.weight.data<span class="op">*</span><span class="dv">0</span> <span class="op">+</span> <span class="dv">1</span><span class="op">/</span><span class="dv">16</span></span>
 <span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>m_conv.bias.data <span class="op">=</span> m_conv.bias.data<span class="op">*</span><span class="dv">0</span> <span class="op">-</span> <span class="fl">0.05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="66fad121-35e3-4766-993a-b0518b7ef72b" class="cell" data-execution_count="254">
+<div id="66fad121-35e3-4766-993a-b0518b7ef72b" class="cell" data-execution_count="988">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">2</span>)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>fig.set_figheight(<span class="dv">8</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>fig.set_figwidth(<span class="dv">8</span>)</span>
@@ -715,13 +715,13 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 </section>
 <section id="e.-cde-relu-mp" class="level2">
 <h2 class="anchored" data-anchor-id="e.-cde-relu-mp">E. (C,D,E) + relu + mp</h2>
-<div id="48784b62-2c11-499e-9467-e2064907feb8" class="cell" data-execution_count="957">
+<div id="48784b62-2c11-499e-9467-e2064907feb8" class="cell" data-execution_count="980">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>relu <span class="op">=</span> torch.nn.ReLU()</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>mp <span class="op">=</span> torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="27daa5f3-cf30-49e9-bd00-ccbb962ce4c5" class="cell" data-execution_count="958">
+<div id="27daa5f3-cf30-49e9-bd00-ccbb962ce4c5" class="cell" data-execution_count="981">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>mp(relu(v_conv(imgs)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="958">
+<div class="cell-output cell-output-display" data-execution_count="981">
 <pre><code>tensor([[[[0.200000]]],
 
 
@@ -734,9 +734,9 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
         [[[0.200000]]]], grad_fn=&lt;MaxPool2DWithIndicesBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="df12d52b-abc7-441c-a660-9bb59bce37d6" class="cell" data-execution_count="959">
+<div id="df12d52b-abc7-441c-a660-9bb59bce37d6" class="cell" data-execution_count="982">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mp(relu(h_conv(imgs)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="959">
+<div class="cell-output cell-output-display" data-execution_count="982">
 <pre><code>tensor([[[[0.000000]]],
 
 
@@ -749,9 +749,9 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
         [[[0.200000]]]], grad_fn=&lt;MaxPool2DWithIndicesBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="23611d05-4752-43f8-942d-4fda866493af" class="cell" data-execution_count="960">
+<div id="23611d05-4752-43f8-942d-4fda866493af" class="cell" data-execution_count="983">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mp(relu(m_conv(imgs)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="960">
+<div class="cell-output cell-output-display" data-execution_count="983">
 <pre><code>tensor([[[[2.000000e-01]]],
 
 
@@ -767,7 +767,7 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 </section>
 <section id="f.-대충-이런-구조" class="level2">
 <h2 class="anchored" data-anchor-id="f.-대충-이런-구조">F. 대충 이런 구조</h2>
-<div id="dc8fecb8-0c68-4047-a94c-e173949fb350" class="cell" data-execution_count="961">
+<div id="dc8fecb8-0c68-4047-a94c-e173949fb350" class="cell" data-execution_count="993">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(in_channels<span class="op">=</span><span class="dv">1</span>,out_channels<span class="op">=</span><span class="dv">3</span>,kernel_size<span class="op">=</span><span class="dv">4</span>),</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
@@ -780,7 +780,7 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 <span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>     m_conv.weight.data],axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">0</span>].bias.data <span class="op">=</span> torch.tensor([<span class="fl">0.0</span>,<span class="fl">0.0</span>, <span class="op">-</span><span class="fl">0.05</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a0319e99-e198-4ae6-a719-f475091e458b" class="cell" data-execution_count="962">
+<div id="a0319e99-e198-4ae6-a719-f475091e458b" class="cell" data-execution_count="994">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>plt.matshow(net(imgs).data,cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -790,12 +790,15 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 </div>
 </div>
 </div>
-<div id="9107a537-22cb-49c5-856e-6b79b0abbc65" class="cell" data-execution_count="963">
+<div id="9107a537-22cb-49c5-856e-6b79b0abbc65" class="cell" data-execution_count="995">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>net(imgs).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="963">
+<div class="cell-output cell-output-display" data-execution_count="995">
 <pre><code>torch.Size([4, 3])</code></pre>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>출력은 (n,3)으로 정리되어서 나온다. 이 시점부터는 더 이상 이미지가 입력이라고 생각하지 않아도 되고, 단순히 (n, 3) 크기의 숫자 데이터가 입력으로 주어진 것처럼 보면 된다. 즉 이제부터는 이 (n,3) 데이터를 입력으로 받는 신경망을 설계하면 된다.</p>
+</blockquote>
 </section>
 <section id="g.-mp의-역할" class="level2">
 <h2 class="anchored" data-anchor-id="g.-mp의-역할">G. mp의 역할?</h2>
@@ -882,6 +885,9 @@ Dumoulin, Vincent, and Francesco Visin. 2016. <span>“A Guide to Convolution Ar
 <pre><code>torch.Size([5000, 2304])</code></pre>
 </div>
 </div>
+<blockquote class="blockquote">
+<p>출력은 (n,2304)으로 정리되어서 나온다. 이 시점부터는 더 이상 이미지가 입력이라고 생각하지 않아도 되고, 단순히 (n, 2304) 크기의 숫자 데이터가 입력으로 주어진 것처럼 보면 된다. 즉 이제부터는 이 (n,2304) 데이터를 입력으로 받는 신경망을 설계하면 된다.</p>
+</blockquote>
 <p><code>-</code> 1d를 처리하는 네트워크</p>
 <div id="b38ee70f-b697-42e0-a2ae-73f12ff890d2" class="cell" data-execution_count="972">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>net2<span class="op">=</span> torch.nn.Sequential(</span>
