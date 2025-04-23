@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="최규빈">
+<meta name="dcterms.date" content="2025-04-23">
 
-<title>DL2025 - 딥러닝 (2025)</title>
+<title>DL2025 - 08wk-2: (합성곱신경망) –OXFORD-IIIT-PET</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,24 +59,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -102,67 +102,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -172,7 +114,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">DL2025</span>
     </a>
   </div>
@@ -200,25 +142,43 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(16)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#oxford-iiit-pet" id="toc-oxford-iiit-pet" class="nav-link active" data-scroll-target="#oxford-iiit-pet">5. OXFORD-IIIT-PET</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="08wk-2.out.ipynb" download="08wk-2.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">딥러닝 (2025)</h1>
+<h1 class="title">08wk-2: (합성곱신경망) –OXFORD-IIIT-PET</h1>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-left">
+<div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>최규빈 </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 23, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -228,230 +188,39 @@ window.Quarto = {
 </header>
 
 
-<p><strong>질문하는 방법</strong></p>
-<ul>
-<li>이메일: <a href="mailto:guebin@jbnu.ac.kr" class="email">guebin@jbnu.ac.kr</a></li>
-<li>직접방문: 자연과학대학 본관 205호</li>
-<li>Zoom: <em>이메일로 미리 시간을 정할 것</em></li>
-<li>카카오톡: <a href="http://pf.kakao.com/_txeIFG/chat" class="uri">http://pf.kakao.com/_txeIFG/chat</a></li>
-</ul>
-<p><strong>오늘의 강의노트</strong></p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">코랩사용자</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">서버사용자</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>아래의 링크 클릭</p>
-<p><a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/lecture.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
+<p><a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/08wk-2.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
+<section id="oxford-iiit-pet" class="level1">
+<h1>5. OXFORD-IIIT-PET</h1>
+<div id="71ef7c63-0f93-41d4-9d43-480a1ab2f930" class="cell" data-execution_count="281">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'trainval'</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>torchvision.transforms.Compose([</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.Resize((<span class="dv">512</span>,<span class="dv">512</span>)),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.ToTensor(),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'test'</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>torchvision.transforms.Compose([</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.Resize((<span class="dv">512</span>,<span class="dv">512</span>)),</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.ToTensor(),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">3680</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(test_dataset,batch_size<span class="op">=</span><span class="dv">3669</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>주피터에서 아래를 실행 (주소 오류 수정했음!)</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">!wget</span> https://raw.githubusercontent.com/guebin/DL2025/refs/heads/main/posts/lecture.ipynb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<p><strong>강의노트</strong></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-Date
-</th>
-<th>
-Title
-</th>
-<th>
-Author
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-listing-date-sort="1745334000000" data-listing-file-modified-sort="1745383584089" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="34" data-listing-title-sort="08wk-1: (합성곱신경망) -- MNIST, CIFAR10, XAI란?" data-listing-filename-sort="08wk-1.ipynb">
-<td>
-<span class="listing-date">Apr 23, 2025</span>
-</td>
-<td>
-<a href="./posts/08wk-1.html" class="title listing-title">08wk-1: (합성곱신경망) – MNIST, CIFAR10, XAI란?</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="1" data-listing-date-sort="1745161200000" data-listing-file-modified-sort="1745383540206" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="367" data-listing-title-sort="07wk-2: (합성곱신경망) -- CNN 핵심레이어, CNN의 학습원리, FashionMNIST" data-listing-filename-sort="07wk-2.ipynb">
-<td>
-<span class="listing-date">Apr 21, 2025</span>
-</td>
-<td>
-<a href="./posts/07wk-2.html" class="title listing-title">07wk-2: (합성곱신경망) – CNN 핵심레이어, CNN의 학습원리, FashionMNIST</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="2" data-listing-date-sort="1744729200000" data-listing-file-modified-sort="1745383540206" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="48" data-listing-title-sort="07wk-1: (합성곱신경망) -- CNN 자랑, CNN 핵심레이어" data-listing-filename-sort="07wk-1.ipynb">
-<td>
-<span class="listing-date">Apr 16, 2025</span>
-</td>
-<td>
-<a href="./posts/07wk-1.html" class="title listing-title">07wk-1: (합성곱신경망) – CNN 자랑, CNN 핵심레이어</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="3" data-listing-date-sort="1744556400000" data-listing-file-modified-sort="1745383540205" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="407" data-listing-title-sort="06wk-2: (신경망) -- 다항분류, FashionMNIST" data-listing-filename-sort="06wk-2.ipynb">
-<td>
-<span class="listing-date">Apr 14, 2025</span>
-</td>
-<td>
-<a href="./posts/06wk-2.html" class="title listing-title">06wk-2: (신경망) – 다항분류, FashionMNIST</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="4" data-listing-date-sort="1744124400000" data-listing-file-modified-sort="1745383540205" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="111" data-listing-title-sort="06wk-1: (신경망) -- 데이터분석 코딩패턴" data-listing-filename-sort="06wk-1.ipynb">
-<td>
-<span class="listing-date">Apr 9, 2025</span>
-</td>
-<td>
-<a href="./posts/06wk-1.html" class="title listing-title">06wk-1: (신경망) – 데이터분석 코딩패턴</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="5" data-listing-date-sort="1743951600000" data-listing-file-modified-sort="1745383540205" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1315" data-listing-title-sort="05wk-2: (신경망) -- 신경망의 표현, GPU사용법, 확률적경사하강법" data-listing-filename-sort="05wk-2.ipynb">
-<td>
-<span class="listing-date">Apr 7, 2025</span>
-</td>
-<td>
-<a href="./posts/05wk-2.html" class="title listing-title">05wk-2: (신경망) – 신경망의 표현, GPU사용법, 확률적경사하강법</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="6" data-listing-date-sort="1743519600000" data-listing-file-modified-sort="1745383540204" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="751" data-listing-title-sort="05wk-1: (신경망) -- 예측, 시벤코정리의 이면, 드랍아웃" data-listing-filename-sort="05wk-1.ipynb">
-<td>
-<span class="listing-date">Apr 2, 2025</span>
-</td>
-<td>
-<a href="./posts/05wk-1.html" class="title listing-title">05wk-1: (신경망) – 예측, 시벤코정리의 이면, 드랍아웃</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="7" data-listing-date-sort="1743346800000" data-listing-file-modified-sort="1745383540202" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="666" data-listing-title-sort="04wk-2: (신경망) -- 꺽인그래프의 한계(?), 시벤코정리, MNIST" data-listing-filename-sort="04wk-2.ipynb">
-<td>
-<span class="listing-date">Mar 31, 2025</span>
-</td>
-<td>
-<a href="./posts/04wk-2.html" class="title listing-title">04wk-2: (신경망) – 꺽인그래프의 한계(?), 시벤코정리, MNIST</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="8" data-listing-date-sort="1742914800000" data-listing-file-modified-sort="1745383540200" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="339" data-listing-title-sort="04wk-1: (신경망) -- 로지스틱의 한계 극복" data-listing-filename-sort="04wk-1.ipynb">
-<td>
-<span class="listing-date">Mar 26, 2025</span>
-</td>
-<td>
-<a href="./posts/04wk-1.html" class="title listing-title">04wk-1: (신경망) – 로지스틱의 한계 극복</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="9" data-listing-date-sort="1742742000000" data-listing-file-modified-sort="1745383540196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="486" data-listing-title-sort="03wk-2: (로지스틱) -- `sig(linr(x))`, `BCELoss`, `Adam`, 로지스틱의 한계" data-listing-filename-sort="03wk-2.ipynb">
-<td>
-<span class="listing-date">Mar 24, 2025</span>
-</td>
-<td>
-<a href="./posts/03wk-2.html" class="title listing-title">03wk-2: (로지스틱) – <code>sig(linr(x))</code>, <code>BCELoss</code>, <code>Adam</code>, 로지스틱의 한계</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="10" data-listing-date-sort="1742310000000" data-listing-file-modified-sort="1745383539952" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="221" data-listing-title-sort="03wk-1: (회귀, 로지스틱) -- 파이토치식 코딩패턴 (2), 로지스틱 모형" data-listing-filename-sort="03wk-1.ipynb">
-<td>
-<span class="listing-date">Mar 19, 2025</span>
-</td>
-<td>
-<a href="./posts/03wk-1.html" class="title listing-title">03wk-1: (회귀, 로지스틱) – 파이토치식 코딩패턴 (2), 로지스틱 모형</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="11" data-listing-date-sort="1742137200000" data-listing-file-modified-sort="1745383539946" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="179" data-listing-title-sort="02wk-2: (회귀) -- 파라메터의 학습과정 음미, MSE, 파이토치식 코딩패턴 (1)" data-listing-filename-sort="02wk-2.ipynb">
-<td>
-<span class="listing-date">Mar 17, 2025</span>
-</td>
-<td>
-<a href="./posts/02wk-2.html" class="title listing-title">02wk-2: (회귀) – 파라메터의 학습과정 음미, MSE, 파이토치식 코딩패턴 (1)</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="12" data-listing-date-sort="1741532400000" data-listing-file-modified-sort="1745383539911" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1143" data-listing-title-sort="01wk-2, 02wk-1: (회귀) -- 회귀모형, 손실함수, 파이토치를 이용한 추정" data-listing-filename-sort="01wk-2.ipynb">
-<td>
-<span class="listing-date">Mar 10, 2025</span>
-</td>
-<td>
-<a href="./posts/01wk-2.html" class="title listing-title">01wk-2, 02wk-1: (회귀) – 회귀모형, 손실함수, 파이토치를 이용한 추정</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="13" data-listing-date-sort="1741100400000" data-listing-file-modified-sort="1745383539910" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="160" data-listing-title-sort="01wk-1: (토치) -- 강의소개, 파이토치 기본" data-listing-filename-sort="01wk-1.ipynb">
-<td>
-<span class="listing-date">Mar 5, 2025</span>
-</td>
-<td>
-<a href="./posts/01wk-1.html" class="title listing-title">01wk-1: (토치) – 강의소개, 파이토치 기본</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="14" data-listing-date-sort="1735657200000" data-listing-file-modified-sort="1745383540763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="139" data-listing-title-sort="A2: Exam Guidelines" data-listing-filename-sort="examguidelines.ipynb">
-<td>
-<span class="listing-date">Jan 1, 2025</span>
-</td>
-<td>
-<a href="./posts/examguidelines.html" class="title listing-title">A2: Exam Guidelines</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-<tr data-index="15" data-listing-date-sort="1735657200000" data-listing-file-modified-sort="1745383540763" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2319" data-listing-title-sort="A1: Exercise -- ver. 0420-2" data-listing-filename-sort="exercise.ipynb">
-<td>
-<span class="listing-date">Jan 1, 2025</span>
-</td>
-<td>
-<a href="./posts/exercise.html" class="title listing-title">A1: Exercise – ver. 0420-2</a>
-</td>
-<td>
-<span class="listing-author">최규빈 </span>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -833,6 +602,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="guebin/DL2024" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

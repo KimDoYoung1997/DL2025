@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-01-01">
 
-<title>DL2025 - 07wk-2: (합성곱신경망) XXX</title>
+<title>DL2025 - 08wk-1: (합성곱신경망) XXX</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,6 +152,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#강의영상" id="toc-강의영상" class="nav-link active" data-scroll-target="#강의영상">1. 강의영상</a></li>
   <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
+  <li><a href="#mnist" id="toc-mnist" class="nav-link" data-scroll-target="#mnist">3. MNIST</a></li>
+  <li><a href="#cifar10" id="toc-cifar10" class="nav-link" data-scroll-target="#cifar10">4. CIFAR10</a>
+  <ul class="collapse">
+  <li><a href="#a.-직접설계" id="toc-a.-직접설계" class="nav-link" data-scroll-target="#a.-직접설계">A. 직접설계</a></li>
+  <li><a href="#b.-알렉스넷" id="toc-b.-알렉스넷" class="nav-link" data-scroll-target="#b.-알렉스넷">B. 알렉스넷?</a></li>
+  <li><a href="#c.-알렉스넷으로-imagenet-적합" id="toc-c.-알렉스넷으로-imagenet-적합" class="nav-link" data-scroll-target="#c.-알렉스넷으로-imagenet-적합">C. 알렉스넷으로 ImageNet 적합</a></li>
+  <li><a href="#d.-renset18" id="toc-d.-renset18" class="nav-link" data-scroll-target="#d.-renset18">D. renset18</a></li>
+  <li><a href="#e.-resnet18-pretrainedtrue" id="toc-e.-resnet18-pretrainedtrue" class="nav-link" data-scroll-target="#e.-resnet18-pretrainedtrue">E. resnet18, pretrained=True</a></li>
+  </ul></li>
+  <li><a href="#xai-란" id="toc-xai-란" class="nav-link" data-scroll-target="#xai-란">5. XAI 란?</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lecture.out.ipynb" download="lecture.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -160,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">07wk-2: (합성곱신경망) XXX</h1>
+<h1 class="title">08wk-1: (합성곱신경망) XXX</h1>
 </div>
 
 
@@ -193,20 +203,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     .ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
 <section id="강의영상" class="level1">
 <h1>1. 강의영상</h1>
-<div id="89f7bb90-f29f-4faa-866f-deff7094e5bb" class="cell" data-tags="[]" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt;video https://youtu.be/playlist?list=PLQqh36zP38-wcPiCEdYML9-6-Xv5RVbso&amp;si=BbNo6mwCHqwOV0FS&gt;}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b3c6adf5-5a25-47f9-8d86-13f7237bd9a8" class="cell" data-tags="[]" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#{{&lt;video https://youtu.be/playlist?list=PLQqh36zP38-z7s7FppJtYXFUnJzw88qWg&amp;si=3TuaJ7IiiIG6QT7X&gt;}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="bde5eeab-baca-4f36-b210-5226e5e082b6" class="cell" data-tags="[]" data-execution_count="2">
+<div id="2e39f442-4cd6-403e-bf9c-15071c4dd634" class="cell" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e89a04f1-54f9-41bd-a90e-d8abea0e9d63" class="cell" data-execution_count="3">
+<div id="3fbf745c-bb6e-42b0-91ec-1385fe1b5d49" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">4.5</span>, <span class="fl">3.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="mnist" class="level1">
+<h1>3. MNIST</h1>
+<div id="cbd52b2e-2878-4886-bead-1b3fa9192a3b" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">6000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">1000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="cifar10" class="level1">
+<h1>4. CIFAR10</h1>
+<div id="db9918e5-30d4-434a-b8bd-efcadf0d3a19" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">10000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">2000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="a.-직접설계" class="level2">
+<h2 class="anchored" data-anchor-id="a.-직접설계">A. 직접설계</h2>
+</section>
+<section id="b.-알렉스넷" class="level2">
+<h2 class="anchored" data-anchor-id="b.-알렉스넷">B. 알렉스넷?</h2>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Comparison_image_neural_networks.svg/960px-Comparison_image_neural_networks.svg.png" class="img-fluid"></p>
+</section>
+<section id="c.-알렉스넷으로-imagenet-적합" class="level2">
+<h2 class="anchored" data-anchor-id="c.-알렉스넷으로-imagenet-적합">C. 알렉스넷으로 ImageNet 적합</h2>
+</section>
+<section id="d.-renset18" class="level2">
+<h2 class="anchored" data-anchor-id="d.-renset18">D. renset18</h2>
+<p><code>-</code> res: <a href="https://arxiv.org/pdf/1512.03385" class="uri">https://arxiv.org/pdf/1512.03385</a></p>
+</section>
+<section id="e.-resnet18-pretrainedtrue" class="level2">
+<h2 class="anchored" data-anchor-id="e.-resnet18-pretrainedtrue">E. resnet18, pretrained=True</h2>
+</section>
+</section>
+<section id="xai-란" class="level1">
+<h1>5. XAI 란?</h1>
+<p><a href="https://brunch.co.kr/@hvnpoet/140" class="uri">https://brunch.co.kr/@hvnpoet/140</a></p>
 
 
 </section>
