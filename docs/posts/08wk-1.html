@@ -208,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="94cf31c0-2cee-4a18-82da-3380f21e28f1" class="cell" data-tags="[]" data-execution_count="37">
+<div id="94cf31c0-2cee-4a18-82da-3380f21e28f1" class="cell" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -216,177 +216,186 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="7e051a46-f5b5-4bdd-b236-6f6b9c62d7ed" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>] <span class="op">=</span> (<span class="fl">4.5</span>, <span class="fl">3.0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div id="32b497c2-3d41-4aa1-99c2-d3e7e4d972bd" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CNN </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># net = 2d --&gt; 1d</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1d: (linr -&gt; relu)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2d: (conv -&gt; relu -&gt; mp) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="mnist" class="level1">
 <h1>3. MNIST</h1>
-<div id="3e8ec5b1-d78d-4696-8bf5-b26c3d2e7eec" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">6000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">1000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3e8ec5b1-d78d-4696-8bf5-b26c3d2e7eec" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">6000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">1000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="3e591dce-9fdc-4f52-9054-9dcca8031a52" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">1</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">5</span>),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">32</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">3</span>),</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#---#</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">3200</span>,<span class="dv">10</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">1</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">5</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">32</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">3</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#---#</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">3200</span>,<span class="dv">10</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="addb1431-ad1b-49d8-929d-c4c72d9dd46e" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>tensor(0.9790, device='cuda:0')</code></pre>
 </div>
 </div>
 <div id="79eed0fc-3b22-4817-b83f-85000fa2de78" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>tensor(0.9690, device='cuda:0')</code></pre>
 </div>
 </div>
 <div id="c6c374d2-2f4a-4b50-b9c0-daa2ba491ac4" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cifar10" class="level1">
 <h1>4. CIFAR10</h1>
 <div id="876bf56a-a932-420a-8dff-f50514577a72" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">10000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">2000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.CIFAR10(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">False</span>, download<span class="op">=</span><span class="va">True</span>,transform<span class="op">=</span>torchvision.transforms.ToTensor())</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">10000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">2000</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="a.-직접설계" class="level2">
 <h2 class="anchored" data-anchor-id="a.-직접설계">A. 직접설계</h2>
 <div id="a63c9951-e0aa-4a89-ae8a-d6339a315345" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">3</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">5</span>),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">32</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">3</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#---#</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4608</span>,<span class="dv">10</span>)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">3</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">5</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d(kernel_size<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">32</span>,<span class="dv">32</span>,kernel_size<span class="op">=</span><span class="dv">3</span>),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#---#</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4608</span>,<span class="dv">10</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="2c7812e9-f130-4301-a1d8-16e8bebdab07" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>tensor(0.7025, device='cuda:0')</code></pre>
 </div>
 </div>
 <div id="82b4bb58-0037-4114-a7a6-8a3c9dcf032f" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>tensor(0.6050, device='cuda:0')</code></pre>
 </div>
 </div>
+<ul>
+<li>표현력자체에 문제가 있어보임</li>
+</ul>
 <div id="c9f4b803-fdc2-4085-abc2-44f59bf44a82" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="b.-알렉스넷" class="level2">
 <h2 class="anchored" data-anchor-id="b.-알렉스넷">B. 알렉스넷?</h2>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Comparison_image_neural_networks.svg/960px-Comparison_image_neural_networks.svg.png" class="img-fluid"></p>
 <div id="a434dae6-0bb9-4aee-82bb-635a74ef7b74" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.zeros(<span class="dv">1</span>,<span class="dv">3</span><span class="op">*</span><span class="dv">224</span><span class="op">*</span><span class="dv">224</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">224</span>,<span class="dv">224</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>img.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.zeros(<span class="dv">1</span>,<span class="dv">3</span><span class="op">*</span><span class="dv">224</span><span class="op">*</span><span class="dv">224</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">224</span>,<span class="dv">224</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>img.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>torch.Size([1, 3, 224, 224])</code></pre>
 </div>
 </div>
 <div id="bdd5f796-6695-480b-8ed6-df39a04ea845" class="cell" data-tags="[]" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">3</span>,<span class="dv">96</span>,kernel_size<span class="op">=</span>(<span class="dv">11</span>,<span class="dv">11</span>),stride<span class="op">=</span><span class="dv">4</span>),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>), <span class="co"># default stride는 3</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">96</span>,<span class="dv">256</span>,kernel_size<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>),padding<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>), <span class="co"># default stride는 3</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">256</span>,<span class="dv">384</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">384</span>,<span class="dv">384</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">384</span>,<span class="dv">256</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">6400</span>,<span class="dv">4096</span>),</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    torch.nn.Dropout(<span class="fl">0.5</span>),</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">4096</span>),        </span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    torch.nn.Dropout(<span class="fl">0.5</span>),    </span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">1000</span>),</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">3</span>,<span class="dv">96</span>,kernel_size<span class="op">=</span>(<span class="dv">11</span>,<span class="dv">11</span>),stride<span class="op">=</span><span class="dv">4</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>), <span class="co"># default stride는 3</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">96</span>,<span class="dv">256</span>,kernel_size<span class="op">=</span>(<span class="dv">5</span>,<span class="dv">5</span>),padding<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>), <span class="co"># default stride는 3</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">256</span>,<span class="dv">384</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">384</span>,<span class="dv">384</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    torch.nn.Conv2d(<span class="dv">384</span>,<span class="dv">256</span>,kernel_size<span class="op">=</span>(<span class="dv">3</span>,<span class="dv">3</span>),padding<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),    </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    torch.nn.MaxPool2d((<span class="dv">3</span>,<span class="dv">3</span>),stride<span class="op">=</span><span class="dv">2</span>),</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">6400</span>,<span class="dv">4096</span>),</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    torch.nn.Dropout(<span class="fl">0.5</span>),</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">4096</span>),        </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    torch.nn.ReLU(),</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    torch.nn.Dropout(<span class="fl">0.5</span>),    </span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">1000</span>),</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="c.-알렉스넷으로-imagenet-적합" class="level2">
 <h2 class="anchored" data-anchor-id="c.-알렉스넷으로-imagenet-적합">C. 알렉스넷으로 ImageNet 적합</h2>
 <div id="d1bdd05a-983c-49cf-8744-53d66a8cde67" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>net[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>net[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> torch.nn.Linear(<span class="dv">4096</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="f3da9a06-0a65-409c-b7a5-0dfb0d32709c" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.randn(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">32</span>,<span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> torch.randn(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">32</span>,<span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="85102866-e15c-4631-810d-8930776d662a" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>net(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>net(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>RuntimeError: Given input size: (256x2x2). Calculated output size: (256x0x0). Output size is too small</code></pre>
 </div>
 </div>
 <div id="be13c5e5-9740-4944-9b5d-28f60f101536" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>net[:<span class="dv">5</span>](img).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>net[:<span class="dv">5</span>](img).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>torch.Size([1, 256, 2, 2])</code></pre>
 </div>
 </div>
 <div id="9a79108d-e1cb-4d88-9a8b-45191123e300" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>MaxPool2d(kernel_size=(3, 3), stride=2, padding=0, dilation=1, ceil_mode=False)</code></pre>
 </div>
@@ -396,91 +405,98 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="d.-renset18" class="level2">
 <h2 class="anchored" data-anchor-id="d.-renset18">D. renset18</h2>
 <p><code>-</code> res: <a href="https://arxiv.org/pdf/1512.03385" class="uri">https://arxiv.org/pdf/1512.03385</a></p>
-<div id="b06789ab-b33e-44f6-9fe5-92cedf343eee" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torchvision.models.resnet18()</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># net </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b06789ab-b33e-44f6-9fe5-92cedf343eee" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torchvision.models.resnet18()</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># net </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="e6118b8b-f5fb-4747-b593-748d5804d0b0" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>net.fc <span class="op">=</span> torch.nn.Linear(<span class="dv">512</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>net.fc <span class="op">=</span> torch.nn.Linear(<span class="dv">512</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="a1c6c4f9-7ca7-47b1-8811-3f0a688f2d58" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cbc4d1e5-7085-459f-bdad-de4f40b3655d" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>tensor(1., device='cuda:0')</code></pre>
 </div>
 </div>
 <div id="1893378f-1d83-45e0-a1e9-ce6d8740050f" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>tensor(0.6215, device='cuda:0')</code></pre>
 </div>
 </div>
+<ul>
+<li>오버피팅이 있어보긴하지만 표현력자체는 올라감</li>
+</ul>
 <div id="8efb6544-fc12-4706-89b7-49ee01f3dcc1" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="e.-resnet18-pretrainedtrue" class="level2">
 <h2 class="anchored" data-anchor-id="e.-resnet18-pretrainedtrue">E. resnet18, pretrained=True</h2>
-<div id="1adf2e13-49d4-4ba9-88ac-a9d726ccc8c0" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torchvision.models.resnet18(pretrained<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>net.fc <span class="op">=</span> torch.nn.Linear(<span class="dv">512</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>-</code> 아이디어: 하나를 잘하는 모델은 다른것도 잘하지 않을까? &lt;– transfer learning</p>
+<div id="1adf2e13-49d4-4ba9-88ac-a9d726ccc8c0" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torchvision.models.resnet18(pretrained<span class="op">=</span><span class="va">True</span>) <span class="co"># 아키텍처 + 학습된 가중치까지 </span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>net.fc <span class="op">=</span> torch.nn.Linear(<span class="dv">512</span>,<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="3d3816c2-d1d7-4c8e-9f74-094ffd5432db" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.CrossEntropyLoss()</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(net.parameters())</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>net.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> XX.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> yy.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>):</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    netout <span class="op">=</span> net(X)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(netout,y)</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4 </span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="9205ed86-30b2-47e4-bb80-1438559b0405" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>(net(X).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> y).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="34">
 <pre><code>tensor(1., device='cuda:0')</code></pre>
 </div>
 </div>
 <div id="9e2819ae-9aa6-4165-aae3-51a63977376c" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>(net(XX).argmax(axis<span class="op">=</span><span class="dv">1</span>) <span class="op">==</span> yy).<span class="bu">float</span>().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="35">
 <pre><code>tensor(0.8035, device='cuda:0')</code></pre>
 </div>
 </div>
+<ul>
+<li>잘함 (오버피팅은 여전히 있음)</li>
+</ul>
 <div id="f05922b6-7336-4f87-99e5-f2f312e31900" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.empty_cache()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
