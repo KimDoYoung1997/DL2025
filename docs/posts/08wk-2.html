@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="최규빈">
-<meta name="dcterms.date" content="2025-04-23">
+<meta name="dcterms.date" content="2025-04-28">
 
-<title>DL2025 - 08wk-2: (합성곱신경망) –OXFORD-IIIT-PET</title>
+<title>DL2025 - 08wk-2: (XAI) – Class Activation Map</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -103,6 +123,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -150,16 +199,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#oxford-iiit-pet" id="toc-oxford-iiit-pet" class="nav-link active" data-scroll-target="#oxford-iiit-pet">5. OXFORD-IIIT-PET</a></li>
+  <li><a href="#강의영상" id="toc-강의영상" class="nav-link active" data-scroll-target="#강의영상">1. 강의영상</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
+  <li><a href="#torch.einsum" id="toc-torch.einsum" class="nav-link" data-scroll-target="#torch.einsum">3. <code>torch.einsum</code></a>
+  <ul class="collapse">
+  <li><a href="#a.-transpose" id="toc-a.-transpose" class="nav-link" data-scroll-target="#a.-transpose">A. transpose</a></li>
+  <li><a href="#b.-행렬곱" id="toc-b.-행렬곱" class="nav-link" data-scroll-target="#b.-행렬곱">B. 행렬곱</a></li>
+  <li><a href="#c.-img_plt-vs-img_pytorch" id="toc-c.-img_plt-vs-img_pytorch" class="nav-link" data-scroll-target="#c.-img_plt-vs-img_pytorch">C. <code>img_plt</code> vs <code>img_pytorch</code></a></li>
+  </ul></li>
+  <li><a href="#이미지-자료-처리" id="toc-이미지-자료-처리" class="nav-link" data-scroll-target="#이미지-자료-처리">4. 이미지 자료 처리</a>
+  <ul class="collapse">
+  <li><a href="#a.-데이터" id="toc-a.-데이터" class="nav-link" data-scroll-target="#a.-데이터">A. 데이터</a></li>
+  <li><a href="#b.-이미지-변환" id="toc-b.-이미지-변환" class="nav-link" data-scroll-target="#b.-이미지-변환">B. 이미지 변환</a></li>
+  </ul></li>
+  <li><a href="#ap-layer" id="toc-ap-layer" class="nav-link" data-scroll-target="#ap-layer">5. AP Layer</a>
+  <ul class="collapse">
+  <li><a href="#a.-ap-layer" id="toc-a.-ap-layer" class="nav-link" data-scroll-target="#a.-ap-layer">A. AP layer</a></li>
+  <li><a href="#b.-ap-linear의-교환" id="toc-b.-ap-linear의-교환" class="nav-link" data-scroll-target="#b.-ap-linear의-교환">B. AP, Linear의 교환</a></li>
+  </ul></li>
+  <li><a href="#camzhou2016learning의-구현" id="toc-camzhou2016learning의-구현" class="nav-link" data-scroll-target="#camzhou2016learning의-구현">6. CAM<span class="citation" data-cites="zhou2016learning">(Zhou et al. 2016)</span>의 구현</a>
+  <ul class="collapse">
+  <li><a href="#a.-0단계-xy-xxyy" id="toc-a.-0단계-xy-xxyy" class="nav-link" data-scroll-target="#a.-0단계-xy-xxyy">A. 0단계 – (X,y), (XX,yy)</a></li>
+  <li><a href="#b.-1단계-이미지분류-잘하는-네트워크-선택-후-학습" id="toc-b.-1단계-이미지분류-잘하는-네트워크-선택-후-학습" class="nav-link" data-scroll-target="#b.-1단계-이미지분류-잘하는-네트워크-선택-후-학습">B. 1단계 – 이미지분류 잘하는 네트워크 선택 후 학습</a></li>
+  <li><a href="#c.-2단계-linear와-ap의-순서를-바꿈" id="toc-c.-2단계-linear와-ap의-순서를-바꿈" class="nav-link" data-scroll-target="#c.-2단계-linear와-ap의-순서를-바꿈">C. 2단계– Linear와 AP의 순서를 바꿈</a></li>
+  <li><a href="#d.-3단계-why-시각화" id="toc-d.-3단계-why-시각화" class="nav-link" data-scroll-target="#d.-3단계-why-시각화">D. 3단계 – WHY 시각화</a></li>
+  </ul></li>
+  <li><a href="#cam의-한계" id="toc-cam의-한계" class="nav-link" data-scroll-target="#cam의-한계">7. CAM의 한계</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="08wk-2.out.ipynb" download="08wk-2.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">08wk-2: (합성곱신경망) –OXFORD-IIIT-PET</h1>
+<h1 class="title">08wk-2: (XAI) – Class Activation Map</h1>
 </div>
 
 
@@ -176,7 +250,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 23, 2025</p>
+      <p class="date">April 28, 2025</p>
     </div>
   </div>
   
@@ -189,33 +263,1000 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p><a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/08wk-2.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
-<section id="oxford-iiit-pet" class="level1">
-<h1>5. OXFORD-IIIT-PET</h1>
-<div id="71ef7c63-0f93-41d4-9d43-480a1ab2f930" class="cell" data-execution_count="281">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'trainval'</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>torchvision.transforms.Compose([</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.Resize((<span class="dv">512</span>,<span class="dv">512</span>)),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.ToTensor(),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    ])</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'test'</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    transform<span class="op">=</span>torchvision.transforms.Compose([</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.Resize((<span class="dv">512</span>,<span class="dv">512</span>)),</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>        torchvision.transforms.ToTensor(),</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    ])</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(train_dataset,batch_size<span class="op">=</span><span class="dv">3680</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>XX,yy <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(torch.utils.data.DataLoader(test_dataset,batch_size<span class="op">=</span><span class="dv">3669</span>,shuffle<span class="op">=</span><span class="va">True</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="강의영상" class="level1">
+<h1>1. 강의영상</h1>
+<div id="5049108a-93b6-44f8-aed9-edc711c7efeb" class="cell" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {{&lt;video https://youtu.be/playlist?list=PLQqh36zP38-yoX-Rtq9TPcvAawZfu6iZx&amp;si=DD64EseytgR75zIz&gt;}}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="imports" class="level1">
+<h1>2. Imports</h1>
+<div id="27f6b621-3956-4564-91c5-8632b1329754" class="cell" data-tags="[]" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> PIL</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="torch.einsum" class="level1">
+<h1>3. <code>torch.einsum</code></h1>
+<section id="a.-transpose" class="level2">
+<h2 class="anchored" data-anchor-id="a.-transpose">A. transpose</h2>
+<div id="0ff4ee24-0327-4c45-a5c9-9a92b57e7bcb" class="cell" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tsr <span class="op">=</span> torch.arange(<span class="dv">12</span>).reshape(<span class="dv">4</span>,<span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tsr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>tensor([[ 0,  1,  2],
+        [ 3,  4,  5],
+        [ 6,  7,  8],
+        [ 9, 10, 11]])</code></pre>
+</div>
+</div>
+<div id="3d817895-a022-450a-b67b-b9b1ab071809" class="cell" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tsr.t()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>tensor([[ 0,  3,  6,  9],
+        [ 1,  4,  7, 10],
+        [ 2,  5,  8, 11]])</code></pre>
+</div>
+</div>
+<div id="9eb50c58-d584-4781-b431-2d3a0dd87746" class="cell" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>torch.einsum(<span class="st">'ij-&gt;ji'</span>,tsr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>tensor([[ 0,  3,  6,  9],
+        [ 1,  4,  7, 10],
+        [ 2,  5,  8, 11]])</code></pre>
+</div>
+</div>
+</section>
+<section id="b.-행렬곱" class="level2">
+<h2 class="anchored" data-anchor-id="b.-행렬곱">B. 행렬곱</h2>
+<div id="0396e248-a06f-4ded-be73-3da072ce0446" class="cell" data-tags="[]" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tsr1 <span class="op">=</span> torch.arange(<span class="dv">12</span>).reshape(<span class="dv">4</span>,<span class="dv">3</span>).<span class="bu">float</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>tsr2 <span class="op">=</span> torch.arange(<span class="dv">15</span>).reshape(<span class="dv">3</span>,<span class="dv">5</span>).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="b8b19dcb-5521-4cc3-85db-e09059bcd0ed" class="cell" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tsr1.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>torch.Size([4, 3])</code></pre>
+</div>
+</div>
+<div id="457d502f-6836-4054-b818-97f067e4153b" class="cell" data-tags="[]" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tsr2.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>torch.Size([3, 5])</code></pre>
+</div>
+</div>
+<div id="8eec661b-7276-4d56-9917-fcece369cba3" class="cell" data-tags="[]" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tsr1 <span class="op">@</span> tsr2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>tensor([[ 25.,  28.,  31.,  34.,  37.],
+        [ 70.,  82.,  94., 106., 118.],
+        [115., 136., 157., 178., 199.],
+        [160., 190., 220., 250., 280.]])</code></pre>
+</div>
+</div>
+<div id="10f6104b-c67e-45fa-a36f-d346d20cc426" class="cell" data-tags="[]" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>torch.einsum(<span class="st">'ij,jk -&gt; ik'</span>,tsr1,tsr2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>tensor([[ 25.,  28.,  31.,  34.,  37.],
+        [ 70.,  82.,  94., 106., 118.],
+        [115., 136., 157., 178., 199.],
+        [160., 190., 220., 250., 280.]])</code></pre>
+</div>
+</div>
+</section>
+<section id="c.-img_plt-vs-img_pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="c.-img_plt-vs-img_pytorch">C. <code>img_plt</code> vs <code>img_pytorch</code></h2>
+<div id="0a5b789a-ac5c-4a6e-903f-3bbb303d2405" class="cell" data-tags="[]" data-execution_count="667">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> torch.zeros(<span class="dv">16</span>).reshape(<span class="dv">4</span>,<span class="dv">4</span>) <span class="op">+</span> <span class="fl">1.0</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> torch.zeros(<span class="dv">16</span>).reshape(<span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.zeros(<span class="dv">16</span>).reshape(<span class="dv">4</span>,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3dd001ee-68a5-4092-84d7-a9237e2a5213" class="cell" data-tags="[]" data-execution_count="674">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># torch를 쓰기 위해서는 이미지가 이렇게 저장되어있어야한다. </span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>img_pytorch <span class="op">=</span> torch.stack([r,g,b],axis<span class="op">=</span><span class="dv">0</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>) </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img_pytorch)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img_pytorch.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[[[1., 1., 1., 1.],
+          [1., 1., 1., 1.],
+          [1., 1., 1., 1.],
+          [1., 1., 1., 1.]],
+
+         [[0., 0., 0., 0.],
+          [0., 0., 0., 0.],
+          [0., 0., 0., 0.],
+          [0., 0., 0., 0.]],
+
+         [[0., 0., 0., 0.],
+          [0., 0., 0., 0.],
+          [0., 0., 0., 0.],
+          [0., 0., 0., 0.]]]])
+torch.Size([1, 3, 4, 4])</code></pre>
+</div>
+</div>
+<ul>
+<li>첫채널, 두번째채널, 세번째채널</li>
+</ul>
+<div id="9a5e5a50-4269-4dd1-8c9f-96429c7f17ef" class="cell" data-execution_count="675">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># matplotlib 를 쓰기 위해서는 이미지가 이렇게 저장되어있어야한다. </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>img_plt <span class="op">=</span> torch.stack([r,g,b],axis<span class="op">=-</span><span class="dv">1</span>) </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img_plt)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(img_plt.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tensor([[[1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.]],
+
+        [[1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.]],
+
+        [[1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.]],
+
+        [[1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.],
+         [1., 0., 0.]]])
+torch.Size([4, 4, 3])</code></pre>
+</div>
+</div>
+<ul>
+<li>첫row, 두번째row, 세번째row, 네번째row</li>
+</ul>
+<p>만약에 <code>img_pytorch</code>를 matplotlib 으로 보고싶다면?</p>
+<div id="ce252672-bedc-4b2f-9f80-001a145c177e" class="cell" data-tags="[]" data-execution_count="679">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 잘못된코드</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_pytorch.reshape(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="5aabfb6f-2dcc-4e1c-9100-c0dc737b8633" class="cell" data-tags="[]" data-execution_count="684">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 올바른코드1</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(torch.einsum(<span class="st">'cij -&gt; ijc'</span>,img_pytorch.squeeze()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="31107ed6-aec3-499b-a2d2-4e8624a55735" class="cell" data-tags="[]" data-execution_count="685">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 올바른코드2</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_pytorch.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="이미지-자료-처리" class="level1">
+<h1>4. 이미지 자료 처리</h1>
+<section id="a.-데이터" class="level2">
+<h2 class="anchored" data-anchor-id="a.-데이터">A. 데이터</h2>
+<div id="8ed679ab-ef4d-4fbe-9a84-ac84cc15bed8" class="cell" data-execution_count="686">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'trainval'</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'test'</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e27baae2-ac8f-4bac-85c1-dc72947f4148" class="cell" data-execution_count="687">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>train_dataset[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="687">
+<pre><code>(&lt;PIL.Image.Image image mode=RGB size=394x500&gt;, 0)</code></pre>
+</div>
+</div>
+</section>
+<section id="b.-이미지-변환" class="level2">
+<h2 class="anchored" data-anchor-id="b.-이미지-변환">B. 이미지 변환</h2>
+<p><code>-</code> <code>x_pil</code> 에 <code>resize</code>, <code>to_tensor</code> 를 적용해보기</p>
+<div id="d4814903-276f-4d44-b797-1e1edafb1b67" class="cell" data-execution_count="524">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x_pil <span class="op">=</span> train_dataset[<span class="dv">0</span>][<span class="dv">0</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>x_pil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="524">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6e21f0c4-09d8-4041-87f3-2f6942b2c774" class="cell" data-execution_count="689">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>resize <span class="op">=</span> torchvision.transforms.Resize((<span class="dv">512</span>,<span class="dv">512</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>resize(x_pil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="689">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="7a03f0f6-9208-49d9-9416-5e323b25149f" class="cell" data-execution_count="690">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>to_tensor(resize(x_pil)).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="690">
+<pre><code>torch.Size([3, 512, 512])</code></pre>
+</div>
+</div>
+<p><code>-</code> compose로 여러변환을 묶은뒤 <code>x_pil</code>에 적용해보기</p>
+<div id="9bdd470e-1f90-49f0-870b-2985936526f5" class="cell" data-execution_count="691">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>compose <span class="op">=</span> torchvision.transforms.Compose(</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    [resize,to_tensor]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d975c468-f034-45a9-acc9-a787f3b12580" class="cell" data-execution_count="692">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>compose(x_pil).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="692">
+<pre><code>torch.Size([3, 512, 512])</code></pre>
+</div>
+</div>
+<p><code>-</code> 크기가 8인 배치를 만들어 보기</p>
+<div id="73ffc004-c451-46fc-9fe1-2bdf3e9d1173" class="cell" data-execution_count="539">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Xm <span class="op">=</span> torch.stack([compose(train_dataset[i][<span class="dv">0</span>]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8</span>)],axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="367f046f-1d83-4bed-97b4-bebfa3b72181" class="cell" data-execution_count="541">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Xm.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="541">
+<pre><code>torch.Size([8, 3, 512, 512])</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="ap-layer" class="level1">
+<h1>5. AP Layer</h1>
+<section id="a.-ap-layer" class="level2">
+<h2 class="anchored" data-anchor-id="a.-ap-layer">A. AP layer</h2>
+<div id="4f496cce-35cb-4462-8a38-ad8e31c8250a" class="cell" data-execution_count="719">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ap <span class="op">=</span> torch.nn.AdaptiveAvgPool2d(output_size<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>ap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="719">
+<pre><code>AdaptiveAvgPool2d(output_size=1)</code></pre>
+</div>
+</div>
+<div id="ea0452a9-c43c-4f35-bd53-056c1477f910" class="cell" data-execution_count="720">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.arange(<span class="dv">1</span><span class="op">*</span><span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">4</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>)<span class="op">*</span><span class="fl">1.0</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="720">
+<pre><code>tensor([[[[ 0.,  1.,  2.,  3.],
+          [ 4.,  5.,  6.,  7.],
+          [ 8.,  9., 10., 11.],
+          [12., 13., 14., 15.]],
+
+         [[16., 17., 18., 19.],
+          [20., 21., 22., 23.],
+          [24., 25., 26., 27.],
+          [28., 29., 30., 31.]],
+
+         [[32., 33., 34., 35.],
+          [36., 37., 38., 39.],
+          [40., 41., 42., 43.],
+          [44., 45., 46., 47.]]]])</code></pre>
+</div>
+</div>
+<div id="258c2112-ca21-4806-af5e-8de8e8f74e73" class="cell" data-execution_count="721">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ap(X) <span class="co"># 채널별로 평균을 구해줌. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="721">
+<pre><code>tensor([[[[ 7.5000]],
+
+         [[23.5000]],
+
+         [[39.5000]]]])</code></pre>
+</div>
+</div>
+<div id="1d937b3d-5c1c-49db-accb-7c770ce0342b" class="cell" data-execution_count="722">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>r,g,b <span class="op">=</span> X[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c8503aed-b428-468d-b0b4-40588406d088" class="cell" data-execution_count="723">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>r.mean(), g.mean(), b.mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="723">
+<pre><code>(tensor(7.5000), tensor(23.5000), tensor(39.5000))</code></pre>
+</div>
+</div>
+<div id="6617d8bc-330b-4bf0-b2db-03002b929301" class="cell" data-execution_count="724">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>ap(r), ap(g), ap(b) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="724">
+<pre><code>(tensor([[7.5000]]), tensor([[23.5000]]), tensor([[39.5000]]))</code></pre>
+</div>
+</div>
+</section>
+<section id="b.-ap-linear의-교환" class="level2">
+<h2 class="anchored" data-anchor-id="b.-ap-linear의-교환">B. AP, Linear의 교환</h2>
+<p><code>-</code> 신기한 거 보여줄까요??</p>
+<div id="05f2c70a-ec4f-4ae4-93b7-e683c012ede4" class="cell" data-execution_count="725">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.arange(<span class="dv">1</span><span class="op">*</span><span class="dv">3</span><span class="op">*</span><span class="dv">4</span><span class="op">*</span><span class="dv">4</span>).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>)<span class="op">*</span><span class="fl">1.0</span> </span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>r,g,b <span class="op">=</span> X[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="67fcef24-b55a-44c0-8700-e40265ad1bcb" class="cell" data-execution_count="726">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>ap(r)<span class="op">*</span><span class="fl">0.1</span> <span class="op">+</span> ap(g)<span class="op">*</span><span class="fl">0.2</span> <span class="op">+</span> ap(b)<span class="op">*</span><span class="fl">0.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="726">
+<pre><code>tensor([[17.3000]])</code></pre>
+</div>
+</div>
+<div id="ee3c9fb5-bfb1-4277-9089-1af28cf8c7a4" class="cell" data-execution_count="727">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>ap(r<span class="op">*</span><span class="fl">0.1</span> <span class="op">+</span> g<span class="op">*</span><span class="fl">0.2</span> <span class="op">+</span> b<span class="op">*</span><span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="727">
+<pre><code>tensor([[17.3000]])</code></pre>
+</div>
+</div>
+<ul>
+<li>별로 안 신기함.. 당연한것 아니야?</li>
+</ul>
+<p><code>-</code> <code>torch.nn.Linear()</code> 와 <code>torch.nn.Flatten()</code> 를 이용한 구현</p>
+<div id="3653a3f5-1d41-4cdf-87f4-6cf7b005aceb" class="cell" data-execution_count="728">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>flattn <span class="op">=</span> torch.nn.Flatten()</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>linr <span class="op">=</span> torch.nn.Linear(<span class="dv">3</span>,<span class="dv">1</span>,bias<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9a05d3a3-0e0b-424e-ad75-70f386b69c7d" class="cell" data-execution_count="729">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ap(r)*0.1 + ap(g)*0.2 + ap(b)*0.3</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>linr.weight.data <span class="op">=</span> torch.tensor([[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>]])</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>linr(flattn(ap(X)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="729">
+<pre><code>tensor([[17.3000]], grad_fn=&lt;MmBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="1970cd9e-9097-471b-a28e-9ad216dfac91" class="cell" data-execution_count="730">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ap(r*0.1 + g*0.2 + b*0.3) ## 각각의 픽셀에 l을 취하고 그 결과에 ap를 취해야함 </span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>flattn(ap(torch.einsum(<span class="st">'ocij,kc -&gt; okij'</span>,X,linr.weight.data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="730">
+<pre><code>tensor([[17.3000]])</code></pre>
+</div>
+</div>
+<p><code>-</code> 정리</p>
+<div id="b945cc0a-62c1-4d6f-8cfb-a11ab90234f8" class="cell" data-execution_count="734">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계산1: x를 ap, flatten, linear 순서로 적용</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- X"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>ap(X)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- ap(X)"</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>flattn(ap(X))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- flattn(ap(X))"</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>linr(flattn(ap(X)))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- linr(flattn(ap(X)))"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 3, 4, 4]) -- X
+torch.Size([1, 3, 1, 1]) -- ap(X)
+torch.Size([1, 3]) -- flattn(ap(X))
+torch.Size([1, 1]) -- linr(flattn(ap(X)))</code></pre>
+</div>
+</div>
+<div id="d535f3e3-8eaa-42dd-a70b-f5f5de185376" class="cell" data-execution_count="736">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계산2: x를 linear, ap, flatten 순서로 적용</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- X"</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>torch<span class="sc">.</span>einsum(<span class="st">'ocij,kc -&gt; okij'</span>,X,linr.weight.data)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- l(X)"</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>ap(torch.einsum(<span class="st">'ocij,kc -&gt; okij'</span>,X,linr.weight.data))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- ap(linr(X))"</span>)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>flatten(ap(torch.einsum(<span class="st">'ocij,kc -&gt; okij'</span>,X,linr.weight.data)))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- flattn(ap(linr(X)))"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 3, 4, 4]) -- X
+torch.Size([1, 1, 4, 4]) -- l(X)
+torch.Size([1, 1, 1, 1]) -- ap(linr(X))
+torch.Size([1, 1]) -- flattn(ap(linr(X)))</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="camzhou2016learning의-구현" class="level1 page-columns page-full">
+<h1>6. CAM<span class="citation" data-cites="zhou2016learning">(<a href="#ref-zhou2016learning" role="doc-biblioref">Zhou et al. 2016</a>)</span>의 구현</h1>
+<div class="no-row-height column-margin column-container"><div id="ref-zhou2016learning" class="csl-entry" role="listitem">
+Zhou, Bolei, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. 2016. <span>“Learning Deep Features for Discriminative Localization.”</span> In <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>, 2921–29.
+</div></div><p>ref: <a href="https://arxiv.org/abs/1512.04150" class="uri">https://arxiv.org/abs/1512.04150</a></p>
+<p><code>-</code> 이 강의노트는 위의 논문의 내용을 재구성하였음.</p>
+<section id="a.-0단계-xy-xxyy" class="level2">
+<h2 class="anchored" data-anchor-id="a.-0단계-xy-xxyy">A. 0단계 – (X,y), (XX,yy)</h2>
+<div id="dc1f4e9f-b580-45d8-8f52-cecbeb420604" class="cell" data-execution_count="619">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'trainval'</span>,</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'test'</span>,</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span>,</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3ae574b1-bca2-4e1c-8e00-2efe3827f38f" class="cell" data-execution_count="620">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(train_dataset), <span class="bu">len</span>(test_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="620">
+<pre><code>(3680, 3669)</code></pre>
+</div>
+</div>
+<div id="ec8f3759-3c61-487d-b317-69bb3071daaf" class="cell" data-execution_count="621">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>compose <span class="op">=</span> torchvision.transforms.Compose([</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>    torchvision.transforms.Resize([<span class="dv">512</span>,<span class="dv">512</span>]),</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    torchvision.transforms.ToTensor()</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="916727f8-d489-4e3a-aa8c-30b54c41f706" class="cell" data-execution_count="622">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.stack([compose(train_dataset[i][<span class="dv">0</span>]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3680</span>)],axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> torch.stack([compose(test_dataset[i][<span class="dv">0</span>]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3669</span>)],axis<span class="op">=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ac1b54c3-9365-4e35-be65-5bb66dd80399" class="cell" data-execution_count="623">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor([train_dataset[i][<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3680</span>)]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>).<span class="bu">float</span>()</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> torch.tensor([test_dataset[i][<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3669</span>)]).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>).<span class="bu">float</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="b.-1단계-이미지분류-잘하는-네트워크-선택-후-학습" class="level2">
+<h2 class="anchored" data-anchor-id="b.-1단계-이미지분류-잘하는-네트워크-선택-후-학습">B. 1단계 – 이미지분류 잘하는 네트워크 선택 후 학습</h2>
+<div id="b0ca651c-f46b-42d1-9d1e-9b558da38a81" class="cell" data-execution_count="624">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="co">#--Step1</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co"># make (X,y), (XX,yy)</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>ds_train <span class="op">=</span> torch.utils.data.TensorDataset(X,y)</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>dl_train <span class="op">=</span> torch.utils.data.DataLoader(ds_train,batch_size<span class="op">=</span><span class="dv">32</span>,shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>ds_test <span class="op">=</span> torch.utils.data.TensorDataset(XX,yy)</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>dl_test <span class="op">=</span> torch.utils.data.DataLoader(ds_test,batch_size<span class="op">=</span><span class="dv">32</span>,shuffle<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a><span class="co">#--Step2</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>resnet18 <span class="op">=</span> torchvision.models.resnet18(pretrained<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>resnet18.fc <span class="op">=</span> torch.nn.Linear(<span class="dv">512</span>,<span class="dv">1</span>)</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.BCEWithLogitsLoss()</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.Adam(resnet18.parameters(),lr<span class="op">=</span><span class="fl">1e-5</span>)</span>
+<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a><span class="co">#--Step3</span></span>
+<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a>resnet18.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-15"><a href="#cb70-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb70-16"><a href="#cb70-16" aria-hidden="true" tabindex="-1"></a>    resnet18.train()</span>
+<span id="cb70-17"><a href="#cb70-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> Xm,ym <span class="kw">in</span> dl_train:</span>
+<span id="cb70-18"><a href="#cb70-18" aria-hidden="true" tabindex="-1"></a>        Xm <span class="op">=</span> Xm.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a>        ym <span class="op">=</span> ym.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-20"><a href="#cb70-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">#1</span></span>
+<span id="cb70-21"><a href="#cb70-21" aria-hidden="true" tabindex="-1"></a>        netout <span class="op">=</span> resnet18(Xm)</span>
+<span id="cb70-22"><a href="#cb70-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">#2</span></span>
+<span id="cb70-23"><a href="#cb70-23" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> loss_fn(netout,ym) </span>
+<span id="cb70-24"><a href="#cb70-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">#3</span></span>
+<span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a>        <span class="co">#4 </span></span>
+<span id="cb70-27"><a href="#cb70-27" aria-hidden="true" tabindex="-1"></a>        optimizr.step()</span>
+<span id="cb70-28"><a href="#cb70-28" aria-hidden="true" tabindex="-1"></a>        optimizr.zero_grad()</span>
+<span id="cb70-29"><a href="#cb70-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">#---# </span></span>
+<span id="cb70-30"><a href="#cb70-30" aria-hidden="true" tabindex="-1"></a>    resnet18.<span class="bu">eval</span>()</span>
+<span id="cb70-31"><a href="#cb70-31" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="dv">0</span> </span>
+<span id="cb70-32"><a href="#cb70-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> Xm,ym <span class="kw">in</span> dl_train:</span>
+<span id="cb70-33"><a href="#cb70-33" aria-hidden="true" tabindex="-1"></a>        Xm <span class="op">=</span> Xm.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-34"><a href="#cb70-34" aria-hidden="true" tabindex="-1"></a>        ym <span class="op">=</span> ym.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-35"><a href="#cb70-35" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> s <span class="op">+</span> ((resnet18(Xm).data <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">==</span> ym).<span class="bu">sum</span>().item()        </span>
+<span id="cb70-36"><a href="#cb70-36" aria-hidden="true" tabindex="-1"></a>    acc <span class="op">=</span> s<span class="op">/</span><span class="bu">len</span>(X)</span>
+<span id="cb70-37"><a href="#cb70-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"train_accuracy = </span><span class="sc">{</span>acc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb70-38"><a href="#cb70-38" aria-hidden="true" tabindex="-1"></a><span class="co">#--Step4</span></span>
+<span id="cb70-39"><a href="#cb70-39" aria-hidden="true" tabindex="-1"></a>resnet18.<span class="bu">eval</span>()</span>
+<span id="cb70-40"><a href="#cb70-40" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="dv">0</span> </span>
+<span id="cb70-41"><a href="#cb70-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Xm,ym <span class="kw">in</span> dl_test:</span>
+<span id="cb70-42"><a href="#cb70-42" aria-hidden="true" tabindex="-1"></a>    Xm <span class="op">=</span> Xm.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-43"><a href="#cb70-43" aria-hidden="true" tabindex="-1"></a>    ym <span class="op">=</span> ym.to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb70-44"><a href="#cb70-44" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> s <span class="op">+</span> ((resnet18(Xm).data <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">==</span> ym).<span class="bu">sum</span>().item()</span>
+<span id="cb70-45"><a href="#cb70-45" aria-hidden="true" tabindex="-1"></a>acc <span class="op">=</span> s<span class="op">/</span><span class="bu">len</span>(XX)</span>
+<span id="cb70-46"><a href="#cb70-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"test_accuracy = </span><span class="sc">{</span>acc<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>train_accuracy = 0.9815
+train_accuracy = 0.9973
+train_accuracy = 0.9995
+test_accuracy = 0.9951</code></pre>
+</div>
+</div>
+</section>
+<section id="c.-2단계-linear와-ap의-순서를-바꿈" class="level2">
+<h2 class="anchored" data-anchor-id="c.-2단계-linear와-ap의-순서를-바꿈">C. 2단계– Linear와 AP의 순서를 바꿈</h2>
+<div id="6572cf53-9eb2-4ce4-861b-3c72b917e303" class="cell" data-execution_count="635">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>resnet18._forward_impl??</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span> resnet18<span class="ansi-blue-fg">.</span>_forward_impl<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">:</span> torch<span class="ansi-blue-fg">.</span>Tensor<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> torch<span class="ansi-blue-fg">.</span>Tensor
+<span class="ansi-red-fg">Docstring:</span> &lt;no docstring&gt;
+<span class="ansi-red-fg">Source:</span>   
+    <span class="ansi-green-fg">def</span> _forward_impl<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> x<span class="ansi-blue-fg">:</span> Tensor<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> Tensor<span class="ansi-blue-fg">:</span>
+        <span class="ansi-red-fg"># See note [TorchScript super()]</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>conv1<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>bn1<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>relu<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>maxpool<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>layer1<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>layer2<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>layer3<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>layer4<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>avgpool<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> torch<span class="ansi-blue-fg">.</span>flatten<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
+        x <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>fc<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">return</span> x
+<span class="ansi-red-fg">File:</span>      ~/anaconda3/envs/dl2025/lib/python3.9/site-packages/torchvision/models/resnet.py
+<span class="ansi-red-fg">Type:</span>      method</pre>
+</div>
+</div>
+</div>
+<div id="9c81a7f4-e52f-4539-82c3-5508ead50bff" class="cell" data-execution_count="626">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>stem <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sequential(</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>        resnet18.conv1,</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>        resnet18.bn1,</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>        resnet18.relu,</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>        resnet18.maxpool,</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>    resnet18.layer1,</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>    resnet18.layer2,</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>    resnet18.layer3,</span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>    resnet18.layer4</span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="27fe9270-0aec-47ed-ae63-5ff826a90b0a" class="cell" data-execution_count="627">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>head <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>    resnet18.avgpool,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>    resnet18.fc</span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c0411f9e-8070-4720-bb90-89a145cdc3cb" class="cell" data-execution_count="628">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>    stem, head</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>-</code> 1개의 observation을 고정</p>
+<div id="1c653225-505c-4ab0-a4de-a621a224562d" class="cell" data-execution_count="636">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span>  X[[<span class="dv">0</span>]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>net(x),resnet18(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="636">
+<pre><code>(tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;),
+ tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;))</code></pre>
+</div>
+</div>
+<p><code>-</code> 하나의 observation이 yhat까지 나오는 과정</p>
+<div id="516954b8-1aff-4aaf-b07b-9228894c8868" class="cell" data-execution_count="637">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계산방식1: 원래계산방식</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>ap <span class="op">=</span> head[<span class="dv">0</span>]</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>flattn <span class="op">=</span> head[<span class="dv">1</span>]</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>linr <span class="op">=</span> head[<span class="dv">2</span>]</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>x<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- x"</span>)</span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>stem(x)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- stem(x)"</span>)</span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>ap(stem(x))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- ap(stem(x))"</span>)</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>flattn(ap(stem(x)))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- flattn(ap(stem(x)))"</span>)</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>linr(flattn(ap(stem(x))))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- linr(flattn(ap(stem(x))))"</span>)</span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>linr(flattn(ap(stem(x)))), net(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 3, 512, 512]) -- x
+torch.Size([1, 512, 16, 16]) -- stem(x)
+torch.Size([1, 512, 1, 1]) -- ap(stem(x))
+torch.Size([1, 512]) -- flattn(ap(stem(x)))
+torch.Size([1, 1]) -- linr(flattn(ap(stem(x))))</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="637">
+<pre><code>(tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;),
+ tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;))</code></pre>
+</div>
+</div>
+<p><strong>전체 네트워크</strong> <span class="math display">\[\underset{(1,3,512,512)}{\boldsymbol x} \overset{stem}{\to} \left( \underset{(1,512,16,16)}{\tilde{\boldsymbol x}} \overset{ap}{\to} \underset{(1,512,1,1)}{{\boldsymbol \sharp}}\overset{flattn}{\to} \underset{(1,512)}{{\boldsymbol \sharp}}\overset{linr}{\to} \underset{(1,1)}{\hat{\boldsymbol y}}\right) = [[-5.5581]]\]</span></p>
+<p><strong>바꾸고 싶은 네트워크</strong> <span class="math display">\[\underset{(1,3,224,224)}{\boldsymbol x} \overset{stem}{\to} \left( \underset{(1,512,16,16)}{\tilde{\boldsymbol x}} \overset{\_linr}{\to} \underset{(1,2,16,16)}{{\boldsymbol \sharp}}\overset{ap}{\to} \underset{(1,1,1,1)}{{\boldsymbol \sharp}}\overset{flattn}{\to} \underset{(1,1)}{\hat{\boldsymbol y}}\right) = [[-5.5581]]\]</span></p>
+<div id="a717b70d-236f-4c16-a804-539b70b7bfd9" class="cell" data-execution_count="638">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 계산방식2: head의 순서를 바꾼 계산</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>ap <span class="op">=</span> head[<span class="dv">0</span>]</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>flattn <span class="op">=</span> head[<span class="dv">1</span>]</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>linr <span class="op">=</span> head[<span class="dv">2</span>]</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _linr(xtilde):</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.einsum(<span class="st">'ocij,kc -&gt; okij'</span>, xtilde, linr.weight.data) <span class="op">+</span> linr.bias.data</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>x<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- x"</span>)</span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>stem(x)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- stem(x)"</span>)</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>_linr(stem(x))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- _linr(stem(x))"</span>)</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>ap(_linr(stem(x)))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- ap(_linr(stem(x)))"</span>)</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>flattn(ap(_linr(stem(x))))<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> -- flattn(ap(_linr(stem(x)))))"</span>)</span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>net(x), flattn(ap(_linr(stem(x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([1, 3, 512, 512]) -- x
+torch.Size([1, 512, 16, 16]) -- stem(x)
+torch.Size([1, 1, 16, 16]) -- _linr(stem(x))
+torch.Size([1, 1, 1, 1]) -- ap(_linr(stem(x)))
+torch.Size([1, 1]) -- flattn(ap(_linr(stem(x)))))</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="638">
+<pre><code>(tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;),
+ tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;ViewBackward0&gt;))</code></pre>
+</div>
+</div>
+<ul>
+<li>참고: 여기에서 <code>_linr</code>는 (1,512,16,16)의 each pixel에 <code>linr=torch.nn.Linear(512,1)</code>를 수행함.</li>
+</ul>
+<section id="star-잠깐-멈추고-생각-좀-해보자.." class="level3">
+<h3 class="anchored" data-anchor-id="star-잠깐-멈추고-생각-좀-해보자.."><span class="math inline">\(\star\)</span> 잠깐 멈추고 생각 좀 해보자..</h3>
+<p><code>-</code> 입력이미지</p>
+<div id="5a49e643-1aaf-4f48-bd6c-8e6abc2292b6" class="cell" data-execution_count="639">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="639">
+<pre><code>tensor([[[[0.1451, 0.1412, 0.1373,  ..., 0.9725, 0.9765, 0.9765],
+          [0.1373, 0.1373, 0.1412,  ..., 0.9686, 0.9725, 0.9765],
+          [0.1373, 0.1412, 0.1451,  ..., 0.9765, 0.9804, 0.9804],
+          ...,
+          [0.0196, 0.0157, 0.0157,  ..., 0.2588, 0.2549, 0.2706],
+          [0.0196, 0.0157, 0.0157,  ..., 0.2275, 0.2275, 0.2510],
+          [0.1098, 0.1098, 0.1098,  ..., 0.2431, 0.2706, 0.2980]],
+
+         [[0.0784, 0.0745, 0.0706,  ..., 0.9725, 0.9725, 0.9725],
+          [0.0706, 0.0706, 0.0745,  ..., 0.9686, 0.9686, 0.9725],
+          [0.0706, 0.0745, 0.0784,  ..., 0.9725, 0.9765, 0.9765],
+          ...,
+          [0.0235, 0.0196, 0.0196,  ..., 0.4235, 0.4118, 0.4314],
+          [0.0157, 0.0118, 0.0118,  ..., 0.3843, 0.3961, 0.4235],
+          [0.1059, 0.1059, 0.1059,  ..., 0.3961, 0.4314, 0.4588]],
+
+         [[0.0471, 0.0431, 0.0392,  ..., 0.9922, 0.9922, 0.9922],
+          [0.0392, 0.0392, 0.0431,  ..., 0.9882, 0.9882, 0.9922],
+          [0.0392, 0.0431, 0.0471,  ..., 0.9922, 0.9961, 0.9961],
+          ...,
+          [0.0941, 0.0902, 0.0902,  ..., 0.9373, 0.9059, 0.8784],
+          [0.0784, 0.0745, 0.0745,  ..., 0.9333, 0.9255, 0.8980],
+          [0.1373, 0.1373, 0.1373,  ..., 0.8784, 0.8980, 0.8745]]]],
+       device='cuda:0')</code></pre>
+</div>
+</div>
+<p><code>-</code> 원래 계산방식을 그대로 적용하고 결과를 해석</p>
+<div id="c4f7fd85-6f83-436c-b017-67b9e424093b" class="cell" data-execution_count="640">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>linr(flattn(ap(stem(x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="640">
+<pre><code>tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;AddmmBackward0&gt;)</code></pre>
+</div>
+</div>
+<p><code>-</code> 바뀐 계산방식을 적용해볼까?</p>
+<div id="5d9d7a62-424e-4e7e-a292-4f4b09335fd6" class="cell" data-execution_count="641">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>flattn(ap(_linr(stem(x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="641">
+<pre><code>tensor([[-5.5581]], device='cuda:0', grad_fn=&lt;ViewBackward0&gt;)</code></pre>
+</div>
+</div>
+<p><code>-</code> 좀더 파고들어서 분석해보자.</p>
+<div id="4546211a-8d73-4346-88d8-d97bfd7e0e3c" class="cell" data-execution_count="642">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>_linr(stem(x)).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="642">
+<pre><code>torch.Size([1, 1, 16, 16])</code></pre>
+</div>
+</div>
+<div id="2365d950-5722-4d88-a489-772bd5a0bf7e" class="cell" data-execution_count="643">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>_linr(stem(x)).<span class="bu">long</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="643">
+<pre><code>tensor([[[[  0,   0,   0,   0,   0,   0,   0,   0,  -1,  -2,  -2,  -2,   0,   0,
+             0,   0],
+          [  0,   0,   0,   0,   0,   0,   0,  -1,   0,  -2,  -3,  -4,  -1,   0,
+             0,   0],
+          [  0,   0,   0,   1,   0,   0,   0,   0,   1,   0,  -3,  -5,  -4,  -2,
+             0,   0],
+          [  0,   0,   0,   0,   0,   0,   0,   0,  -1,  -4,  -9, -12, -12,  -8,
+            -2,   0],
+          [  0,   0,   0,   0,   0,   0,  -1,  -5, -11, -16, -20, -24, -22, -14,
+            -4,   0],
+          [ -1,  -1,   0,   0,   0,   0,  -5, -16, -28, -35, -40, -43, -38, -23,
+            -7,   0],
+          [ -1,  -1,   0,   0,   0,   0, -10, -28, -47, -56, -56, -53, -43, -25,
+            -7,   0],
+          [  0,  -1,   0,   0,   0,   0, -11, -29, -49, -57, -54, -47, -34, -19,
+            -4,   1],
+          [  0,   0,   0,   0,   0,   0,  -7, -21, -36, -43, -38, -29, -18,  -8,
+            -1,   0],
+          [  0,   0,  -1,  -1,   0,   0,  -3,  -9, -16, -19, -16, -11,  -4,   0,
+             0,   0],
+          [  0,   0,  -2,  -2,   0,   0,  -1,  -3,  -6,  -7,  -5,  -2,   0,   0,
+             1,   1],
+          [  0,   0,  -2,  -1,   0,   0,  -1,  -3,  -4,  -3,  -1,   0,   0,   0,
+             1,   1],
+          [  0,   0,  -1,   0,   0,   0,   0,  -2,  -2,  -1,   0,   0,   0,   0,
+             1,   1],
+          [  0,   0,   0,   0,   0,   0,   0,  -1,  -1,   0,   0,   0,   0,   1,
+             2,   1],
+          [ -1,  -1,  -1,  -1,   0,   0,   0,  -1,   0,   0,   0,   1,   1,   2,
+             2,   2],
+          [  0,  -1,  -1,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,
+             1,   1]]]], device='cuda:0')</code></pre>
+</div>
+</div>
+<ul>
+<li>여러값들이 있지만 아무튼 이 값들의 평균은 -5.5581임.</li>
+<li>이 값들이 작을수록 이 그림은 고양이라는 의미임</li>
+<li>그런데 살펴보니 대부분의 위치에서 0에 가까운 값을 가지고, 특정 위치에서만 엄청 작은값이 있어서 -5.5581이라는 값이 나온 것임.</li>
+<li>특정위치에 존재하는 엄청 작은 값들은, <code>x</code>가 고양이 이미지라고 판단하는 근거가 된다.</li>
+</ul>
+<p><span class="math display">\[\underset{(1,2,16,16)}{{\boldsymbol \sharp}:={\bf WHY}}\overset{ap}{\to} \underset{(1,2,1,1)}{{\boldsymbol \sharp}}\overset{flatten}{\to} \underset{(1,1)}{\hat{\boldsymbol y}} = [[-5.5581]]\]</span></p>
+</section>
+</section>
+<section id="d.-3단계-why-시각화" class="level2">
+<h2 class="anchored" data-anchor-id="d.-3단계-why-시각화">D. 3단계 – WHY 시각화</h2>
+<p><code>-</code> 시각화1</p>
+<div id="4dee8c54-a833-47f0-9d01-3b7400942d61" class="cell" data-execution_count="644">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>why <span class="op">=</span> _linr(stem(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="403390c7-84bf-4fe6-8142-7fd259abf2e4" class="cell" data-execution_count="645">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>why.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="645">
+<pre><code>torch.Size([1, 1, 16, 16])</code></pre>
+</div>
+</div>
+<div id="4b991eca-0fe0-4323-a9dd-69c68f5e9865" class="cell" data-execution_count="646">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(why.squeeze().to(<span class="st">"cpu"</span>).detach(), cmap<span class="op">=</span><span class="st">'bwr'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-61-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="5c89eac0-ef16-424a-bf84-9468ec917f3f" class="cell" data-execution_count="647">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>why.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="647">
+<pre><code>torch.Size([1, 1, 16, 16])</code></pre>
+</div>
+</div>
+<div id="b4a99643-e9ff-4bc0-9533-15de1451455c" class="cell" data-execution_count="648">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>    why,</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>    align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="a992fc3d-9f36-4c2c-aebb-38480da4a994" class="cell" data-execution_count="649">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>    why_resized.squeeze().to(<span class="st">"cpu"</span>).detach(),</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"bwr"</span>,</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>    alpha<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-64-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="93a213b0-c239-4384-a682-c91279594785" class="cell" data-execution_count="650">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"bwr"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-65-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 시각화2</p>
+<div id="4eb7979e-5713-400a-b6cc-f730532e3a67" class="cell" data-execution_count="653">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> X[[<span class="dv">0</span>]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>    why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> <span class="st">"cat"</span></span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>    why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>    why,</span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a>    align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb103-13"><a href="#cb103-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb103-14"><a href="#cb103-14" aria-hidden="true" tabindex="-1"></a>plt.imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb103-15"><a href="#cb103-15" aria-hidden="true" tabindex="-1"></a>plt.imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb103-16"><a href="#cb103-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-66-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 시각화3 – 하니를 시각화해보자.</p>
+<div id="4d3a7655-f083-45cf-87cc-b426fe4b7105" class="cell" data-execution_count="657">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://github.com/guebin/DL2024/blob/main/imgs/01wk-hani1.jpeg?raw=true'</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>hani_pil <span class="op">=</span> PIL.Image.<span class="bu">open</span>(io.BytesIO(requests.get(url).content))</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>hani_pil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="657">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-67-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="e7957f0e-6c1c-4ff0-b2e7-c4ee93e00e66" class="cell" data-execution_count="655">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> resize(to_tensor(hani_pil)).reshape(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">512</span>,<span class="dv">512</span>).to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>    why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> <span class="st">"cat"</span> </span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>    why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a>why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a>    why,</span>
+<span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a>    size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a>    mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a>    align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb105-13"><a href="#cb105-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb105-14"><a href="#cb105-14" aria-hidden="true" tabindex="-1"></a>plt.imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb105-15"><a href="#cb105-15" aria-hidden="true" tabindex="-1"></a>plt.imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb105-16"><a href="#cb105-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers). Got range [0.0..1.0000002].</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-68-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>-</code> 시각화4</p>
+<div id="20136278-d974-4b36-bbe7-232b48a548b7" class="cell" data-execution_count="661">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> XX[[k]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"cat"</span> </span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>        why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>            why,</span>
+<span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb107-16"><a href="#cb107-16" aria-hidden="true" tabindex="-1"></a>            mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb107-17"><a href="#cb107-17" aria-hidden="true" tabindex="-1"></a>            align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb107-18"><a href="#cb107-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb107-19"><a href="#cb107-19" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb107-20"><a href="#cb107-20" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)        </span>
+<span id="cb107-21"><a href="#cb107-21" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_xticks([])</span>
+<span id="cb107-22"><a href="#cb107-22" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_yticks([])    </span>
+<span id="cb107-23"><a href="#cb107-23" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span> </span>
+<span id="cb107-24"><a href="#cb107-24" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span>k<span class="op">+</span><span class="dv">50</span></span>
+<span id="cb107-25"><a href="#cb107-25" aria-hidden="true" tabindex="-1"></a>fig.set_figheight(<span class="dv">16</span>)</span>
+<span id="cb107-26"><a href="#cb107-26" aria-hidden="true" tabindex="-1"></a>fig.set_figwidth(<span class="dv">16</span>)</span>
+<span id="cb107-27"><a href="#cb107-27" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-69-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="fa7b21da-330a-41f6-8f5a-83d505440fc3" class="cell" data-execution_count="662">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span><span class="dv">25</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> XX[[k]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"cat"</span> </span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>        why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a>            why,</span>
+<span id="cb108-15"><a href="#cb108-15" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb108-16"><a href="#cb108-16" aria-hidden="true" tabindex="-1"></a>            mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb108-17"><a href="#cb108-17" aria-hidden="true" tabindex="-1"></a>            align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb108-18"><a href="#cb108-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb108-19"><a href="#cb108-19" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb108-20"><a href="#cb108-20" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)        </span>
+<span id="cb108-21"><a href="#cb108-21" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_xticks([])</span>
+<span id="cb108-22"><a href="#cb108-22" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_yticks([])    </span>
+<span id="cb108-23"><a href="#cb108-23" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span> </span>
+<span id="cb108-24"><a href="#cb108-24" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span>k<span class="op">+</span><span class="dv">50</span></span>
+<span id="cb108-25"><a href="#cb108-25" aria-hidden="true" tabindex="-1"></a>fig.set_figheight(<span class="dv">16</span>)</span>
+<span id="cb108-26"><a href="#cb108-26" aria-hidden="true" tabindex="-1"></a>fig.set_figwidth(<span class="dv">16</span>)</span>
+<span id="cb108-27"><a href="#cb108-27" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-70-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="f9b9f0c5-85df-4843-8d3a-17f359d71ba7" class="cell" data-execution_count="663">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span><span class="dv">50</span></span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> XX[[k]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"cat"</span> </span>
+<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a>        why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>            why,</span>
+<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>            mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb109-17"><a href="#cb109-17" aria-hidden="true" tabindex="-1"></a>            align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb109-18"><a href="#cb109-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb109-19"><a href="#cb109-19" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb109-20"><a href="#cb109-20" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)        </span>
+<span id="cb109-21"><a href="#cb109-21" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_xticks([])</span>
+<span id="cb109-22"><a href="#cb109-22" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_yticks([])    </span>
+<span id="cb109-23"><a href="#cb109-23" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span> </span>
+<span id="cb109-24"><a href="#cb109-24" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span>k<span class="op">+</span><span class="dv">50</span></span>
+<span id="cb109-25"><a href="#cb109-25" aria-hidden="true" tabindex="-1"></a>fig.set_figheight(<span class="dv">16</span>)</span>
+<span id="cb109-26"><a href="#cb109-26" aria-hidden="true" tabindex="-1"></a>fig.set_figwidth(<span class="dv">16</span>)</span>
+<span id="cb109-27"><a href="#cb109-27" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-71-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="3a5b6158-132e-49e4-b011-ab1b29cb8243" class="cell" data-execution_count="664">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>fig,ax <span class="op">=</span> plt.subplots(<span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span><span class="dv">75</span></span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> XX[[k]].to(<span class="st">"cuda:0"</span>)</span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> net(x)<span class="op">&gt;</span><span class="dv">0</span>:</span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"dog"</span></span>
+<span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> _linr(stem(x))</span>
+<span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a>            pred <span class="op">=</span> <span class="st">"cat"</span> </span>
+<span id="cb110-12"><a href="#cb110-12" aria-hidden="true" tabindex="-1"></a>            why <span class="op">=</span> <span class="op">-</span> _linr(stem(x))</span>
+<span id="cb110-13"><a href="#cb110-13" aria-hidden="true" tabindex="-1"></a>        why_resized <span class="op">=</span> torch.nn.functional.interpolate(</span>
+<span id="cb110-14"><a href="#cb110-14" aria-hidden="true" tabindex="-1"></a>            why,</span>
+<span id="cb110-15"><a href="#cb110-15" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">512</span>),</span>
+<span id="cb110-16"><a href="#cb110-16" aria-hidden="true" tabindex="-1"></a>            mode<span class="op">=</span><span class="st">'bilinear'</span>,</span>
+<span id="cb110-17"><a href="#cb110-17" aria-hidden="true" tabindex="-1"></a>            align_corners<span class="op">=</span><span class="va">False</span></span>
+<span id="cb110-18"><a href="#cb110-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb110-19"><a href="#cb110-19" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(x.squeeze().permute(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>).cpu().detach())</span>
+<span id="cb110-20"><a href="#cb110-20" aria-hidden="true" tabindex="-1"></a>        ax[i][j].imshow(why_resized.squeeze().cpu().detach(),cmap<span class="op">=</span><span class="st">"magma"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>)        </span>
+<span id="cb110-21"><a href="#cb110-21" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_xticks([])</span>
+<span id="cb110-22"><a href="#cb110-22" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_yticks([])    </span>
+<span id="cb110-23"><a href="#cb110-23" aria-hidden="true" tabindex="-1"></a>        ax[i][j].set_title(<span class="ss">f"prediction = </span><span class="sc">{</span>pred<span class="sc">}</span><span class="ss">"</span>)<span class="op">;</span> </span>
+<span id="cb110-24"><a href="#cb110-24" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span>k<span class="op">+</span><span class="dv">50</span></span>
+<span id="cb110-25"><a href="#cb110-25" aria-hidden="true" tabindex="-1"></a>fig.set_figheight(<span class="dv">16</span>)</span>
+<span id="cb110-26"><a href="#cb110-26" aria-hidden="true" tabindex="-1"></a>fig.set_figwidth(<span class="dv">16</span>)</span>
+<span id="cb110-27"><a href="#cb110-27" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="08wk-2_files/figure-html/cell-72-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="cam의-한계" class="level1">
+<h1>7. CAM의 한계</h1>
+<p><code>-</code> 구조의 제약이 있음</p>
+<ul>
+<li>AP 와 LINR 로 구성된 net만 가능</li>
+<li>그렇지 않은 네트워크는 임의로 CAM 을 위한 구조로 만들어야함</li>
+</ul>
+<p><code>-</code> 이후에 등장한 grad-cam의 경우 구조의 제약없이 거의 모든 CNN에 적용가능</p>
+
 
 
 </section>
