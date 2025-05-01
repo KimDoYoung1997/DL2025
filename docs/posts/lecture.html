@@ -203,9 +203,11 @@ window.Quarto = {
   <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports">2. Imports</a></li>
   <li><a href="#gan-goodfellow2014generative-intro" id="toc-gan-goodfellow2014generative-intro" class="nav-link" data-scroll-target="#gan-goodfellow2014generative-intro">3. GAN <span class="citation" data-cites="goodfellow2014generative">(Goodfellow et al. 2014)</span> intro</a>
   <ul class="collapse">
-  <li><a href="#a.-생성모형이란-쉬운-설명" id="toc-a.-생성모형이란-쉬운-설명" class="nav-link" data-scroll-target="#a.-생성모형이란-쉬운-설명">A. 생성모형이란? (쉬운 설명)</a></li>
-  <li><a href="#b.-생성모형이란-통계학과-버전의-설명" id="toc-b.-생성모형이란-통계학과-버전의-설명" class="nav-link" data-scroll-target="#b.-생성모형이란-통계학과-버전의-설명">B. 생성모형이란? 통계학과 버전의 설명</a></li>
-  <li><a href="#c.-gan의-원리" id="toc-c.-gan의-원리" class="nav-link" data-scroll-target="#c.-gan의-원리">C. GAN의 원리</a></li>
+  <li><a href="#a.-잡썰" id="toc-a.-잡썰" class="nav-link" data-scroll-target="#a.-잡썰">A. 잡썰</a></li>
+  <li><a href="#b.-gan의-원리" id="toc-b.-gan의-원리" class="nav-link" data-scroll-target="#b.-gan의-원리">B. GAN의 원리</a></li>
+  <li><a href="#c.-생성모형이란-쉬운-설명" id="toc-c.-생성모형이란-쉬운-설명" class="nav-link" data-scroll-target="#c.-생성모형이란-쉬운-설명">C. 생성모형이란? (쉬운 설명)</a></li>
+  <li><a href="#d.-생성모형이란-통계학과-버전의-설명" id="toc-d.-생성모형이란-통계학과-버전의-설명" class="nav-link" data-scroll-target="#d.-생성모형이란-통계학과-버전의-설명">D. 생성모형이란? 통계학과 버전의 설명</a></li>
+  <li><a href="#e.-철학의-차이" id="toc-e.-철학의-차이" class="nav-link" data-scroll-target="#e.-철학의-차이">E. 철학의 차이</a></li>
   </ul></li>
   <li><a href="#gan의-구현" id="toc-gan의-구현" class="nav-link" data-scroll-target="#gan의-구현">4. GAN의 구현</a>
   <ul class="collapse">
@@ -275,7 +277,9 @@ window.Quarto = {
 <h1>3. GAN <span class="citation" data-cites="goodfellow2014generative">(<a href="#ref-goodfellow2014generative" role="doc-biblioref">Goodfellow et al. 2014</a>)</span> intro</h1>
 <div class="no-row-height column-margin column-container"><div id="ref-goodfellow2014generative" class="csl-entry" role="listitem">
 Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. 2014. <span>“Generative Adversarial Nets.”</span> <em>Advances in Neural Information Processing Systems</em> 27.
-</div></div><p><code>-</code> 저자: 이안굿펠로우</p>
+</div></div><section id="a.-잡썰" class="level2">
+<h2 class="anchored" data-anchor-id="a.-잡썰">A. 잡썰</h2>
+<p><code>-</code> 저자: 이안굿펠로우</p>
 <ul>
 <li>천재임</li>
 <li>지도교수가 요수아 벤지오</li>
@@ -285,34 +289,13 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <li>https://arxiv.org/abs/1406.2661</li>
 </ul>
 <p><code>-</code> 최근 10년간 머신러닝 분야에서 가장 혁신적인 아이디어이다. (얀르쿤, 2014년 시점..)</p>
-<p><code>-</code> 무슨내용? 생성모형</p>
-<section id="a.-생성모형이란-쉬운-설명" class="level2">
-<h2 class="anchored" data-anchor-id="a.-생성모형이란-쉬운-설명">A. 생성모형이란? (쉬운 설명)</h2>
-<blockquote class="blockquote">
-<p>만들수 없다면 이해하지 못한 것이다, 리처드 파인만 (천재 물리학자)</p>
-</blockquote>
-<p><code>-</code> 사진속에 들어있는 동물이 개인지 고양이인지 맞출수 있는 기계와 개와 고양이를 그릴수 있는 기계중 어떤것이 더 시각적보에 대한 이해가 깊다고 볼 수 있는가?</p>
-<p><code>-</code> 진정으로 인공지능이 이미지자료를 이해했다면, 이미지를 만들수도 있어야 한다. <span class="math inline">\(\to\)</span> 이미지를 생성하는 모형을 만들어보자 <span class="math inline">\(\to\)</span> 성공</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Woman_1.jpg" class="img-fluid" style="width:70.0%"></p>
-</section>
-<section id="b.-생성모형이란-통계학과-버전의-설명" class="level2">
-<h2 class="anchored" data-anchor-id="b.-생성모형이란-통계학과-버전의-설명">B. 생성모형이란? 통계학과 버전의 설명</h2>
-<blockquote class="blockquote">
-<p>제한된 정보만으로 어떤 문제를 풀 때, 그 과정에서 원래의 문제보다 일반적인 문제를 풀지 말고 (=문제를 괜히 어렵게 만들어서 풀지 말고), 가능한 원래의 문제를 직접 풀어야한다. 배프닉 (SVM 창시자)</p>
-</blockquote>
-<p><code>-</code> 이미지 <span class="math inline">\(\boldsymbol{X}\)</span> 가 주어졌을 경우 라벨을 <span class="math inline">\(y\)</span> 라고 하자.</p>
-<p><code>-</code> 이미지를 보고 라벨을 맞추는 일은 <span class="math inline">\(p(y| \boldsymbol{X})\)</span>에 관심이 있다. – 판별모형</p>
-<p><code>-</code> 이미지를 생성하는 일은 <span class="math inline">\(p(\boldsymbol{X},y)\)</span>에 관심이 있는것이다. – 생성모형</p>
-<p><code>-</code> 데이터의 생성확률 <span class="math inline">\(p(\boldsymbol{X},y)\)</span>을 알면 클래스의 사후확률 <span class="math inline">\(p(y|\boldsymbol{X})\)</span>를 알 수 있음. (아래의 수식 참고) 하지만 역은 불가능</p>
-<p><span class="math display">\[p(y|{\boldsymbol X}) = \frac{p({\boldsymbol X},y)}{p({\boldsymbol X})} = \frac{p({\boldsymbol X},y)}{\sum_{y}p({\boldsymbol X},y)}\]</span></p>
+<p><code>-</code> 야사와 만화로 배우는 인공지능</p>
 <ul>
-<li>즉 이미지를 생성하는일은 분류문제보다 더 어려운 일이라 해석가능</li>
+<li>https://wedatalab.tistory.com/125</li>
 </ul>
-<p><code>-</code> 따라서 배프닉의 원리에 의하면 일반적인 분류문제를 해결할때 “판별모형이 생성모형보다 더 바람직한 접근법”이라 할 수 있음. 즉 개와 고양이를 구분할 때, 그려진 개와 고양이 사진을 잘 구분하면 되는 것이지 굳이 개와 고양이를 그릴줄 알아야하는건 아니라는 의미.</p>
-<p><code>-</code> 예전에는 머신러닝의 응용분야가 “분류/회귀”에 한정된 느낌이었는데 요즘은 생성모형도 인기있음.</p>
 </section>
-<section id="c.-gan의-원리" class="level2">
-<h2 class="anchored" data-anchor-id="c.-gan의-원리">C. GAN의 원리</h2>
+<section id="b.-gan의-원리" class="level2">
+<h2 class="anchored" data-anchor-id="b.-gan의-원리">B. GAN의 원리</h2>
 <p><code>-</code> GAN의 원리는 경찰과 위조지폐범이 서로 선의의(?) 경쟁을 통하여 서로 발전하는 모형으로 설명할 수 있다.</p>
 <blockquote class="blockquote">
 <p>The generative model can be thought of as analogous to a team of fakers, trying to produce fake currency and use it without detection, while the discriminative model is analogous to the police, trying to detect the counterfeit currency. Competition in this game drives both teams to improve their methods until the counterfeits are indistiguishable from the genuine articles.</p>
@@ -329,6 +312,38 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <li>반복..</li>
 </ul>
 <p><code>-</code> 굉장히 우수한 경찰조차도 진짜와 가짜를 구분하지 못할때(=진짜 이미지를 0.5의 확률로만 진짜라고 말할때 = 가짜 이미지를 0.5의 확률로만 가짜라고 말할때) 학습을 멈춘다.</p>
+</section>
+<section id="c.-생성모형이란-쉬운-설명" class="level2">
+<h2 class="anchored" data-anchor-id="c.-생성모형이란-쉬운-설명">C. 생성모형이란? (쉬운 설명)</h2>
+<p><code>-</code> 사진속에 들어있는 동물이 개인지 고양이인지 맞출수 있는 기계와 개와 고양이를 그릴수 있는 기계중 어떤것이 더 시각적보에 대한 이해가 깊다고 볼 수 있는가?</p>
+<p><code>-</code> 진정으로 인공지능이 이미지자료를 이해했다면, 이미지를 만들수도 있어야 한다. <span class="math inline">\(\to\)</span> 이미지를 생성하는 모형을 만들어보자 <span class="math inline">\(\to\)</span> 성공</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Woman_1.jpg" class="img-fluid" style="width:70.0%"></p>
+<p><code>-</code> 뭘 분류하려는 목적을 가진게 판별모형이면 뭘 만들려는 목적을 가진게 생성모형이고 생성모형이 더 우수하다.</p>
+<blockquote class="blockquote">
+<p>명언: 만들수 없다면 이해하지 못한 것이다, 리처드 파인만 (천재 물리학자)</p>
+</blockquote>
+</section>
+<section id="d.-생성모형이란-통계학과-버전의-설명" class="level2">
+<h2 class="anchored" data-anchor-id="d.-생성모형이란-통계학과-버전의-설명">D. 생성모형이란? 통계학과 버전의 설명</h2>
+<p><code>-</code> 이미지 <span class="math inline">\(\boldsymbol{X}\)</span> 가 주어졌을 경우 라벨을 <span class="math inline">\(y\)</span> 라고 하자.</p>
+<p><code>-</code> 이미지를 보고 라벨을 맞추는 일은 <span class="math inline">\(p(y| \boldsymbol{X})\)</span>에 관심이 있다고 볼 수 있다. – 판별모형</p>
+<p><code>-</code> 이미지를 생성하는 일은 <span class="math inline">\(p(\boldsymbol{X},y)\)</span>에 관심이 있는것이다. – 생성모형</p>
+<p><code>-</code> 데이터의 생성확률 <span class="math inline">\(p(\boldsymbol{X},y)\)</span>을 알면 클래스의 사후확률 <span class="math inline">\(p(y|\boldsymbol{X})\)</span>를 알 수 있음. (아래의 수식 참고) 하지만 역은 불가능</p>
+<p><span class="math display">\[p(y|{\boldsymbol X}) = \frac{p({\boldsymbol X},y)}{p({\boldsymbol X})} = \frac{p({\boldsymbol X},y)}{\sum_{y}p({\boldsymbol X},y)}\]</span></p>
+<ul>
+<li>즉 이미지를 생성하는일은 분류문제보다 더 어려운 일이라 해석가능</li>
+</ul>
+</section>
+<section id="e.-철학의-차이" class="level2">
+<h2 class="anchored" data-anchor-id="e.-철학의-차이">E. 철학의 차이</h2>
+<blockquote class="blockquote">
+<p>명언: 제한된 정보만으로 어떤 문제를 풀 때, 그 과정에서 원래의 문제보다 일반적인 문제를 풀지 말고 (=문제를 괜히 어렵게 만들어서 풀지 말고), 가능한 원래의 문제를 직접 풀어야한다. 배프닉 (SVM 창시자)</p>
+</blockquote>
+<p><code>-</code> 따라서 배프닉의 원리에 의하면 일반적인 분류문제를 해결할때 “판별모형이 생성모형보다 더 바람직한 접근법”이라 할 수 있음. 즉 개와 고양이를 구분할 때, 그려진 개와 고양이 사진을 잘 구분하면 되는 것이지 굳이 개와 고양이를 그릴줄 알아야하는건 아니라는 의미.</p>
+<p><code>*</code> 예전에는 머신러닝의 응용분야가 “분류/회귀”에 한정된 느낌이었는데 요즘은 생성모형도 인기있음.</p>
+<ul>
+<li>마인드가 되게 달라요</li>
+</ul>
 </section>
 </section>
 <section id="gan의-구현" class="level1">
@@ -362,12 +377,48 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <h2 class="anchored" data-anchor-id="d.-바보경찰-바보페이커">D. 바보경찰, 바보페이커</h2>
 <p><code>-</code> 경찰네트워크가 가짜이미지를 봤을때 어떤 판단을 하는지, 진짜 이미지를 봤을떄 어떤 판단을 하는지 살펴보자.</p>
 <p><strong><em>&lt;경찰이 진짜이미지를 봤다면&gt;</em></strong></p>
+<div id="db8caaa6-11d9-41c8-b4a7-c5b1f928d1d9" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>net_police(X_real[[<span class="dv">0</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>tensor([[0.4877]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+</div>
+</div>
 <p><strong><em>&lt;경찰이 가짜이미지를 봤다면&gt;</em></strong></p>
+<div id="8466a439-6b8a-4bc8-bbce-e05bffdbd302" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>net_police(facker_out)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>tensor([[0.4605]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+</div>
+</div>
 </section>
 <section id="e.-똑똑해진-경찰" class="level2">
 <h2 class="anchored" data-anchor-id="e.-똑똑해진-경찰">E. 똑똑해진 경찰</h2>
+<div id="0bc48723-fea9-478f-a93b-73db2d8131a9" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>X_real.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>torch.Size([6131, 1, 28, 28])</code></pre>
+</div>
+</div>
+<div id="3b3b69f0-306a-4354-8a61-34c9a78097a2" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X_fake <span class="op">=</span> net_facker(torch.randn(<span class="dv">6131</span>,<span class="dv">4</span>)).data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ffedde17-a612-4066-8f30-bb3303a82b84" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y_real <span class="op">=</span> torch.zeros(<span class="dv">6131</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y_fake <span class="op">=</span> torch.ones(<span class="dv">6131</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><code>-</code> step1:</p>
+<div id="a20de54a-7d67-4f22-8f62-0f2a96988105" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>yhat_real <span class="op">=</span> net_police(X_real)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>yhat_fake <span class="op">=</span> net_police(X_fake)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><code>-</code> step2:</p>
+<div id="29dcd9c1-6cad-4fab-92d6-8f834e4cd87d" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bce <span class="op">=</span> torch.nn.BCELoss()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bce(yhat_real,y_real) <span class="op">+</span> bce(yhat_fake,y_fake) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>tensor(1.4116, grad_fn=&lt;AddBackward0&gt;)</code></pre>
+</div>
+</div>
 <p><code>-</code> step3~4</p>
 <p><code>-</code> 경찰의 실력향상을 감상해보자.</p>
 </section>
