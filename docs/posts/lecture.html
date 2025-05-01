@@ -335,7 +335,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <h1>4. GAN의 구현</h1>
 <section id="a.-data" class="level2">
 <h2 class="anchored" data-anchor-id="a.-data">A. Data</h2>
-<div id="82a2de0e-c2d9-45d9-98a2-6f18f3dae1e0" class="cell" data-tags="[]" data-execution_count="39">
+<div id="82a2de0e-c2d9-45d9-98a2-6f18f3dae1e0" class="cell" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>X_real <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">3</span>])</span>
