@@ -427,23 +427,24 @@ window.Quarto = {
 </section>
 <section id="torch.einsum" class="level2">
 <h2 class="anchored" data-anchor-id="torch.einsum"><code>$</code>. <code>torch.einsum</code></h2>
-<div id="8056475d-5848-47cc-a5a2-4c1430a99f7a" class="cell" data-execution_count="130">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.randn(<span class="dv">500</span>,<span class="dv">2</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.randn(<span class="dv">2</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>(1)</code> 주어진 <code>X</code>에 대하여 <code>X.t()</code>를 수행하는 코드를 <code>torch.einsum</code>으로 구현하라.</p>
-<div id="ddd92621-9178-474a-b968-d81777202c31" class="cell" data-execution_count="126">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]])</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X.t()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="126">
-<pre><code>tensor([[1],
-        [2],
-        [3]])</code></pre>
+<div id="8056475d-5848-47cc-a5a2-4c1430a99f7a" class="cell" data-execution_count="304">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.randn(<span class="dv">5</span>,<span class="dv">2</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="304">
+<pre><code>tensor([[ 0.6537,  0.9248],
+        [ 0.3244, -1.8769],
+        [ 0.6280,  0.3024],
+        [ 0.1647,  0.0360],
+        [-1.6667, -0.1892]])</code></pre>
 </div>
 </div>
-<p><code>(2)</code> 아래를 수행하는 코드를 <code>torch.einsum</code>으로 구현하라.</p>
-<div id="e742b4b6-a2ba-431e-8df9-03c014ef799f" class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>(1)</code> 아래에 대응하는 코드를 <code>torch.einsum</code>으로 구현하라.</p>
+<div id="ddd92621-9178-474a-b968-d81777202c31" class="cell" data-execution_count="305">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>X.t()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="305">
+<pre><code>tensor([[ 0.6537,  0.3244,  0.6280,  0.1647, -1.6667],
+        [ 0.9248, -1.8769,  0.3024,  0.0360, -0.1892]])</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -604,7 +605,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -752,7 +753,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -787,7 +788,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1044,7 +1045,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <div class="cell-output cell-output-display" data-execution_count="297">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
