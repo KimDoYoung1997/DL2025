@@ -264,7 +264,7 @@ window.Quarto = {
 </section>
 <section id="imports" class="level1">
 <h1>2. Imports</h1>
-<div id="8f622828-1f15-4ee0-a2fd-680c24d412ad" class="cell" data-tags="[]" data-execution_count="1">
+<div id="8f622828-1f15-4ee0-a2fd-680c24d412ad" class="cell" data-tags="[]" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torchvision</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -347,12 +347,12 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <h1>4. GAN의 구현</h1>
 <section id="a.-data" class="level2">
 <h2 class="anchored" data-anchor-id="a.-data">A. Data</h2>
-<div id="0b5e72a8-5808-41ce-a7bc-15aa5491ac29" class="cell" data-tags="[]" data-execution_count="29">
+<div id="0b5e72a8-5808-41ce-a7bc-15aa5491ac29" class="cell" data-tags="[]" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root<span class="op">=</span><span class="st">'./data'</span>, train<span class="op">=</span><span class="va">True</span>, download<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X_real <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> train_dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9f32defb-8e7a-4622-b290-c0416b23e719" class="cell" data-execution_count="30">
+<div id="9f32defb-8e7a-4622-b290-c0416b23e719" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(X_real[<span class="dv">0</span>].squeeze(),cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -369,14 +369,14 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <p>“net_faker: noise <span class="math inline">\(\to\)</span> 가짜이미지” 를 만들자.</p>
 </blockquote>
 <p><code>-</code> 네트워크의 입력: (n,??) 인 랜덤으로 뽑은 숫자.</p>
-<div id="9cc9a14c-3c4b-42de-8606-a4dd42d2e45b" class="cell" data-execution_count="31">
+<div id="9cc9a14c-3c4b-42de-8606-a4dd42d2e45b" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>torch.randn(<span class="dv">1</span>,<span class="dv">4</span>) <span class="co"># 이게 입력으로 온다고 상상하자. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
-<pre><code>tensor([[-0.5662,  1.6717, -1.7444, -0.8829]])</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>tensor([[-0.9855,  1.0043, -0.4022, -0.0478]])</code></pre>
 </div>
 </div>
 <p><code>-</code> 네트워크의 출력: (n,1,28,28)의 텐서</p>
-<div id="0bf365bc-bd46-4ddd-825a-bcff6e01241a" class="cell" data-execution_count="32">
+<div id="0bf365bc-bd46-4ddd-825a-bcff6e01241a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FlattenToImage(torch.nn.Module):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -392,9 +392,9 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    FlattenToImage()</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e9e7a3c4-4169-46e9-a230-13255ea507f5" class="cell" data-execution_count="33">
+<div id="e9e7a3c4-4169-46e9-a230-13255ea507f5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>net_facker(torch.randn(<span class="dv">1</span>,<span class="dv">4</span>)).shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>torch.Size([1, 1, 28, 28])</code></pre>
 </div>
 </div>
@@ -406,7 +406,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 </blockquote>
 <p><code>-</code> 네트워크의 입력: (n,1,28,28) 인 이미지</p>
 <p><code>-</code> 네트워크의 출력: 0,1</p>
-<div id="c81af7ff-325b-40f9-99a6-17b6ba8a4080" class="cell" data-execution_count="34">
+<div id="c81af7ff-325b-40f9-99a6-17b6ba8a4080" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>net_police <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">784</span>,<span class="dv">30</span>),</span>
@@ -419,23 +419,23 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <section id="d.-바보경찰-바보페이커" class="level2">
 <h2 class="anchored" data-anchor-id="d.-바보경찰-바보페이커">D. 바보경찰, 바보페이커</h2>
 <p><code>-</code> 데이터</p>
-<div id="156b5eb4-084b-4e0d-aebc-866e08b8ac10" class="cell" data-execution_count="35">
+<div id="156b5eb4-084b-4e0d-aebc-866e08b8ac10" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>real_image <span class="op">=</span> X_real[[<span class="dv">0</span>]]  <span class="co"># 진짜이미지</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fake_image <span class="op">=</span> net_facker(torch.randn(<span class="dv">1</span>,<span class="dv">4</span>)).data <span class="co"># 가짜이미지</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> 경찰네트워크가 가짜이미지를 봤을때 어떤 판단을 하는지, 진짜 이미지를 봤을떄 어떤 판단을 하는지 살펴보자.</p>
 <p><strong><em>&lt;경찰이 진짜이미지를 봤다면&gt;</em></strong></p>
-<div id="b6f0bb81-f1f5-459c-b11d-00e7f737fcdf" class="cell" data-execution_count="36">
+<div id="b6f0bb81-f1f5-459c-b11d-00e7f737fcdf" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>net_police(real_image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
-<pre><code>tensor([[0.4522]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>tensor([[0.4764]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
 </div>
 </div>
 <p><strong><em>&lt;경찰이 가짜이미지를 봤다면&gt;</em></strong></p>
-<div id="093eaf1a-7835-4967-8256-3c666234a97c" class="cell" data-execution_count="37">
+<div id="093eaf1a-7835-4967-8256-3c666234a97c" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>net_police(fake_image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
-<pre><code>tensor([[0.4685]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>tensor([[0.4968]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
 </div>
 </div>
 </section>
@@ -448,29 +448,29 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <li><span class="math inline">\({\bf X}_{real}\)</span>에 대응하는 <span class="math inline">\({\bf y}_{real}\)</span> 생성. 진짜이미지는 라벨을 0으로 정함.</li>
 <li><span class="math inline">\({\bf X}_{faker}\)</span>에 대응하는 <span class="math inline">\({\bf y}_{fake}\)</span> 생성. 가짜이미지는 라벨을 1로 정함.</li>
 </ul>
-<div id="0347ac26-87bc-401b-88fa-cbf113cab6b6" class="cell" data-execution_count="43">
+<div id="0347ac26-87bc-401b-88fa-cbf113cab6b6" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>X_fake <span class="op">=</span> net_facker(torch.randn(<span class="dv">6131</span>,<span class="dv">4</span>)).data</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>y_real <span class="op">=</span> torch.zeros((<span class="dv">6131</span>,<span class="dv">1</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>y_fake <span class="op">=</span> torch.ones((<span class="dv">6131</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> step1: <code>X_real</code>, <code>X_fake</code>를 보고 각각 <code>yhat_real</code>, <code>yhat_fake</code>를 만드는 과정</p>
-<div id="46ee551c-4f40-4f4b-924f-e7db617a5faf" class="cell" data-execution_count="51">
+<div id="46ee551c-4f40-4f4b-924f-e7db617a5faf" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>yhat_real <span class="op">=</span> net_police(X_real)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>yhat_fake <span class="op">=</span> net_police(X_fake)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> step2: 경찰의 미덕은 (1) 가짜이미지를 가짜라고 하고 (2) 진짜이미지를 진짜라고 해야함. 즉 yhat_real 은 거의 0의 값으로, 그리고 yhat_fake는 1이 되도록 설계해야함. (yhat_real <span class="math inline">\(\approx\)</span> y_real 이고 yhat_fake <span class="math inline">\(\approx\)</span> y_fake 이어야 함) 이러면 경찰이 잘하는것.</p>
-<div id="72b2f5b2-9f4d-4df8-a924-d0e25448f708" class="cell" data-execution_count="52">
+<div id="72b2f5b2-9f4d-4df8-a924-d0e25448f708" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bce <span class="op">=</span> torch.nn.BCELoss()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="dbb4656a-9844-4b8b-a18e-5062df4cdfdc" class="cell" data-execution_count="68">
+<div id="dbb4656a-9844-4b8b-a18e-5062df4cdfdc" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>loss_police <span class="op">=</span> bce(yhat_real,y_real) <span class="op">+</span> bce(yhat_fake,y_fake) </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>loss_police</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="68">
-<pre><code>tensor(1.3782, grad_fn=&lt;AddBackward0&gt;)</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>tensor(1.3961, grad_fn=&lt;AddBackward0&gt;)</code></pre>
 </div>
 </div>
 <p><code>-</code> step3~4</p>
-<div id="e6673c7d-1d91-40dc-adab-19cfa4366c6b" class="cell" data-execution_count="70">
+<div id="e6673c7d-1d91-40dc-adab-19cfa4366c6b" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># net_police = torch.nn.Sequential(</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     torch.nn.Flatten(),</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     torch.nn.Linear(784,30),</span></span>
@@ -494,39 +494,39 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    optimizr_police.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> 경찰의 실력향상을 감상해보자.</p>
-<div id="4a6daa48-a353-45fd-80a3-87a38ef8d547" class="cell" data-execution_count="81">
+<div id="4a6daa48-a353-45fd-80a3-87a38ef8d547" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>net_police(X_real) <span class="co"># 거의 0으로 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="81">
-<pre><code>tensor([[0.0151],
-        [0.0194],
-        [0.0180],
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>tensor([[0.0145],
+        [0.0247],
+        [0.0160],
         ...,
-        [0.0215],
-        [0.1193],
-        [0.0329]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+        [0.0240],
+        [0.1189],
+        [0.0379]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="acbf22e8-818f-462d-bd0e-0311e84d9890" class="cell" data-execution_count="82">
+<div id="acbf22e8-818f-462d-bd0e-0311e84d9890" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>net_police(net_facker(torch.randn(<span class="dv">6131</span>,<span class="dv">4</span>)).data) <span class="co"># 거의 1로</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="82">
-<pre><code>tensor([[0.9808],
-        [0.9809],
-        [0.9812],
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>tensor([[0.9924],
+        [0.9922],
+        [0.9924],
         ...,
-        [0.9811],
-        [0.9811],
-        [0.9811]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
+        [0.9924],
+        [0.9923],
+        [0.9923]], grad_fn=&lt;SigmoidBackward0&gt;)</code></pre>
 </div>
 </div>
 <p><code>-</code> 꽤 우수한 경찰이 되었음.</p>
-<div id="b9d8e056-7892-44c1-b365-9352466dd8cf" class="cell" data-execution_count="92">
+<div id="b9d8e056-7892-44c1-b365-9352466dd8cf" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].imshow(X_fake[[<span class="dv">2</span>]].squeeze(),cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].set_title(<span class="ss">f"police output = </span><span class="sc">{</span>net_police(X_fake[[<span class="dv">2</span>]])<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].imshow(X_real[[<span class="op">-</span><span class="dv">1</span>]].squeeze(),cmap<span class="op">=</span><span class="st">"gray"</span>)</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].set_title(<span class="ss">f"police output = </span><span class="sc">{</span>net_police(X_real[[<span class="op">-</span><span class="dv">1</span>]])<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="92">
-<pre><code>Text(0.5, 1.0, 'police output = 0.0329')</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>Text(0.5, 1.0, 'police output = 0.0379')</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -540,12 +540,12 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <section id="f.-더-똑똑해지는-페이커" class="level2">
 <h2 class="anchored" data-anchor-id="f.-더-똑똑해지는-페이커">F. 더 똑똑해지는 페이커</h2>
 <p><code>-</code> step1: noise <span class="math inline">\(\to\)</span> X_fake</p>
-<div id="db3d26db-2df9-4718-8575-dda592f6ac0f" class="cell" data-execution_count="97">
+<div id="db3d26db-2df9-4718-8575-dda592f6ac0f" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>X_fake <span class="op">=</span> net_facker(torch.randn(<span class="dv">6131</span>,<span class="dv">4</span>))</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 여기서는 X_fake가 데이터가 아니고 네트워크 출력이므로 꼬리표를 제거하지 말아야함</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> step2: 손실함수 - 페이커의 미덕 (잘 훈련된) 경찰이 가짜이미지를 진짜라고 판단하는 것. 즉 <code>yhat_fake</code> <span class="math inline">\(\approx\)</span> <code>y_real</code> 이어야 페이커의 실력이 우수하다고 볼 수 있음.</p>
-<div id="9c01fb8d-3d2c-4ff7-b581-eb2157f69f85" class="cell" data-execution_count="99">
+<div id="9c01fb8d-3d2c-4ff7-b581-eb2157f69f85" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>yhat_fake <span class="op">=</span> net_police(X_fake)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>loss_faker <span class="op">=</span> bce(yhat_fake, y_real) </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 가짜이미지를 보고 잘 훈련된 경찰도  </span></span>
@@ -553,7 +553,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 위조범의 실력이 좋다고 볼 수 있다는 의미</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> step3~4:</p>
-<div id="1086b26a-a351-4710-960a-6cb2a95fad3f" class="cell" data-execution_count="102">
+<div id="1086b26a-a351-4710-960a-6cb2a95fad3f" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FlattenToImage(torch.nn.Module):</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -571,7 +571,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>bce <span class="op">=</span> torch.nn.BCELoss()</span>
 <span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>optimizr_facker <span class="op">=</span> torch.optim.Adam(net_facker.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cabeeaa9-70b6-40e6-b633-89a6391f751a" class="cell" data-execution_count="146">
+<div id="cabeeaa9-70b6-40e6-b633-89a6391f751a" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>):</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># step1 -- yhat을 얻음</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    X_fake <span class="op">=</span> net_facker(torch.randn(<span class="dv">6131</span>,<span class="dv">4</span>))</span>
@@ -585,7 +585,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    optimizr_facker.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>-</code> 위조범의 실력향상을 감상해보자.</p>
-<div id="f2ca6f4d-6e84-4dfd-9391-102b374b9b5a" class="cell" data-execution_count="147">
+<div id="f2ca6f4d-6e84-4dfd-9391-102b374b9b5a" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(X_fake[[<span class="dv">0</span>]].squeeze().data,cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -601,7 +601,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <blockquote class="blockquote">
 <p>두 적대적인 네트워크를 경쟁시키자!</p>
 </blockquote>
-<div id="a341fd06-03cf-4fa6-ab80-e965f5da98ae" class="cell" data-execution_count="148">
+<div id="a341fd06-03cf-4fa6-ab80-e965f5da98ae" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>net_police <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Flatten(),</span>
@@ -628,7 +628,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>optimizr_police <span class="op">=</span> torch.optim.Adam(net_police.parameters(),lr<span class="op">=</span><span class="fl">0.001</span>, betas<span class="op">=</span>(<span class="fl">0.5</span>,<span class="fl">0.999</span>))</span>
 <span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>optimizr_facker <span class="op">=</span> torch.optim.Adam(net_facker.parameters(),lr<span class="op">=</span><span class="fl">0.0002</span>, betas<span class="op">=</span>(<span class="fl">0.5</span>,<span class="fl">0.999</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="92564b11-bea7-4bd1-9127-0dda8423e01a" class="cell" data-execution_count="150">
+<div id="92564b11-bea7-4bd1-9127-0dda8423e01a" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">#--- net_police 를 훈련 </span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#step1</span></span>
@@ -654,7 +654,7 @@ Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, S
 <span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>    optimizr_facker.step()</span>
 <span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    optimizr_facker.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ee2c9827-cc39-49f8-ac5e-dbca38f024ea" class="cell" data-execution_count="165">
+<div id="ee2c9827-cc39-49f8-ac5e-dbca38f024ea" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig, ax  <span class="op">=</span> plt.subplots(<span class="dv">2</span>,<span class="dv">5</span>,figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span><span class="dv">0</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span>):</span>

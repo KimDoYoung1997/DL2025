@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-01-01">
 
-<title>DL2025 - A1: Exercise – ver. 0420-2</title>
+<title>DL2025 - A1: Exercise – ver. 0503-1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -188,6 +208,7 @@ window.Quarto = {
   <li><a href="#concat-stack" id="toc-concat-stack" class="nav-link" data-scroll-target="#concat-stack"><code>$</code>. concat, stack</a></li>
   <li><a href="#행렬곱" id="toc-행렬곱" class="nav-link" data-scroll-target="#행렬곱"><code>$</code>. 행렬곱</a></li>
   <li><a href="#인덱싱" id="toc-인덱싱" class="nav-link" data-scroll-target="#인덱싱"><code>$</code>. 인덱싱</a></li>
+  <li><a href="#torch.einsum" id="toc-torch.einsum" class="nav-link" data-scroll-target="#torch.einsum"><code>$</code>. <code>torch.einsum</code></a></li>
   </ul></li>
   <li><a href="#최적화" id="toc-최적화" class="nav-link" data-scroll-target="#최적화"><code>#</code> – 최적화</a>
   <ul class="collapse">
@@ -209,15 +230,18 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#iris" id="toc-iris" class="nav-link" data-scroll-target="#iris"><code>$</code>. iris</a></li>
   </ul></li>
+  <li><a href="#합성곱신경망" id="toc-합성곱신경망" class="nav-link" data-scroll-target="#합성곱신경망"><code>#</code> – 합성곱신경망</a></li>
+  <li><a href="#xai" id="toc-xai" class="nav-link" data-scroll-target="#xai"><code>#</code> – XAI</a></li>
+  <li><a href="#gan" id="toc-gan" class="nav-link" data-scroll-target="#gan"><code>#</code> – GAN</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="exercise.out.ipynb" download="exercise.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A1: Exercise – ver. 0420-2</h1>
+<h1 class="title">A1: Exercise – ver. 0503-1</h1>
 </div>
 
 
@@ -401,6 +425,27 @@ window.Quarto = {
         [-1.0276, -0.5631, -0.8923, -0.0583]])
 </code></pre>
 </section>
+<section id="torch.einsum" class="level2">
+<h2 class="anchored" data-anchor-id="torch.einsum"><code>$</code>. <code>torch.einsum</code></h2>
+<div id="8056475d-5848-47cc-a5a2-4c1430a99f7a" class="cell" data-execution_count="130">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.randn(<span class="dv">500</span>,<span class="dv">2</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.randn(<span class="dv">2</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>(1)</code> 주어진 <code>X</code>에 대하여 <code>X.t()</code>를 수행하는 코드를 <code>torch.einsum</code>으로 구현하라.</p>
+<div id="ddd92621-9178-474a-b968-d81777202c31" class="cell" data-execution_count="126">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor([[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X.t()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="126">
+<pre><code>tensor([[1],
+        [2],
+        [3]])</code></pre>
+</div>
+</div>
+<p><code>(2)</code> 아래를 수행하는 코드를 <code>torch.einsum</code>으로 구현하라.</p>
+<div id="e742b4b6-a2ba-431e-8df9-03c014ef799f" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 </section>
 <section id="최적화" class="level1">
 <h1><code>#</code> – 최적화</h1>
@@ -418,8 +463,8 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="정규분포-mle"><code>$</code>. 정규분포 MLE</h2>
 <p>아래는 <span class="math inline">\(X_i \sim N(3, 2^2)\)</span> 를 생성하는 코드이다.</p>
 <div id="008c785f-dc06-4b54-9ccf-78bfba6da567" class="cell" data-execution_count="451">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn((<span class="dv">10000</span>,<span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn((<span class="dv">10000</span>,<span class="dv">1</span>)) <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>함수 <span class="math inline">\(l(\mu, \sigma)\)</span>를 최대화하는 <span class="math inline">\((\mu, \sigma)\)</span>를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)</p>
 <p><span class="math display">\[l(\mu, \sigma) = \sum_{i=1}^{n} \log f(x_i), \quad
@@ -429,8 +474,8 @@ f(x_i) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\
 <h2 class="anchored" data-anchor-id="베르누이-mle"><code>$</code>. 베르누이 MLE</h2>
 <p>아래는 <span class="math inline">\(X_i \overset{iid}{\sim} Ber(0.8)\)</span>을 생성하는 코드이다.</p>
 <div id="140484a4-1d92-4d3a-953c-2a6dc245ead1" class="cell" data-execution_count="475">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.bernoulli(torch.tensor([<span class="fl">0.8</span>]<span class="op">*</span><span class="dv">10000</span>)).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.bernoulli(torch.tensor([<span class="fl">0.8</span>]<span class="op">*</span><span class="dv">10000</span>)).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>함수 <span class="math inline">\(l(p)\)</span>를 최대화하는 <span class="math inline">\(p\)</span>를 경사하강법기반을 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)</p>
 <p><span class="math display">\[l(p) = \sum_{i=1}^{n} \log f(x_i), \quad f(x_i) = p^{x_i} (1-p)^{1-x_i}\]</span></p>
@@ -444,8 +489,8 @@ f(x_i) = \frac{1}{\sqrt{2\pi}\sigma} \exp\left(-\frac{(x_i - \mu)^2}{2\sigma^2}\
 </ul>
 <p>아래는 위의 모형에서 얻은 샘플이다.</p>
 <div id="aa672168-b471-44c9-bd19-9f8affd19742" class="cell" data-execution_count="477">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">10000</span>).reshape(<span class="dv">10000</span>,<span class="dv">1</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">0.5</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> torch.randn(<span class="dv">10000</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">10000</span>).reshape(<span class="dv">10000</span>,<span class="dv">1</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">0.5</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> torch.randn(<span class="dv">10000</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>함수 <span class="math inline">\(l(\beta_0, \beta_1)\)</span>를 최대화하는 <span class="math inline">\((\beta_0, \beta_1)\)</span>를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)</p>
 <p><span class="math display">\[
@@ -461,9 +506,9 @@ l(\beta_0, \beta_1) = \sum_{i=1}^{n} \log f(y_i), \quad f(y_i) = \frac{1}{\sqrt{
 </ul>
 <p>아래는 위의 모형에서 얻은 샘플이다.</p>
 <div id="edcc83a3-d726-49fe-ae59-42637eb4fbe1" class="cell" data-execution_count="487">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">10000</span>).reshape(<span class="dv">10000</span>,<span class="dv">1</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span> x) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> x))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.bernoulli(pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">10000</span>).reshape(<span class="dv">10000</span>,<span class="dv">1</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span> x) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> x))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.bernoulli(pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>함수 <span class="math inline">\(l(w_0, w_1)\)</span>을 최대화하는 파라미터 <span class="math inline">\((w_0, w_1)\)</span>를 경사하강법기반을 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)</p>
 <p><span class="math display">\[
@@ -473,19 +518,19 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 \]</span></p>
 <p>(풀이1)</p>
 <div id="72e06d00-65d0-4521-9d70-9d1248677ce9" class="cell" data-execution_count="488">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([torch.ones((<span class="dv">10000</span>,<span class="dv">1</span>)),x],axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>What <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">0.1</span>], [<span class="op">-</span><span class="fl">0.1</span>]],requires_grad<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([torch.ones((<span class="dv">10000</span>,<span class="dv">1</span>)),x],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>What <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">0.1</span>], [<span class="op">-</span><span class="fl">0.1</span>]],requires_grad<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="96c98218-7856-412d-84a3-a0237ebaf057" class="cell" data-execution_count="489">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">501</span>):</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    pi_hat <span class="op">=</span> torch.exp(X<span class="op">@</span>What)<span class="op">/</span>(torch.exp(X<span class="op">@</span>What)<span class="op">+</span><span class="dv">1</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    pdf <span class="op">=</span> pi_hat<span class="op">**</span>y <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>pi_hat)<span class="op">**</span>(<span class="dv">1</span><span class="op">-</span>y)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    l  <span class="op">=</span> <span class="op">-</span> torch.<span class="bu">sum</span>(torch.log(pdf)) </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    l.backward()</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    What.data <span class="op">=</span> What.data <span class="op">-</span> <span class="fl">0.00001</span> <span class="op">*</span> What.grad </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    What.grad <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span><span class="dv">50</span> <span class="op">==</span><span class="dv">0</span>:</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"# of iterations = </span><span class="sc">{</span>i<span class="sc">}</span><span class="ch">\t</span><span class="ss">log_L = </span><span class="sc">{</span>log_L<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ch">\t</span><span class="ss"> What= </span><span class="sc">{</span>What<span class="sc">.</span>data<span class="sc">.</span>reshape(<span class="op">-</span><span class="dv">1</span>)<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">501</span>):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    pi_hat <span class="op">=</span> torch.exp(X<span class="op">@</span>What)<span class="op">/</span>(torch.exp(X<span class="op">@</span>What)<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    pdf <span class="op">=</span> pi_hat<span class="op">**</span>y <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>pi_hat)<span class="op">**</span>(<span class="dv">1</span><span class="op">-</span>y)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    l  <span class="op">=</span> <span class="op">-</span> torch.<span class="bu">sum</span>(torch.log(pdf)) </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    l.backward()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    What.data <span class="op">=</span> What.data <span class="op">-</span> <span class="fl">0.00001</span> <span class="op">*</span> What.grad </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    What.grad <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span><span class="dv">50</span> <span class="op">==</span><span class="dv">0</span>:</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"# of iterations = </span><span class="sc">{</span>i<span class="sc">}</span><span class="ch">\t</span><span class="ss">log_L = </span><span class="sc">{</span>log_L<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ch">\t</span><span class="ss"> What= </span><span class="sc">{</span>What<span class="sc">.</span>data<span class="sc">.</span>reshape(<span class="op">-</span><span class="dv">1</span>)<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># of iterations = 50    log_L = -5790.2769   What= [-0.6835615   0.05030123]
 # of iterations = 100   log_L = -5790.2769   What= [-0.8696075   0.15454161]
@@ -508,28 +553,28 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <p><span class="math display">\[- l(\hat{w}_0,\hat{w}_1) = - \sum_{i=1}^{n} \big( y_i \log(\hat{\pi}_i) + (1 - y_i) \log(1 - \hat{\pi}_i) \big)\]</span></p>
 <p>여기에서 <span class="math inline">\(\hat{\pi}_i = \frac{\exp(\hat{w}_0 + \hat{w}_1 x_i)}{1 + \exp(\hat{w}_0 + \hat{w}_1 x_i)} = \hat{y}_i\)</span> 이다. 따라서 위의 식은 우리에게 친숙한 <span class="math inline">\(n \times \text{BCELoss}\)</span>의 형태임을 쉽게 알 수 있다. 결국 <span class="math inline">\(l(w_0, w_1)\)</span>을 최대화 하는 일은 BCELoss를 최소화하는 일과 같게 된다. 따라서 아래와 같이 풀면된다.</p>
 <div id="be3c176c-5916-462c-b1c9-a80723d0a851" class="cell" data-execution_count="490">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sigmoid()</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">0</span>].weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">0.1</span>]])</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">0</span>].bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">0.1</span>])</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.BCELoss()</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.SGD(net.parameters(),lr<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">501</span>):</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    yhat <span class="op">=</span> net(x) </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(yhat,y)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sigmoid()</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">0</span>].weight.data <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">0.1</span>]])</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>net[<span class="dv">0</span>].bias.data <span class="op">=</span> torch.tensor([<span class="op">-</span><span class="fl">0.1</span>])</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>loss_fn <span class="op">=</span> torch.nn.BCELoss()</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>optimizr <span class="op">=</span> torch.optim.SGD(net.parameters(),lr<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoc <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">501</span>):</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#1</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    yhat <span class="op">=</span> net(x) </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#2</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(yhat,y)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#3</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#4</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="d5854bea-09d8-4c44-8ea2-3a36e21d1a29" class="cell" data-execution_count="491">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(net.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(net.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="491">
 <pre><code>[Parameter containing:
  tensor([[0.4085]], requires_grad=True),
@@ -548,18 +593,18 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 </blockquote>
 <p>주어진 자료가 아래와 같다고 하자.</p>
 <div id="867eace3-c083-4b09-821b-ce8e262f1966" class="cell" data-tags="[]" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>x,_ <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort()</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>ϵ <span class="op">=</span> torch.randn(<span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.5</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> ϵ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>x,_ <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>ϵ <span class="op">=</span> torch.randn(<span class="dv">100</span>).reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="op">*</span><span class="fl">0.5</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> ϵ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="2a17e4c1-f2e6-45c2-8a65-c7a66e20f82d" class="cell" data-tags="[]" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -655,10 +700,10 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <h2 class="anchored" data-anchor-id="d"><code>$</code>. 2d</h2>
 <p>아래의 데이터를 고려하자.</p>
 <div id="8582aa72" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/regression_2d.csv"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.tensor(df.x1).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.tensor(df.x2).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/regression_2d.csv"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="op">=</span> torch.tensor(df.x1).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> torch.tensor(df.x2).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(df.y).<span class="bu">float</span>().reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="math inline">\(x_1, x_2\)</span> 에서 <span class="math inline">\(y\)</span>로 향하는 규칙을 찾기 위해 아래와 같은 모형을 고려하였다. (<span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span> 대신에 <span class="math inline">\(w_0, w_1, w_2\)</span> 라고 생각해도 무방)</p>
 <p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i \quad i = 1, 2, \ldots, n\]</span></p>
@@ -697,17 +742,17 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 </blockquote>
 <p>주어진 자료가 아래와 같다고 하자.</p>
 <div id="b5294ab7-2fdc-4bc0-828b-68e2227a90cf" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">7676</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort().values</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>ϵ <span class="op">=</span> torch.randn(<span class="dv">100</span>)<span class="op">*</span><span class="fl">0.5</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> ϵ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">7676</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">100</span>).sort().values</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>ϵ <span class="op">=</span> torch.randn(<span class="dv">100</span>)<span class="op">*</span><span class="fl">0.5</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">2.5</span><span class="op">+</span> <span class="dv">4</span><span class="op">*</span>x <span class="op">+</span> ϵ</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="e9879c34-126f-459a-91d4-ca1d54a8d294" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -715,7 +760,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <p>아래와 같은 모형을 가정하고 물음에 답하라.</p>
 <p><span class="math display">\[y_i = w_0+w_1 x_i +\epsilon_i, \quad \epsilon_i \overset{iid}{\sim} N(0,\sigma^2)\]</span></p>
 <p><code>(1)</code> ??를 적당하게 채워 아래와 같은 네트워크를 설정하고 최초의 예측값이 <span class="math inline">\(\hat{y}_i=-5+10x_i\)</span>가 출력되도록 net의 가중치를 조정하라.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span>??,bias<span class="op">=</span>??)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span>??,bias<span class="op">=</span>??)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>(2)</code> 학습률은 0.1로 설정하고 torch.optim.Adam을 이용하여 optimizer를 선언하라. <span class="math inline">\((\hat{w}_0,\hat{w}_1)=(-5,10)\)</span>에서 MSELoss의 미분계수 <span class="math inline">\(\frac{\partial}{\partial {\bf W}}loss(w_0,w_1) ~\Big|_{~\hat{w}_0,\hat{w}_1}\)</span>를 구하고 이를 바탕으로 <span class="math inline">\((\hat{w}_0,\hat{w}_1)\)</span>의 값을 1회 갱신하라. 계산된 미분계수값과 갱신된 <span class="math inline">\((\hat{w}_0,\hat{w}_1)\)</span>의 값을 출력하라.</p>
 <p><code>(3)</code> (2)에서 설정한 optimizer를 이용하여 <span class="math inline">\((\hat{w}_0, \hat{w}_1)\)</span>의 값을 5회 갱신한 값을 구하여라. - 문제(2)에 갱신한 1회를 포함하여 5회임.</p>
 <p><code>(4)</code> 학습률을 0.2로 설정하고 torch.optim.SGD를 이용하여 새로운 optimizr를 선언하라. (3)의 결과로 총 5회 갱신된 값에 이어서 10회 추가로 학습하라. 학습된 값은 얼마인가?</p>
@@ -734,15 +779,15 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 </blockquote>
 <p>아래와 같은 자료가 있다고 가정하자.</p>
 <div id="506b74fc-0854-4f66-8907-c710f0eb654c" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.rand([<span class="dv">1000</span>,<span class="dv">1</span>])<span class="op">*</span><span class="dv">2</span><span class="op">-</span><span class="dv">1</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">3.14</span> <span class="op">+</span> <span class="fl">6.28</span><span class="op">*</span>x <span class="op">+</span> torch.randn([<span class="dv">1000</span>,<span class="dv">1</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.rand([<span class="dv">1000</span>,<span class="dv">1</span>])<span class="op">*</span><span class="dv">2</span><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="fl">3.14</span> <span class="op">+</span> <span class="fl">6.28</span><span class="op">*</span>x <span class="op">+</span> torch.randn([<span class="dv">1000</span>,<span class="dv">1</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="e6f40848-f6c2-4b5f-a8a9-399f3ec60445" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>,alpha<span class="op">=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="exercise_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="exercise_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -774,7 +819,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <p><strong>슬기</strong>: 나도 그렇게 생각해. 그래서 (2)-(3)과 같이 기울기를 제외하고 적합하거나 절편을 제외하고 적합하면 underfitting의 상황에 빠질 수 있어.</p>
 <p><strong>성재</strong>: (2)의 경우 사실상 <span class="math inline">\(\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_i\)</span>를 추정하는 것과 같아지게 되지.</p>
 <p><strong>세민</strong>: (4)의 경우 <span class="math inline">\({\bf X}=\begin{bmatrix} 1  &amp; x_1 \\ 1 &amp; x_2 \\ \dots &amp; \dots \\ 1 &amp; x_n \end{bmatrix}\)</span> 와 같이 설정하고 네트워크를 아래와 같이 설정할 경우 얻어지는 모형이야.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Linear(in_features<span class="op">=</span><span class="dv">2</span>,out_features<span class="op">=</span><span class="dv">1</span>,bias<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>구환</strong>: 모델 (4)-(5)는 표현력은 (1)과 동일하지만 추정할 파라메터는 (1)보다 많으므로 효율적인 모델이라고 볼 수 없어.</p>
 </section>
 </section>
@@ -784,8 +829,8 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <h2 class="anchored" data-anchor-id="iris"><code>$</code>. iris</h2>
 <p>아래의 자료를 고려하자.</p>
 <div id="d7a676c0-d9a5-49be-85b5-3c1404539a75" class="cell" data-execution_count="549">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/iris.csv"</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/guebin/DL2025/main/posts/iris.csv"</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="549">
 <div>
 
@@ -914,13 +959,13 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 </ul>
 <p><code>(1)</code> 주어진 데이터를 8:2 비율로 학습용(df_train)과 테스트용(df_test)으로 나누고, SepalLength, SepalWidth, PetalLength, PetalWidth를 입력으로 하여 Species를 예측할 수 있도록 데이터를 텐서 형태로 변환하라.</p>
 <p>hint: 아래의 코드를 활용할 것</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.8</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> df.drop(df_train.index)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor(df_train.iloc[:,:<span class="dv">4</span>].values).<span class="bu">float</span>()</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ???</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> ???</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> ???</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> df.sample(frac<span class="op">=</span><span class="fl">0.8</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> df.drop(df_train.index)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co">#---#</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor(df_train.iloc[:,:<span class="dv">4</span>].values).<span class="bu">float</span>()</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ???</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>XX <span class="op">=</span> ???</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>yy <span class="op">=</span> ???</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>(2)</code> 아래의 제약사항에 맞추어 Species를 예측할 수 있는 적당한 네트워크를 학습하라.</p>
 <p><strong>제약사항</strong></p>
 <ul>
@@ -950,13 +995,85 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <li>학습가능한 파라메터는 2층이상 설계할 것</li>
 <li>드랍아웃을 포함시킬 것</li>
 <li>학습 후 test accuracy 가 70% 이상일 것</li>
-<li>train에서 <code>batch_size = 50</code> 으로, test에서는 <code>batch_size=30</code>을 설정할것</li>
+<li>train에서 <code>batch_size=50</code> 으로, test에서는 <code>batch_size=30</code>을 설정할것</li>
 <li>GPU를 사용할 것</li>
 <li>매 epoch마다 loss와 train accuracy를 출력할 것</li>
 </ul>
-
-
 </section>
+</section>
+<section id="합성곱신경망" class="level1">
+<h1><code>#</code> – 합성곱신경망</h1>
+</section>
+<section id="xai" class="level1 page-columns page-full">
+<h1><code>#</code> – XAI</h1>
+<blockquote class="blockquote">
+<p>아래의 문제는 시험에 똑같이 냅니다.</p>
+</blockquote>
+<p>아래의 코드를 이용하여 <code>OxfordIIITPet</code> 자료를 다운로드하고 물음에 답하라.</p>
+<div id="d5556cf2-4729-4912-8e04-20feeb1ad182" class="cell" data-execution_count="135">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'trainval'</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> torchvision.datasets.OxfordIIITPet(</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    root<span class="op">=</span><span class="st">'./data'</span>, </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    split<span class="op">=</span><span class="st">'test'</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>    target_types<span class="op">=</span><span class="st">'binary-category'</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>(1)</code> 이 데이터를 사용하여 ResNet18을 기반으로 한 이진 분류 모델을 학습 및 평가하는 전체 파이프라인 코드를 작성하시오. 다음 제약사항을 만족해야 한다:</p>
+<p><strong>제약사항</strong></p>
+<ul>
+<li>각 이미지를 (512,512)로 리사이즈하고, torch.Tensor로 변환할 것</li>
+<li>이용해 TensorDataset 및 DataLoader(batch_size=32)를 생성할 것 (학습 데이터는 shuffle=True)</li>
+<li>resnet18(pretrained=True)을 불러오고, 마지막 fully-connected layer를 torch.nn.Linear(512,1)로 교체할 것</li>
+<li>손실함수는 torch.nn.BCEWithLogitsLoss(), 옵티마이저는 torch.optim.Adam(resnet18.parameters(), lr=1e-5)로 설정할 것</li>
+<li>3번의 epoch 동안 학습하고 매 epoch 마다 학습 데이터의 정확도를 출력할 것</li>
+<li>학습이 끝난 잉후 테스트 데이터에 대해 정확도를 계산하여 출력할 것</li>
+</ul>
+<p><code>(2)</code> 아래의 이미지에 대한 로짓값과 그에 대응하는 확률값을 계산하고 인공지능이 이 이미지를 개라고 생각하는지 고양이라고 생각하는지 답하라.</p>
+<div id="9b96229b-4d4c-4103-afba-ba29ca14b0ed" class="cell" data-execution_count="297">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://github.com/guebin/DL2025/blob/main/imgs/hani2.jpeg?raw=true'</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>hani_pil <span class="op">=</span> PIL.Image.<span class="bu">open</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    io.BytesIO(requests.get(url).content)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>hani_pil</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="297">
+<div>
+<figure class="figure">
+<p><img src="exercise_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>(3)</code> (2)의 이미지에 대한 인공지능의 판단근거를 Class Activation Map (CAM) <span class="citation" data-cites="zhou2016learning">(<a href="#ref-zhou2016learning" role="doc-biblioref">Zhou et al. 2016</a>)</span>을 이용하여 시각화하라.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-zhou2016learning" class="csl-entry" role="listitem">
+Zhou, Bolei, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba. 2016. <span>“Learning Deep Features for Discriminative Localization.”</span> In <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>, 2921–29.
+</div></div></section>
+<section id="gan" class="level1 page-columns page-full">
+<h1><code>#</code> – GAN</h1>
+<blockquote class="blockquote">
+<p>아래의 문제는 시험에 똑같이 냅니다.</p>
+</blockquote>
+<p>아래의 코드를 이용하여 <code>MNIST</code> 자료를 다운로드하라.</p>
+<div id="5b747f49-fb62-447c-803d-9993fd504b30" class="cell" data-execution_count="291">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> torchvision.datasets.MNIST(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    root <span class="op">=</span> <span class="st">'./data'</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    download<span class="op">=</span><span class="va">True</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>to_tensor <span class="op">=</span> torchvision.transforms.ToTensor()</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>X_real <span class="op">=</span> torch.stack([to_tensor(Xi) <span class="cf">for</span> Xi, yi <span class="kw">in</span> dataset <span class="cf">if</span> yi<span class="op">==</span><span class="dv">8</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>이안굿펠로우의 generative adversarial networks (GAN) <span class="citation" data-cites="goodfellow2014generative">(<a href="#ref-goodfellow2014generative" role="doc-biblioref">Goodfellow et al. 2014</a>)</span> 을 활용하여 (n,6) shape의 노이즈를 입력으로 하고 (n,1,28,28) shape 의 가짜이미지를 생성하는 네트워크를 훈련하고 결과를 시각화하라. 시각화 예시는 아래와 같다.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-goodfellow2014generative" class="csl-entry" role="listitem">
+Goodfellow, Ian, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio. 2014. <span>“Generative Adversarial Nets.”</span> <em>Advances in Neural Information Processing Systems</em> 27.
+</div></div><p><img src="exercise_files/figure-html/9c4eac52-a7ef-44ea-b0d3-2179c4025ed2-1-c78c8a75-9a6a-4c10-95a8-c63bf40cd84c.png" class="img-fluid"></p>
+
+
+
 </section>
 
 </main> <!-- /main -->
