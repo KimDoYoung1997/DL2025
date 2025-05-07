@@ -212,7 +212,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#최적화" id="toc-최적화" class="nav-link" data-scroll-target="#최적화"><code>#</code> – 최적화</a>
   <ul class="collapse">
-  <li><a href="#경사하강법-경사상승법" id="toc-경사하강법-경사상승법" class="nav-link" data-scroll-target="#경사하강법-경사상승법"><code>$</code>. 경사하강법, 경사상승법</a></li>
+  <li><a href="#경사하강법" id="toc-경사하강법" class="nav-link" data-scroll-target="#경사하강법"><code>$</code>. 경사하강법</a></li>
   <li><a href="#정규분포-mle" id="toc-정규분포-mle" class="nav-link" data-scroll-target="#정규분포-mle"><code>$</code>. 정규분포 MLE</a></li>
   <li><a href="#베르누이-mle" id="toc-베르누이-mle" class="nav-link" data-scroll-target="#베르누이-mle"><code>$</code>. 베르누이 MLE</a></li>
   <li><a href="#회귀모형의-mle" id="toc-회귀모형의-mle" class="nav-link" data-scroll-target="#회귀모형의-mle"><code>$</code>. 회귀모형의 MLE</a></li>
@@ -466,8 +466,8 @@ window.Quarto = {
 </section>
 <section id="최적화" class="level1">
 <h1><code>#</code> – 최적화</h1>
-<section id="경사하강법-경사상승법" class="level2">
-<h2 class="anchored" data-anchor-id="경사하강법-경사상승법"><code>$</code>. 경사하강법, 경사상승법</h2>
+<section id="경사하강법" class="level2">
+<h2 class="anchored" data-anchor-id="경사하강법"><code>$</code>. 경사하강법</h2>
 <p><code>(1)</code> 아래의 함수를 최소화하는 <span class="math inline">\(x\)</span>를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)</p>
 <p><span class="math display">\[f(x)=(x-1)^2\]</span></p>
 <p>초기값은 <span class="math inline">\(x=3\)</span> 으로 설정하라.</p>
@@ -522,7 +522,7 @@ l(\beta_0, \beta_1) = \sum_{i=1}^{n} \log f(y_i), \quad f(y_i) = \frac{1}{\sqrt{
 <li><span class="math inline">\(\pi_i = \dfrac{\exp(w_0 + w_1 x_i)}{1 + \exp(w_0 + w_1 x_i)} = \dfrac{\exp(-1 + 0.5x_i)}{1 + \exp(-1 + 0.5x_i)}\)</span></li>
 </ul>
 <p>아래는 위의 모형에서 얻은 샘플이다.</p>
-<div id="edcc83a3-d726-49fe-ae59-42637eb4fbe1" class="cell" data-execution_count="363">
+<div id="edcc83a3-d726-49fe-ae59-42637eb4fbe1" class="cell" data-execution_count="392">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.linspace(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">10000</span>).reshape(<span class="dv">10000</span>,<span class="dv">1</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span> x) <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> torch.exp(<span class="op">-</span><span class="dv">1</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> x))</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.bernoulli(pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -534,11 +534,11 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 \pi_i = \dfrac{\exp(w_0 + w_1 x_i)}{1 + \exp(w_0 + w_1 x_i)}
 \]</span></p>
 <p>(풀이1)</p>
-<div id="72e06d00-65d0-4521-9d70-9d1248677ce9" class="cell" data-execution_count="364">
+<div id="72e06d00-65d0-4521-9d70-9d1248677ce9" class="cell" data-execution_count="395">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.concat([torch.ones((<span class="dv">10000</span>,<span class="dv">1</span>)),x],axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>What <span class="op">=</span> torch.tensor([[<span class="op">-</span><span class="fl">0.1</span>], [<span class="op">-</span><span class="fl">0.1</span>]],requires_grad<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="96c98218-7856-412d-84a3-a0237ebaf057" class="cell" data-execution_count="371">
+<div id="96c98218-7856-412d-84a3-a0237ebaf057" class="cell" data-execution_count="396">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">501</span>):</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    pi_hat <span class="op">=</span> torch.exp(X<span class="op">@</span>What)<span class="op">/</span>(torch.exp(X<span class="op">@</span>What)<span class="op">+</span><span class="dv">1</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    pdf <span class="op">=</span> pi_hat<span class="op">**</span>y <span class="op">*</span> (<span class="dv">1</span><span class="op">-</span>pi_hat)<span class="op">**</span>(<span class="dv">1</span><span class="op">-</span>y)</span>
@@ -547,18 +547,18 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    What.data <span class="op">=</span> What.data <span class="op">-</span> <span class="fl">0.00001</span> <span class="op">*</span> What.grad </span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    What.grad <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">%</span><span class="dv">50</span> <span class="op">==</span><span class="dv">0</span>:</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"# of iterations = </span><span class="sc">{</span>i<span class="sc">}</span><span class="ch">\t</span><span class="ss">log_L = </span><span class="sc">{</span>l<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ch">\t</span><span class="ss">  What= </span><span class="sc">{</span>What<span class="sc">.</span>data<span class="sc">.</span>reshape(<span class="op">-</span><span class="dv">1</span>)<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"# of iterations = </span><span class="sc">{</span>i<span class="sc">}</span><span class="ch">\t</span><span class="ss">log_L = </span><span class="sc">{</span>l<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss"> </span><span class="ch">\t</span><span class="ss">  What= </span><span class="sc">{</span>What<span class="sc">.</span>data<span class="sc">.</span>reshape(<span class="op">-</span><span class="dv">1</span>)<span class="sc">.</span>numpy()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># of iterations = 50    log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 100   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 150   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 200   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 250   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 300   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 350   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 400   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 450   log_L = 5798.7671     What= [-0.9869517  0.5190738]
-# of iterations = 500   log_L = 5798.7671     What= [-0.9869517  0.5190738]</code></pre>
+<pre><code># of iterations = 50    log_L = 5980.3896     What= [-0.673138    0.06826053]
+# of iterations = 100   log_L = 5877.2261     What= [-0.855518    0.18514545]
+# of iterations = 150   log_L = 5853.4365     What= [-0.91999674  0.26959354]
+# of iterations = 200   log_L = 5844.4150     What= [-0.94476056  0.33098808]
+# of iterations = 250   log_L = 5840.1309     What= [-0.95529944  0.375552  ]
+# of iterations = 300   log_L = 5837.9512     What= [-0.9604368   0.40783867]
+# of iterations = 350   log_L = 5836.8213     What= [-0.9633348   0.43120864]
+# of iterations = 400   log_L = 5836.2314     What= [-0.96517617  0.44812122]
+# of iterations = 450   log_L = 5835.9229     What= [-0.9664379  0.4603632]
+# of iterations = 500   log_L = 5835.7617     What= [-0.96733695  0.46922773]</code></pre>
 </div>
 </div>
 <p>(풀이2) – 약간의 통계지식을 요하는 풀이</p>
@@ -569,7 +569,7 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <p><span class="math inline">\(w_0, w_1\)</span>의 추정값을 <span class="math inline">\(\hat{w}_0, \hat{w}_1\)</span> 이라고 하고 점차 업데이트 한다고 하자. 그러면 <span class="math inline">\(l(w_0, w_1)\)</span>을 점차 크게 만드는 일은 아래를 점차 작게 만드는 일과 같다.</p>
 <p><span class="math display">\[- l(\hat{w}_0,\hat{w}_1) = - \sum_{i=1}^{n} \big( y_i \log(\hat{\pi}_i) + (1 - y_i) \log(1 - \hat{\pi}_i) \big)\]</span></p>
 <p>여기에서 <span class="math inline">\(\hat{\pi}_i = \frac{\exp(\hat{w}_0 + \hat{w}_1 x_i)}{1 + \exp(\hat{w}_0 + \hat{w}_1 x_i)} = \hat{y}_i\)</span> 이다. 따라서 위의 식은 우리에게 친숙한 <span class="math inline">\(n \times \text{BCELoss}\)</span>의 형태임을 쉽게 알 수 있다. 결국 <span class="math inline">\(l(w_0, w_1)\)</span>을 최대화 하는 일은 BCELoss를 최소화하는 일과 같게 된다. 따라서 아래와 같이 풀면된다.</p>
-<div id="be3c176c-5916-462c-b1c9-a80723d0a851" class="cell" data-execution_count="384">
+<div id="be3c176c-5916-462c-b1c9-a80723d0a851" class="cell" data-execution_count="397">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>net <span class="op">=</span> torch.nn.Sequential(</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    torch.nn.Linear(<span class="dv">1</span>,<span class="dv">1</span>),</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    torch.nn.Sigmoid()</span>
@@ -589,13 +589,13 @@ f(x_i) = \pi_i^{y_i}(1 - \pi_i)^{1 - y_i}, \quad
 <span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    optimizr.step()</span>
 <span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    optimizr.zero_grad()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d5854bea-09d8-4c44-8ea2-3a36e21d1a29" class="cell" data-execution_count="385">
+<div id="d5854bea-09d8-4c44-8ea2-3a36e21d1a29" class="cell" data-execution_count="398">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(net.parameters())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="385">
+<div class="cell-output cell-output-display" data-execution_count="398">
 <pre><code>[Parameter containing:
- tensor([[0.5313]], requires_grad=True),
+ tensor([[0.4851]], requires_grad=True),
  Parameter containing:
- tensor([-0.9883], requires_grad=True)]</code></pre>
+ tensor([-0.9689], requires_grad=True)]</code></pre>
 </div>
 </div>
 </section>
