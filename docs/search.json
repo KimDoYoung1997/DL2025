@@ -770,11 +770,11 @@
     "text": "$. torch.einsum\n(1) 아래에 코드중 X.t()에 대응하는 코드를 torch.einsum으로 구현하라.\n\nX = torch.randn(5,2)\nX.t()\n\ntensor([[ 0.2055,  0.0693,  0.2733, -0.0948, -0.9798],\n        [ 0.6524, -0.0180,  0.1093, -2.3999,  0.5101]])\n\n\n(2) 아래에 코드중 X@b에 대응하는 코드를 torch.einsum으로 구현하라.\n\nX = torch.randn(5,2)\nb = torch.randn(2,1)\nX@b\n\ntensor([[-0.2886],\n        [-0.1229],\n        [ 0.9096],\n        [ 0.2358],\n        [-0.2577]])\n\n\n(3) 아래에 코드중 linr(X)에 대응하는 코드를 torch.einsum으로 구현하라.\n\nX =  torch.randn(5,2)\nlinr = torch.nn.Linear(2,1,bias=False)\nlinr(X)\n\ntensor([[ 0.1934],\n        [-0.2889],\n        [ 0.5970],\n        [ 0.1249],\n        [ 1.1178]], grad_fn=&lt;MmBackward0&gt;)"
   },
   {
-    "objectID": "posts/exercise.html#경사하강법-경사상승법",
-    "href": "posts/exercise.html#경사하강법-경사상승법",
+    "objectID": "posts/exercise.html#경사하강법",
+    "href": "posts/exercise.html#경사하강법",
     "title": "A1: Exercise – ver. 0505-1",
-    "section": "$. 경사하강법, 경사상승법",
-    "text": "$. 경사하강법, 경사상승법\n(1) 아래의 함수를 최소화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=(x-1)^2\\]\n초기값은 \\(x=3\\) 으로 설정하라.\n(2) 아래의 함수를 최대화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=-x^2 +6x-9 \\]\n초기값은 \\(x=0\\) 으로 설정하라.\nhint: \\(f(x)\\)을 최대화하는 \\(x\\)는 \\(-f(x)\\)를 최소화한다."
+    "section": "$. 경사하강법",
+    "text": "$. 경사하강법\n(1) 아래의 함수를 최소화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=(x-1)^2\\]\n초기값은 \\(x=3\\) 으로 설정하라.\n(2) 아래의 함수를 최대화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=-x^2 +6x-9 \\]\n초기값은 \\(x=0\\) 으로 설정하라.\nhint: \\(f(x)\\)을 최대화하는 \\(x\\)는 \\(-f(x)\\)를 최소화한다."
   },
   {
     "objectID": "posts/exercise.html#정규분포-mle",
@@ -1125,12 +1125,5 @@
     "title": "09wk-2: (생성모형) – Generative Adversarial Network (GAN)",
     "section": "G. 경쟁학습",
     "text": "G. 경쟁학습\n\n두 적대적인 네트워크를 경쟁시키자!\n\n\ntorch.manual_seed(43052)\nnet_police = torch.nn.Sequential(\n    torch.nn.Flatten(),\n    torch.nn.Linear(784,30),\n    torch.nn.ReLU(),\n    torch.nn.Linear(30,1),\n    torch.nn.Sigmoid()\n)\nclass FlattenToImage(torch.nn.Module):\n    def __init__(self):\n        super().__init__()\n    def forward(self,X):\n        return X.reshape(-1,1,28,28)\nnet_facker = torch.nn.Sequential(\n    torch.nn.Linear(4,64),\n    torch.nn.ReLU(),\n    torch.nn.Linear(64,64),\n    torch.nn.ReLU(),\n    torch.nn.Linear(64,784),\n    torch.nn.Sigmoid(), # 출력을 0~1로 눌러주기 위한 레이어 // 저한테는 일종의 문화충격\n    FlattenToImage()\n)\nbce = torch.nn.BCELoss()\noptimizr_police = torch.optim.Adam(net_police.parameters(),lr=0.001, betas=(0.5,0.999))\noptimizr_facker = torch.optim.Adam(net_facker.parameters(),lr=0.0002, betas=(0.5,0.999))\n\n\nfor epoc in range(1000):\n    #--- net_police 를 훈련 \n    #step1\n    X_fake = net_facker(torch.randn(6131,4)).data # 여기에서 X_fake는 data를 의미\n    yhat_real = net_police(X_real)\n    yhat_fake = net_police(X_fake)\n    #step2\n    loss_police = bce(yhat_real,y_real) + bce(yhat_fake,y_fake)\n    #step3\n    loss_police.backward()\n    #step4\n    optimizr_police.step()\n    optimizr_police.zero_grad()\n    #--- net_faker 를 훈련 \n    #step1\n    X_fake = net_facker(torch.randn(6131,4)) # 이때 X_fake는 net의 out을 의미 \n    #step2\n    yhat_fake = net_police(X_fake)\n    loss_facker = bce(yhat_fake, y_real)\n    #step3\n    loss_facker.backward()\n    #step4\n    optimizr_facker.step()\n    optimizr_facker.zero_grad()\n\n\nfig, ax  = plt.subplots(2,5,figsize=(10,4))\nk=0\nfor i in range(2):\n    for j in range(5):\n        ax[i][j].imshow(X_fake[[k]].data.squeeze(),cmap=\"gray\")\n        ax[i][j].set_title(f\"police out = {net_police(X_fake[[k]]).item():.4f}\")\n        k= k+1\nfig.tight_layout()"
-  },
-  {
-    "objectID": "posts/exercise.html#경사하강법",
-    "href": "posts/exercise.html#경사하강법",
-    "title": "A1: Exercise – ver. 0505-1",
-    "section": "$. 경사하강법",
-    "text": "$. 경사하강법\n(1) 아래의 함수를 최소화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=(x-1)^2\\]\n초기값은 \\(x=3\\) 으로 설정하라.\n(2) 아래의 함수를 최대화하는 \\(x\\)를 경사하강법기반의 알고리즘을 활용하여 추정하라. (꼭 SGD를 쓸 필요는 없음)\n\\[f(x)=-x^2 +6x-9 \\]\n초기값은 \\(x=0\\) 으로 설정하라.\nhint: \\(f(x)\\)을 최대화하는 \\(x\\)는 \\(-f(x)\\)를 최소화한다."
   }
 ]
