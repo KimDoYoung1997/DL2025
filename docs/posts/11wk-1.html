@@ -219,6 +219,7 @@ window.Quarto = {
   <li><a href="#a.-nn-based-방식" id="toc-a.-nn-based-방식" class="nav-link" data-scroll-target="#a.-nn-based-방식">A. NN-based 방식</a></li>
   <li><a href="#b.-ncf-he2017neural" id="toc-b.-ncf-he2017neural" class="nav-link" data-scroll-target="#b.-ncf-he2017neural">B. NCF <span class="citation" data-cites="he2017neural">(He et al. 2017)</span></a></li>
   </ul></li>
+  <li><a href="#appendix-선택학습" id="toc-appendix-선택학습" class="nav-link" data-scroll-target="#appendix-선택학습">Appendix – 선택학습</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="11wk-1.out.ipynb" download="11wk-1.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -1417,10 +1418,81 @@ Note
 He, Xiangnan, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu, and Tat-Seng Chua. 2017. <span>“Neural Collaborative Filtering.”</span> In <em>Proceedings of the 26th International Conference on World Wide Web</em>, 173–82.
 </div></div><p><code>-</code> MF-based와 NN-base를 합친것</p>
 <p><img src="https://github.com/guebin/DL2024/blob/main/posts/NCF.png?raw=true" class="img-fluid"></p>
-
-
-
 </section>
+</section>
+<section id="appendix-선택학습" class="level1">
+<h1>Appendix – 선택학습</h1>
+<p><code># 의문</code>: 그냥 원핫인코딩없이 바로 선형변환하면 안되나? (= 꼭 임베딩레이어를 써야하나?)</p>
+<div id="eec0e176-d5a4-40b2-bf78-3e2cc657d118" class="cell" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor([<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> x.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>).<span class="bu">float</span>()</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>x,X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>(tensor([0, 1, 2, 0, 1]),
+ tensor([[0.],
+         [1.],
+         [2.],
+         [0.],
+         [1.]]))</code></pre>
+</div>
+</div>
+<div id="b1602e87-c137-41b2-b996-81af992e6d6e" class="cell" data-tags="[]" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>l1 <span class="op">=</span> torch.nn.Linear(<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>l1(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>tensor([[-0.8470],
+        [-1.1937],
+        [-1.5404],
+        [-0.8470],
+        [-1.1937]], grad_fn=&lt;AddmmBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="9da021eb-8440-4fd5-af7a-0c5af0aed330" class="cell" data-tags="[]" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">43052</span>)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>ebdd <span class="op">=</span> torch.nn.Embedding(<span class="dv">3</span>,<span class="dv">1</span>) </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>ebdd(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>tensor([[-0.8178],
+        [-0.7052],
+        [-0.5843],
+        [-0.8178],
+        [-0.7052]], grad_fn=&lt;EmbeddingBackward0&gt;)</code></pre>
+</div>
+</div>
+<p>결과적으로 0,1,2 를 다른숫자들로 맵핑한건 비슷해보이는데?</p>
+<p><code>-</code> 수식의 차이: 비슷해보이지만 계산방식이 조금 다름</p>
+<div id="da2fa122-cb91-479f-8438-8cd1431bf33e" class="cell" data-tags="[]" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>l1.weight, l1.bias</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>(Parameter containing:
+ tensor([[-0.3467]], requires_grad=True),
+ Parameter containing:
+ tensor([-0.8470], requires_grad=True))</code></pre>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\(l_1({\bf X}) = \begin{bmatrix} 0 \\ 1 \\ 2 \\ 0 \\ 1 \end{bmatrix} \times (-0.3467) + (-0.8470)=\begin{bmatrix} -0.8470 \\ -1.1937 \\ -1.5404 \\ -0.8470 \\ -1.1937 \end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(\text{ebdd}({\boldsymbol x})= \text{linr}\big(\text{onehot}({\boldsymbol x})\big) = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\begin{bmatrix} -0.8178 \\ -0.7052 \\ -0.5843 \end{bmatrix} = \begin{bmatrix} -0.8178 \\ -0.7052 \\ -0.5843 \\ -0.8178 \\ -0.7052 \end{bmatrix}\)</span></p></li>
+</ul>
+<p><code>-</code> 데이터를 읽으며 해석: 사실상 0,1,2에 대한 의미는 “옥순”,“영숙”,“하니” 같은 자료였고, 임베딩의 결과는 “옥순”,“영숙”,“하니”가 가지는 어떠한 특징이었음 (예를들면 매력같은). 데이터를 상상하며 위의 결과를 다시 해석해보자.</p>
+<p><strong>옥순이 가지는 어떠한 특징 (-0.8470 혹은 -0.8178) 을 바꾸고 싶다면?</strong></p>
+<ul>
+<li><code>ebdd</code>의 경우: <code>ebdd.weigth</code>에 있는 -0.8178 이라는 숫자를 조정하면 된다. 이 조정은 옥순의 특징만 바꾸며 영숙과 하니의 특징은 바꾸지 않는다. (개별조정이 쉬움)</li>
+<li><code>linr</code>의 경우: <code>linr.weight</code>에 있는 -0.3467 혹은 <code>linr.bias</code>에 있는 -0.8470 을 조정하면 되는데, 이를 조정하면 옥순의 특징을 바꿈과 동시에 영숙/하니의 특징까지 같이 바뀌게 된다. (개별조정이 어려움)</li>
+</ul>
+<p><strong>만약에 출연자가 1000명이라면??</strong></p>
+<ul>
+<li><code>linr</code>의 경우: 1000명의 특징을 단 2개의 파라메터로 조정해야한다. (그리고 한명의 특징을 바꾸면 999명의 특징이 같이 바뀐다, 개별조정은 애초에 가능하지 않음.)</li>
+<li><code>ebdd</code>의 경우: 1000개의 특징을 조정할 수 있는 1000개의 파라메터를 확보할 수 있게 된다.</li>
+</ul>
+<p><code>-</code> 결론: ebdd가 더 파라메터 미세조정을 통하여 특징을 학습하기 용이하다. (독립적으로 특징값을 줄 수 있으니까!)</p>
+<blockquote class="blockquote">
+<p>만약에 문자열이 “최우수(A)”, “우수(B)”, “보통(C)”, “미흡(D)”, “매우미흡(F)” 이었다면 특징을 뽑아낼때 linr 가 더 적절했겠죠?</p>
+</blockquote>
+
+
+
 </section>
 
 </main> <!-- /main -->
