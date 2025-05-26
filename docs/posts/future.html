@@ -181,11 +181,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#a1.-자잘한-용어-정리-star" id="toc-a1.-자잘한-용어-정리-star" class="nav-link active" data-scroll-target="#a1.-자잘한-용어-정리-star">A1. 자잘한 용어 정리 (<span class="math inline">\(\star\)</span>)</a>
   <ul class="collapse">
-  <li><a href="#a.-지도학습" id="toc-a.-지도학습" class="nav-link" data-scroll-target="#a.-지도학습">A. 지도학습</a></li>
-  <li><a href="#b.-모델이란" id="toc-b.-모델이란" class="nav-link" data-scroll-target="#b.-모델이란">B. 모델이란?</a></li>
-  <li><a href="#c.-학습이란" id="toc-c.-학습이란" class="nav-link" data-scroll-target="#c.-학습이란">C. 학습이란?</a></li>
-  <li><a href="#d.-haty를-부르는-다양한-이름" id="toc-d.-haty를-부르는-다양한-이름" class="nav-link" data-scroll-target="#d.-haty를-부르는-다양한-이름">D. <span class="math inline">\(\hat{y}\)</span>를 부르는 다양한 이름</a></li>
-  <li><a href="#e.-다양한-코드들" id="toc-e.-다양한-코드들" class="nav-link" data-scroll-target="#e.-다양한-코드들">E. 다양한 코드들</a></li>
+  <li><a href="#a.-bf-x-bf-y" id="toc-a.-bf-x-bf-y" class="nav-link" data-scroll-target="#a.-bf-x-bf-y">A. <span class="math inline">\({\bf X}\)</span>, <span class="math inline">\({\bf y}\)</span></a></li>
+  <li><a href="#b.-지도학습" id="toc-b.-지도학습" class="nav-link" data-scroll-target="#b.-지도학습">B. 지도학습</a></li>
+  <li><a href="#c.-모델이란" id="toc-c.-모델이란" class="nav-link" data-scroll-target="#c.-모델이란">C. 모델이란?</a></li>
+  <li><a href="#d.-학습이란" id="toc-d.-학습이란" class="nav-link" data-scroll-target="#d.-학습이란">D. 학습이란?</a></li>
+  <li><a href="#e.-haty를-부르는-다양한-이름" id="toc-e.-haty를-부르는-다양한-이름" class="nav-link" data-scroll-target="#e.-haty를-부르는-다양한-이름">E. <span class="math inline">\(\hat{y}\)</span>를 부르는 다양한 이름</a></li>
+  <li><a href="#f.-다양한-코드들" id="toc-f.-다양한-코드들" class="nav-link" data-scroll-target="#f.-다양한-코드들">F. 다양한 코드들</a></li>
   </ul></li>
   <li><a href="#a2.-참고자료들" id="toc-a2.-참고자료들" class="nav-link" data-scroll-target="#a2.-참고자료들">A2. 참고자료들</a></li>
   <li><a href="#강의영상" id="toc-강의영상" class="nav-link" data-scroll-target="#강의영상">1. 강의영상</a></li>
@@ -232,8 +233,11 @@ window.Quarto = {
 <p><a href="https://colab.research.google.com/github/guebin/DL2025/blob/main/posts/future.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" style="text-align: left"></a></p>
 <section id="a1.-자잘한-용어-정리-star" class="level1">
 <h1>A1. 자잘한 용어 정리 (<span class="math inline">\(\star\)</span>)</h1>
-<section id="a.-지도학습" class="level2">
-<h2 class="anchored" data-anchor-id="a.-지도학습">A. 지도학습</h2>
+<section id="a.-bf-x-bf-y" class="level2">
+<h2 class="anchored" data-anchor-id="a.-bf-x-bf-y">A. <span class="math inline">\({\bf X}\)</span>, <span class="math inline">\({\bf y}\)</span></h2>
+</section>
+<section id="b.-지도학습" class="level2">
+<h2 class="anchored" data-anchor-id="b.-지도학습">B. 지도학습</h2>
 <p><code>-</code> 우리가 수업에서 다루는 데이터는 주로 아래와 같은 느낌이다.</p>
 <ol type="1">
 <li><p>데이터는 <span class="math inline">\((X,y)\)</span>의 형태로 정리되어 있다.</p></li>
@@ -297,11 +301,8 @@ window.Quarto = {
 </table>
 <p><code>-</code> 이러한 문제상황, 즉 <span class="math inline">\((X,y)\)</span>가 주어졌을때 <span class="math inline">\(X \to y\)</span>를 추정하는 문제를 supervised learning 이라한다.</p>
 </section>
-<section id="b.-모델이란" class="level2">
-<h2 class="anchored" data-anchor-id="b.-모델이란">B. 모델이란?</h2>
-<blockquote class="blockquote">
-<p>모델이란 단어는 제 발작버튼이었어요..</p>
-</blockquote>
+<section id="c.-모델이란" class="level2">
+<h2 class="anchored" data-anchor-id="c.-모델이란">C. 모델이란?</h2>
 <p><code>-</code> 통계학에서 모델은 y와 x의 관계를 의미하며 오차항의 설계를 포함하는 개념이다. 이는 통계학이 “데이터 = 정보 + 오차”의 관점을 유지하기 때문이다. 따라서 통계학에서 모델링이란</p>
 <p><span class="math display">\[y_i = net(x_i) + \epsilon_i\]</span></p>
 <p>에서 (1) 적절한 함수 <span class="math inline">\(net\)</span>를 선택하는 일 (2) 적절한 오차항 <span class="math inline">\(\epsilon_i\)</span> 을 설계하는일 모두를 포함한다.</p>
@@ -314,8 +315,8 @@ window.Quarto = {
 <li>머신러닝/딥러닝교재 특: 회귀문제와 분류문제를 구분해서 설명한다. (표도 만듦) 이는 오차항에 대한 기술을 모호하게 하여 생기는 현상이다.</li>
 </ul>
 </section>
-<section id="c.-학습이란" class="level2">
-<h2 class="anchored" data-anchor-id="c.-학습이란">C. 학습이란?</h2>
+<section id="d.-학습이란" class="level2">
+<h2 class="anchored" data-anchor-id="d.-학습이란">D. 학습이란?</h2>
 <p><code>-</code> 학습이란 주어진 자료 <span class="math inline">\((X,y)\)</span>를 잘 분석하여 <span class="math inline">\(X\)</span>에서 <span class="math inline">\(y\)</span>로 가는 어떠한 “규칙” 혹은 “원리”를 찾는 것이다.</p>
 <ul>
 <li>학습이란 주어진 자료 <span class="math inline">\((X,y)\)</span>를 잘 분석하여 <span class="math inline">\(X\)</span>에서 <span class="math inline">\(y\)</span>로 가는 어떠한 “맵핑”을 찾는 것이다.</li>
@@ -330,25 +331,24 @@ window.Quarto = {
 <li><span class="math inline">\(\hat{y} = net(X)\)</span></li>
 </ul>
 </section>
-<section id="d.-haty를-부르는-다양한-이름" class="level2">
-<h2 class="anchored" data-anchor-id="d.-haty를-부르는-다양한-이름">D. <span class="math inline">\(\hat{y}\)</span>를 부르는 다양한 이름</h2>
+<section id="e.-haty를-부르는-다양한-이름" class="level2">
+<h2 class="anchored" data-anchor-id="e.-haty를-부르는-다양한-이름">E. <span class="math inline">\(\hat{y}\)</span>를 부르는 다양한 이름</h2>
 <p><code>-</code> <span class="math inline">\(\hat{y}\)</span>는 <span class="math inline">\(X\)</span>가 주어진 자료에 있는 값인지 아니면 새로운 값 인지에 따라 지칭하는 이름이 미묘하게 다르다.</p>
 <ol type="1">
 <li><p><span class="math inline">\(X \in data\)</span>: <span class="math inline">\(\hat{y}=net(X)\)</span> 는 predicted value, fitted value 라고 부른다.</p></li>
 <li><p><span class="math inline">\(X \notin data\)</span>: <span class="math inline">\(\hat{y}=net(X)\)</span> 는 predicted value, predicted value with new data 라고 부른다.</p></li>
 </ol>
 </section>
-<section id="e.-다양한-코드들" class="level2">
-<h2 class="anchored" data-anchor-id="e.-다양한-코드들">E. 다양한 코드들</h2>
+<section id="f.-다양한-코드들" class="level2">
+<h2 class="anchored" data-anchor-id="f.-다양한-코드들">F. 다양한 코드들</h2>
 <p><code>-</code> 파이썬 코드..</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Python</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>predictor.fit(X,y) <span class="co"># autogluon 에서 "학습"을 의미하는 과정</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>model.fit(X,y) <span class="co"># sklearn 에서 "학습"을 의미하는 과정</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>learner.learn() <span class="co"># fastai 에서 "학습"을 의미하는 과정</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>learner.fine_tune(<span class="dv">1</span>) <span class="co"># fastai 에서 "부분학습"을 의미하는 과정</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>learner.predict(cat1) <span class="co"># fastai 에서 "예측"을 의미하는 과정 </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model.fit(x, y, batch_size<span class="op">=</span><span class="dv">32</span>, epochs<span class="op">=</span><span class="dv">10</span>) <span class="co"># keras에서 "학습"을 의미하는 과정</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>model.predict(test_img) <span class="co"># keras에서 "예측"을 의미하는 과정 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>trainer.train() <span class="co"># huggingface 에서 "학습"을 의미하는 과정</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>trainer.predict(dataset) <span class="co"># huggingface 에서 "예측"을 의미하는 과정</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model.fit(x, y, batch_size<span class="op">=</span><span class="dv">32</span>, epochs<span class="op">=</span><span class="dv">10</span>) <span class="co"># keras에서 "학습"을 의미하는 과정</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model.predict(test_img) <span class="co"># keras에서 "예측"을 의미하는 과정 </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>-</code> R 코드..</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x) <span class="co"># 선형회귀분석에서 학습을 의미하는 함수</span></span>
@@ -496,7 +496,7 @@ train_accuracy = 0.9976</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="future_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="future_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -513,7 +513,7 @@ train_accuracy = 0.9976</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="future_files/figure-html/cell-13-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="future_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -530,7 +530,7 @@ train_accuracy = 0.9976</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="future_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="future_files/figure-html/cell-15-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -547,7 +547,7 @@ train_accuracy = 0.9976</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="future_files/figure-html/cell-15-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="future_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -564,7 +564,7 @@ train_accuracy = 0.9976</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="future_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="future_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
