@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "딥러닝 (2025)",
     "section": "",
-    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n오늘의 강의노트\n\n코랩사용자서버사용자\n\n\n아래의 링크 클릭\n\n\n\n주피터에서 아래를 실행 (주소 오류 수정했음!)\n!wget https://raw.githubusercontent.com/guebin/DL2025/refs/heads/main/posts/lecture.ipynb\n\n\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMay 26, 2025\n\n\n12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3\n\n\n최규빈 \n\n\n\n\nMay 21, 2025\n\n\n12wk-1: (순환신경망) – 겹장(덧장), rNNCell\n\n\n최규빈 \n\n\n\n\nMay 19, 2025\n\n\n11wk-2: (순환신경망) – abc, abcd, 임베딩 공간의 이해, AbAcAd, 겹장(덧장)\n\n\n최규빈 \n\n\n\n\nMay 14, 2025\n\n\n11wk-1: (추천시스템) – Embedding 레이어, 사용자정의 네트워크, MF-based 추천시스템을 넘어서\n\n\n최규빈 \n\n\n\n\nMay 12, 2025\n\n\n10wk-2: (추천시스템) – optimizer 사용 고급, 모델링 전략, MF-based 추천시스템\n\n\n최규빈 \n\n\n\n\nMay 7, 2025\n\n\n10wk-1: 중간고사\n\n\n최규빈 \n\n\n\n\nMay 5, 2025\n\n\n09wk-2: (생성모형) – Generative Adversarial Network (GAN)\n\n\n최규빈 \n\n\n\n\nApr 28, 2025\n\n\n08wk-2, 09wk-1: (XAI, 설명가능한 인공지능) – Class Activation Map\n\n\n최규빈 \n\n\n\n\nApr 23, 2025\n\n\n08wk-1: (합성곱신경망) – MNIST, CIFAR10, XAI란?\n\n\n최규빈 \n\n\n\n\nApr 21, 2025\n\n\n07wk-2: (합성곱신경망) – CNN 핵심레이어, CNN의 학습원리, FashionMNIST\n\n\n최규빈 \n\n\n\n\nApr 16, 2025\n\n\n07wk-1: (합성곱신경망) – CNN 자랑, CNN 핵심레이어\n\n\n최규빈 \n\n\n\n\nApr 14, 2025\n\n\n06wk-2: (신경망) – 다항분류, FashionMNIST\n\n\n최규빈 \n\n\n\n\nApr 9, 2025\n\n\n06wk-1: (신경망) – 데이터분석 코딩패턴\n\n\n최규빈 \n\n\n\n\nApr 7, 2025\n\n\n05wk-2: (신경망) – 신경망의 표현, GPU사용법, 확률적경사하강법\n\n\n최규빈 \n\n\n\n\nApr 2, 2025\n\n\n05wk-1: (신경망) – 예측, 시벤코정리의 이면, 드랍아웃\n\n\n최규빈 \n\n\n\n\nMar 31, 2025\n\n\n04wk-2: (신경망) – 꺽인그래프의 한계(?), 시벤코정리, MNIST\n\n\n최규빈 \n\n\n\n\nMar 26, 2025\n\n\n04wk-1: (신경망) – 로지스틱의 한계 극복\n\n\n최규빈 \n\n\n\n\nMar 24, 2025\n\n\n03wk-2: (로지스틱) – sig(linr(x)), BCELoss, Adam, 로지스틱의 한계\n\n\n최규빈 \n\n\n\n\nMar 19, 2025\n\n\n03wk-1: (회귀, 로지스틱) – 파이토치식 코딩패턴 (2), 로지스틱 모형\n\n\n최규빈 \n\n\n\n\nMar 17, 2025\n\n\n02wk-2: (회귀) – 파라메터의 학습과정 음미, MSE, 파이토치식 코딩패턴 (1)\n\n\n최규빈 \n\n\n\n\nMar 10, 2025\n\n\n01wk-2, 02wk-1: (회귀) – 회귀모형, 손실함수, 파이토치를 이용한 추정\n\n\n최규빈 \n\n\n\n\nMar 5, 2025\n\n\n01wk-1: (토치) – 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\nJan 1, 2025\n\n\nA2: Exam Guidelines\n\n\n최규빈 \n\n\n\n\nJan 1, 2025\n\n\nA1: Exercise – ver. 0505-1\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
+    "text": "질문하는 방법\n\n이메일: guebin@jbnu.ac.kr\n직접방문: 자연과학대학 본관 205호\nZoom: 이메일로 미리 시간을 정할 것\n카카오톡: http://pf.kakao.com/_txeIFG/chat\n\n오늘의 강의노트\n\n코랩사용자서버사용자\n\n\n아래의 링크 클릭\n\n\n\n주피터에서 아래를 실행 (주소 오류 수정했음!)\n!wget https://raw.githubusercontent.com/guebin/DL2025/refs/heads/main/posts/lecture.ipynb\n\n\n\n강의노트\n\n\n\n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMay 26, 2025\n\n\n12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A\n\n\n최규빈 \n\n\n\n\nMay 21, 2025\n\n\n12wk-1: (순환신경망) – 겹장(덧장), rNNCell\n\n\n최규빈 \n\n\n\n\nMay 19, 2025\n\n\n11wk-2: (순환신경망) – abc, abcd, 임베딩 공간의 이해, AbAcAd, 겹장(덧장)\n\n\n최규빈 \n\n\n\n\nMay 14, 2025\n\n\n11wk-1: (추천시스템) – Embedding 레이어, 사용자정의 네트워크, MF-based 추천시스템을 넘어서\n\n\n최규빈 \n\n\n\n\nMay 12, 2025\n\n\n10wk-2: (추천시스템) – optimizer 사용 고급, 모델링 전략, MF-based 추천시스템\n\n\n최규빈 \n\n\n\n\nMay 7, 2025\n\n\n10wk-1: 중간고사\n\n\n최규빈 \n\n\n\n\nMay 5, 2025\n\n\n09wk-2: (생성모형) – Generative Adversarial Network (GAN)\n\n\n최규빈 \n\n\n\n\nApr 28, 2025\n\n\n08wk-2, 09wk-1: (XAI, 설명가능한 인공지능) – Class Activation Map\n\n\n최규빈 \n\n\n\n\nApr 23, 2025\n\n\n08wk-1: (합성곱신경망) – MNIST, CIFAR10, XAI란?\n\n\n최규빈 \n\n\n\n\nApr 21, 2025\n\n\n07wk-2: (합성곱신경망) – CNN 핵심레이어, CNN의 학습원리, FashionMNIST\n\n\n최규빈 \n\n\n\n\nApr 16, 2025\n\n\n07wk-1: (합성곱신경망) – CNN 자랑, CNN 핵심레이어\n\n\n최규빈 \n\n\n\n\nApr 14, 2025\n\n\n06wk-2: (신경망) – 다항분류, FashionMNIST\n\n\n최규빈 \n\n\n\n\nApr 9, 2025\n\n\n06wk-1: (신경망) – 데이터분석 코딩패턴\n\n\n최규빈 \n\n\n\n\nApr 7, 2025\n\n\n05wk-2: (신경망) – 신경망의 표현, GPU사용법, 확률적경사하강법\n\n\n최규빈 \n\n\n\n\nApr 2, 2025\n\n\n05wk-1: (신경망) – 예측, 시벤코정리의 이면, 드랍아웃\n\n\n최규빈 \n\n\n\n\nMar 31, 2025\n\n\n04wk-2: (신경망) – 꺽인그래프의 한계(?), 시벤코정리, MNIST\n\n\n최규빈 \n\n\n\n\nMar 26, 2025\n\n\n04wk-1: (신경망) – 로지스틱의 한계 극복\n\n\n최규빈 \n\n\n\n\nMar 24, 2025\n\n\n03wk-2: (로지스틱) – sig(linr(x)), BCELoss, Adam, 로지스틱의 한계\n\n\n최규빈 \n\n\n\n\nMar 19, 2025\n\n\n03wk-1: (회귀, 로지스틱) – 파이토치식 코딩패턴 (2), 로지스틱 모형\n\n\n최규빈 \n\n\n\n\nMar 17, 2025\n\n\n02wk-2: (회귀) – 파라메터의 학습과정 음미, MSE, 파이토치식 코딩패턴 (1)\n\n\n최규빈 \n\n\n\n\nMar 10, 2025\n\n\n01wk-2, 02wk-1: (회귀) – 회귀모형, 손실함수, 파이토치를 이용한 추정\n\n\n최규빈 \n\n\n\n\nMar 5, 2025\n\n\n01wk-1: (토치) – 강의소개, 파이토치 기본\n\n\n최규빈 \n\n\n\n\nJan 1, 2025\n\n\nA2: Exam Guidelines\n\n\n최규빈 \n\n\n\n\nJan 1, 2025\n\n\nA1: Exercise – ver. 0505-1\n\n\n최규빈 \n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/03wk-1.html#a.-bias의-사용",
@@ -1115,42 +1115,42 @@
   {
     "objectID": "posts/12wk-2.html#a.-bf-x-bf-y",
     "href": "posts/12wk-2.html#a.-bf-x-bf-y",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "A. \\({\\bf X}\\), \\({\\bf y}\\)",
-    "text": "A. \\({\\bf X}\\), \\({\\bf y}\\)\n- X, y를 지칭하는 이름\n\n\n\n\n\n\n\n용어\n설명\n\n\n\n\nX\n수학적 수식이나 딥러닝 모델 등에서 관습적으로 입력 변수로 표기\n\n\n설명변수 (Explanatory Variable)\n종속변수(반응변수)를 설명하거나 예측하는 데 사용되는 변수로, 전통 통계 및 머신러닝에서의 입력 역할\n\n\n독립변수 (Independent Variable)\n전통적인 통계학 및 회귀 분석 문맥에서 사용됨\n\n\n입력변수 (Input Variable)\n머신러닝 모델에서 입력 데이터로 사용되며, 특히 신경망 구조 등에서 많이 쓰임\n\n\n특징 / 특성 (Feature)\n머신러닝, 데이터마이닝, 딥러닝 등에서 데이터를 구성하는 속성 또는 설명 변수로 사용됨\n\n\n예측 변수 (Predictor)\n예측 모델 설계 시 독립변수를 지칭하는 용어로, 모델링/통계 분석 문맥에서 흔히 사용됨\n\n\n공변량 (Covariate)\n실험 디자인, 특히 임상연구나 사회과학 연구에서 제어 변수로 사용됨\n\n\n\n\n\n\nY\n수식이나 알고리즘 표현에서 일반적으로 종속변수를 나타내는 기호\n\n\n반응변수 (Response Variable)\n독립변수의 영향을 받는 결과 변수로, 모델링이나 인과 추론에서 핵심적인 대상\n\n\n종속변수 (Dependent Variable)\n전통 통계학과 회귀분석에서 사용되며, 독립변수의 영향을 받는 변수로 정의됨\n\n\n출력변수 (Output Variable)\n머신러닝 및 딥러닝에서 모델의 예측 결과로 출력되는 값으로 사용됨\n\n\n타겟 / 정답 (Target / Label)\n지도학습에서 모델이 학습해야 하는 실제 정답값을 의미하며, 분류/회귀 문제에 공통적으로 사용됨\n\n\n\n- 더 다양함: https://ko.wikipedia.org/wiki/독립변수와_종속변수"
+    "text": "A. \\({\\bf X}\\), \\({\\bf y}\\)\n- X, y를 지칭하는 이름\n\n\n\n\n\n\n\n\n기호\n용어\n설명\n\n\n\n\n\\({\\bf X}\\)\n설명변수  (Explanatory Variable)\n종속변수(반응변수)를 설명하거나 예측하는 데 사용되는 변수로, 전통 통계 및 머신러닝에서의 입력 역할\n\n\n\n독립변수  (Independent Variable)\n전통적인 통계학 및 회귀 분석 문맥에서 사용됨\n\n\n\n입력변수  (Input Variable)\n머신러닝 모델에서 입력 데이터로 사용되며, 특히 신경망 구조 등에서 많이 쓰임\n\n\n\n특징 / 특성  (Feature)\n머신러닝, 데이터마이닝, 딥러닝 등에서 데이터를 구성하는 속성 또는 설명 변수로 사용됨\n\n\n\n예측 변수  (Predictor)\n예측 모델 설계 시 독립변수를 지칭하는 용어로, 모델링/통계 분석 문맥에서 흔히 사용됨\n\n\n\n공변량  (Covariate)\n실험 디자인, 특히 임상연구나 사회과학 연구에서 제어 변수로 사용됨\n\n\n\n\n\n\n\n\\({\\bf y}\\)\n반응변수  (Response Variable)\n독립변수의 영향을 받는 결과 변수로, 모델링이나 인과 추론에서 핵심적인 대상\n\n\n\n종속변수  (Dependent Variable)\n전통 통계학과 회귀분석에서 사용되며, 독립변수의 영향을 받는 변수로 정의됨\n\n\n\n출력변수  (Output Variable)\n머신러닝 및 딥러닝에서 모델의 예측 결과로 출력되는 값으로 사용됨\n\n\n\n타겟 / 정답  (Target / Label)\n지도학습에서 모델이 학습해야 하는 실제 정답값을 의미하며, 분류/회귀 문제에 공통적으로 사용됨\n\n\n\n- 더 다양함: https://ko.wikipedia.org/wiki/독립변수와_종속변수"
   },
   {
     "objectID": "posts/12wk-2.html#b.-지도학습",
     "href": "posts/12wk-2.html#b.-지도학습",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "B. 지도학습",
     "text": "B. 지도학습\n- 우리가 수업에서 다루는 데이터는 주로 아래와 같은 느낌이다.\n\n데이터는 \\((X,y)\\) 의 형태로 정리되어 있다.\n\\(y\\)는 우리가 관심이 있는 변수이다. 즉 우리는 \\(y\\)를 적절하게 추정하는 것에 관심이 있다.\n\\(X\\)는 \\(y\\)를 추정하기 위해 필요한 정보이다.\n\n\n\n\n\n\n\n\n\n\n\n\\(X\\)\n\\(y\\)\n비고\n순서\n예시\n\n\n\n\n기온(온도)\n아이스 아메리카노 판매량\n회귀\n상관없음\n날씨가 판매량에 미치는 영향 분석\n\n\n스펙\n합격 여부\n로지스틱\n상관없음\n입사 지원자의 합격 예측\n\n\n이미지\n카테고리\n합성곱신경망 (CNN)\n상관없음\n개/고양이 이미지 구분\n\n\n유저, 아이템 정보\n평점\n추천시스템\n상관없음\n넷플릭스 영화 추천\n\n\n처음 \\(m\\)개의 단어(문장)\n이후 1개의 단어(문장)\n순환신경망 (RNN)\n순서 상관 있음\n챗봇, 문장 생성, 언어 모델링\n\n\n처음 \\(m\\)개의 단어(문장)\n카테고리\n순환신경망 (RNN)\n순서 상관 있음\n영화리뷰 감정 분류\n\n\n\n- 이러한 문제상황, 즉 \\((X,y)\\)가 주어졌을때 \\(X \\to y\\)를 추정하는 문제를 supervised learning 이라한다."
   },
   {
     "objectID": "posts/12wk-2.html#c.-모델이란",
     "href": "posts/12wk-2.html#c.-모델이란",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "C. 모델이란?",
     "text": "C. 모델이란?\n- 통계학에서 모델은 y와 x의 관계를 의미하며 오차항의 설계를 포함하는 개념이다. 이는 통계학이 “데이터 = 정보 + 오차”의 관점을 유지하기 때문이다. 따라서 통계학에서 모델링이란\n\\[y_i = net(x_i) + \\epsilon_i\\]\n에서 (1) 적절한 함수 \\(net\\)를 선택하는 일 (2) 적절한 오차항 \\(\\epsilon_i\\) 을 설계하는일 모두를 포함한다.\n- 딥러닝 혹은 머신러닝에서 모델은 단순히\n\\[y_i \\approx net(x_i)\\]\n를 의미하는 경우가 많다. 즉 “model=net”라고 생각해도 무방하다. 이 경우 “모델링”이란 단순히 적절한 \\(net\\)을 설계하는 것만을 의미할 경우가 많다.\n- 그래서 생긴일\n\n통계학교재 특징: 분류문제와 회귀문제를 엄밀하게 구분하지 않는다. 사실 오차항만 다를뿐이지 크게보면 같은 회귀모형이라는 관점이다. 그래서 일반화선형모형(GLM)이라는 용어를 쓴다.\n머신러닝/딥러닝교재 특징: 회귀문제와 분류문제를 구분해서 설명한다. (표도 만듦) 이는 오차항에 대한 기술을 모호하게 하여 생기는 현상이다."
   },
   {
     "objectID": "posts/12wk-2.html#d.-학습이란",
     "href": "posts/12wk-2.html#d.-학습이란",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "D. 학습이란?",
     "text": "D. 학습이란?\n- 학습이란 주어진 자료 \\((X,y)\\)를 잘 분석하여 \\(X\\)에서 \\(y\\)로 가는 어떠한 “규칙” 혹은 “원리”를 찾는 것이다.\n\n학습이란 주어진 자료 \\((X,y)\\)를 잘 분석하여 \\(X\\)에서 \\(y\\)로 가는 어떠한 “맵핑”을 찾는 것이다.\n학습이란 주어진 자료 \\((X,y)\\)를 잘 분석하여 \\(X\\)에서 \\(y\\)로 가는 어떠한 “함수”을 찾는 것이다. 즉 \\(y\\approx f(X)\\)가 되도록 만드는 \\(f\\)를 잘 찾는 것이다. (이 경우 “함수를 추정한다”라고 표현)\n학습이란 주어진 자료 \\((X,y)\\)를 잘 분석하여 \\(X\\)에서 \\(y\\)로 가는 어떠한 “모델” 혹은 “모형”을 찾는 것이다. 즉 \\(y\\approx model(X)\\)가 되도록 만드는 \\(model\\)을 잘 찾는 것이다. (이 경우 “모형을 학습시킨다”라고 표현)\n학습이란 주어진 자료 \\((X,y)\\)를 잘 분석하여 \\(X\\)에서 \\(y\\)로 가는 어떠한 “네트워크”을 찾는 것이다. 즉 \\(y\\approx net(X)\\)가 되도록 만드는 \\(net\\)을 잘 찾는 것이다. (이 경우 “네트워크를 학습시킨다”라고 표현)\n\n- prediction이란 학습과정에서 찾은 “규칙” 혹은 “원리”를 \\(X\\)에 적용하여 \\(\\hat{y}\\)을 구하는 과정이다. 학습과정에서 찾은 규칙 혹은 원리는 \\(f\\),\\(model\\),\\(net\\) 으로 생각가능한데 이에 따르면 아래가 성립한다.\n\n\\(\\hat{y} = f(X)\\)\n\\(\\hat{y} = model(X)\\)\n\\(\\hat{y} = net(X)\\)"
   },
   {
     "objectID": "posts/12wk-2.html#e.-haty를-부르는-다양한-이름",
     "href": "posts/12wk-2.html#e.-haty를-부르는-다양한-이름",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "E. \\(\\hat{y}\\)를 부르는 다양한 이름",
     "text": "E. \\(\\hat{y}\\)를 부르는 다양한 이름\n- \\(\\hat{y}\\)는 \\(X\\)가 주어진 자료에 있는 값인지 아니면 새로운 값 인지에 따라 지칭하는 이름이 미묘하게 다르다.\n\n\\(X \\in data\\): \\(\\hat{y}=net(X)\\) 는 predicted value, fitted value 라고 부른다.\n\\(X \\notin data\\): \\(\\hat{y}=net(X)\\) 는 predicted value, predicted value with new data 라고 부른다."
   },
   {
     "objectID": "posts/12wk-2.html#f.-다양한-코드들",
     "href": "posts/12wk-2.html#f.-다양한-코드들",
-    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, A1-A3",
+    "title": "12wk-2: (순환신경망) – RNNCell, RNN, LSTM, Appedix A",
     "section": "F. 다양한 코드들",
     "text": "F. 다양한 코드들\n- 파이썬 코드..\n#Python\npredictor.fit(X,y) # autogluon 에서 \"학습\"을 의미하는 과정\nmodel.fit(X,y) # sklearn 에서 \"학습\"을 의미하는 과정\ntrainer.train() # huggingface 에서 \"학습\"을 의미하는 과정\ntrainer.predict(dataset) # huggingface 에서 \"예측\"을 의미하는 과정\nmodel.fit(x, y, batch_size=32, epochs=10) # keras에서 \"학습\"을 의미하는 과정\nmodel.predict(test_img) # keras에서 \"예측\"을 의미하는 과정 \n- R 코드..\n# R\nols &lt;- lm(y~x) # 선형회귀분석에서 학습을 의미하는 함수\nols$fitted.values # 선형회귀분석에서 yhat을 출력 \npredict(ols, newdata=test) # 선형회귀분석에서 test에 대한 예측값을 출력하는 함수\nols$coef # 선형회귀분석에서 weight를 확인하는 방법"
   },
