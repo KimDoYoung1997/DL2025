@@ -396,7 +396,7 @@
     "href": "posts/14wk-1.html#c.-첫번째-q_table보다-나은-것",
     "title": "14wk-1: (강화학습) – 4x4 Grid World 환경의 이해",
     "section": "C. 첫번째 q_table보다 나은 것?",
-    "text": "C. 첫번째 q_table보다 나은 것?\n- 첫번째 q_table을 알고있다고 가정하자.\n\n- 정책시각화 (합리적인 행동)\n\n- 이게 최선이야?"
+    "text": "C. 첫번째 q_table보다 나은 것?\n- 첫번째 q_table을 알고있다고 가정하자.\n\n- 정책시각화 (합리적인 행동)\n\n- 이게 최선의 정책일까?"
   },
   {
     "objectID": "posts/11wk-2.html#a.-tanh",
