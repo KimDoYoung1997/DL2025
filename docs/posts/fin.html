@@ -912,7 +912,7 @@ epoch: 5     val_loss: 0.7334</code></pre>
 </div>
 <p>적당한 위의 환경에 대응하는 Agent를 설계하고 <code>q_net</code>를 이용하여 올바른 행동을 학습하라.</p>
 <p><strong>힌트1:</strong> 아래의 에이전트를 설계에 활용하세요</p>
-<div id="0860d4fd-fd27-4c01-a220-232537313c8d" class="cell" data-tags="[]" data-execution_count="13">
+<div id="0860d4fd-fd27-4c01-a220-232537313c8d" class="cell" data-tags="[]" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RandomAgent: </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">#--# define spaces </span></span>
@@ -936,7 +936,7 @@ epoch: 5     val_loss: 0.7334</code></pre>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> learn(<span class="va">self</span>):</span>
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span> </span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> save_experience(<span class="va">self</span>):</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.states.append(<span class="va">self</span>.state)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.states.append(torch.tensor(<span class="va">self</span>.state))</span>
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.actions.append(<span class="va">self</span>.action)</span>
 <span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.rewards.append(<span class="va">self</span>.reward)</span>
 <span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.next_states.append(torch.tensor(<span class="va">self</span>.next_state))</span>
