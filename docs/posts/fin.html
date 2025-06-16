@@ -9,7 +9,7 @@
 <meta name="author" content="최규빈">
 <meta name="dcterms.date" content="2025-06-18">
 
-<title>15wk-2: 기말고사 (ver 0.5) – DL2025</title>
+<title>15wk-2: 기말고사 (ver 1.0) – DL2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -188,6 +188,8 @@ window.Quarto = {
   <li><a href="#hello" id="toc-hello" class="nav-link" data-scroll-target="#hello">2. <code>hello</code></a></li>
   <li><a href="#human_numbers" id="toc-human_numbers" class="nav-link" data-scroll-target="#human_numbers">3. <code>Human_Numbers</code></a></li>
   <li><a href="#frozenlake" id="toc-frozenlake" class="nav-link" data-scroll-target="#frozenlake">4. <code>FrozenLake</code></a></li>
+  <li><a href="#x4-girdworld" id="toc-x4-girdworld" class="nav-link" data-scroll-target="#x4-girdworld">5. <code>4x4 GirdWorld</code></a></li>
+  <li><a href="#미공개-문제" id="toc-미공개-문제" class="nav-link" data-scroll-target="#미공개-문제">6. 미공개 문제</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="fin.out.ipynb" download="fin.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -196,7 +198,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">15wk-2: 기말고사 (ver 0.5)</h1>
+<h1 class="title">15wk-2: 기말고사 (ver 1.0)</h1>
 </div>
 
 
@@ -887,13 +889,10 @@ epoch: 5     val_loss: 0.7334</code></pre>
 <li>처음 12개의 단어와 마지막 12개의 단어에 대한 적합값(fitted value)을 제시할 것</li>
 </ul>
 <p><strong>hint</strong>: 아래의 코드를 이용하여 전처리하면 편리하다.</p>
-<div id="27dfec5e-0c02-4d6c-89b5-988c72233baf" class="cell" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'HUMAN_NUMBERS_train.txt'</span>) <span class="im">as</span> f:</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> f.read().split()</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>words[:<span class="dv">10</span>]</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>: words[:<span class="op">-</span><span class="dv">1</span>], <span class="st">'y'</span>: words[<span class="dv">1</span>:]})</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>df_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div id="27dfec5e-0c02-4d6c-89b5-988c72233baf" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>: words[:<span class="op">-</span><span class="dv">1</span>], <span class="st">'y'</span>: words[<span class="dv">1</span>:]})</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df_train</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div>
 
 
@@ -968,7 +967,7 @@ epoch: 5     val_loss: 0.7334</code></pre>
 </div>
 </div>
 </div>
-<div id="822a0663-b67e-4405-a686-42be15245b49" class="cell" data-execution_count="38">
+<div id="822a0663-b67e-4405-a686-42be15245b49" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 전체 vocab 기준으로 맵핑</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>vocab <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">set</span>(words))</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>dct<span class="op">=</span> {w: i <span class="cf">for</span> i, w <span class="kw">in</span> <span class="bu">enumerate</span>(vocab)}</span>
@@ -1066,6 +1065,25 @@ epoch: 5     val_loss: 0.7334</code></pre>
 <ul>
 <li>상태공간(state space)이 0~15일텐데, <code>상태1 x 2 = 상태2</code>, <code>상태3 + 상태2 = 상태5</code> 와 같은 관계가 성립한다고 보기 어려우므로 상태공간은 범주형변수로 봐야겠죠?</li>
 </ul>
+</section>
+<section id="x4-girdworld" class="level1">
+<h1>5. <code>4x4 GirdWorld</code></h1>
+<p>아래의 제약조건에 맞추어 14wk-2의 Solve를 해결할 것</p>
+<ol type="1">
+<li><strong>Q-테이블 초기화 및 사용 방식</strong>: 에이전트는 <code>q_net</code>이 아닌 <code>q_table</code>을 사용하여 업데이트하며, <code>q_table</code>은 np.random.randn(4, 4, 4)로 초기화된다.</li>
+<li><strong>액션 선택 전략</strong>: 매 스텝마다 일정 확률로 랜덤 액션을 수행하고, 랜덤이 아닐 경우에는 q_table을 참고해 가장 높은 Q값을 갖는 최적의 액션을 선택한다.</li>
+<li><strong>탐험 확률 감소 (ε-greedy)</strong>: 랜덤액션을 선택하는 확률은 초기값 100%에서 시작하여, 매 에피소드마다 “이전 확률 × 0.995” 방식으로 점차 감소한다.</li>
+<li><strong>감가율 (Discount Factor)</strong>: 미래 보상의 중요도를 반영하기 위한 감가율은 0.95로 설정한다.</li>
+<li><strong>학습률 (Learning Rate)</strong>: <code>q</code>와 <code>q_hat</code>의 차이를 얼마나 반영할지를 결정하는 학습률은 0.01로 설정한다.</li>
+<li><strong>경험 메모리 구조</strong>: 플레이어(=에이전트)는 최대 5000개의 경험을 저장할 수 있다.</li>
+<li><strong>학습 조건 및 방식 (learn 함수)</strong>: 저장된 경험이 64개 이상일 때만 학습이 수행되며, 경험 메모리에서 64개를 무작위로 샘플링하여 q_table을 업데이트한다.</li>
+<li><strong>종료 조건 (Success Criterion)</strong>: 최근 10개 에피소드의 평균 score가 90 이상이면 과업을 완료한 것으로 간주하고 학습을 종료한다.</li>
+<li><strong>플레이타임 계산</strong>: 각 에피소드가 끝날 때까지 몇 번의 step이 소요되었는지 기록하며, 이를 기반으로 에피소드별 플레이타임을 저장한다.</li>
+<li><strong>시각화 출력</strong>: 최종학습결과를 13wk-2 주차 강의의 <code>show()</code> 함수를 이용하여 시각화한다.</li>
+</ol>
+</section>
+<section id="미공개-문제" class="level1">
+<h1>6. 미공개 문제</h1>
 
 
 </section>
